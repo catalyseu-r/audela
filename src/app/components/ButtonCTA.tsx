@@ -1,16 +1,20 @@
-import React from 'react';
+import Link from 'next/link';
+import { ButtonPropsCTA } from '../types/buttonCTA';
 
-interface ButtonProps {
-  title: string;
-}
+const ButtonCTA = ({ title: buttonText, linkTo }: ButtonPropsCTA) => {
+  const buttonDefault = 'py-4 px-6 lg:w-[16rem] w-48 mt-[2.75rem] bg-main-red flex items-center content-center rounded';
+  const buttonTextDefault = 'lg:text-2xl text-xl w-full text-main-white uppercase cursor-pointer text-center';
 
-const ButtonCTA = (props: ButtonProps) => {
-  const btnText = props.title;
-  return (
-    <div className='py-4 px-6 lg:w-[16rem] w-48 mt-[2.75rem] bg-main-red flex items-center content-center rounded'>
-      <p className='lg:text-2xl text-xl w-full text-main-white uppercase cursor-pointer text-center'>{btnText}</p>
-    </div>
-  );
+  const generateLinkIfAny = () =>
+    linkTo ? (
+      <Link href={linkTo} className={buttonTextDefault}>
+        {buttonText}
+      </Link>
+    ) : (
+      <p className={buttonTextDefault}>{buttonText}</p>
+    );
+
+  return <div className={buttonDefault}>{generateLinkIfAny()}</div>;
 };
 
 export default ButtonCTA;

@@ -6,7 +6,7 @@ import { FaInstagramSquare as InstagramIcon, FaPinterestSquare as PinterestIcon 
 const SocialStack = () => {
   const iconClass = 'lg:text-4xl md:text-3xl text-2xl text-main-white';
   return (
-    <div className='lg:w-[24rem] md:w-[16rem] w={8rem} flex items-center justify-between mt-[25%]'>
+    <div className='lg:w-[24rem] md:w-[16rem] w-[12rem] flex items-center justify-between mt-[5%]'>
       <DribbleIcon className={iconClass} />
       <TwitterIcon className={iconClass} />
       <InstagramIcon className={iconClass} />
