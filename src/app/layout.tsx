@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='en'>
+    <html lang='en' className='w-full h-full'>
       <body className={roboto.className}>{children}</body>
     </html>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Options = () => {
-  const optionClass = 'py-4 px-2 flex items-center justify-center self-stretch border border-main-red';
+  const optionClass = 'py-4 px-2 flex items-center justify-center self-stretch border border-main-red text-xl';
   const optionTextClass = 'text-main-white';
   return (
     <div className='mt-[7rem] flex items-center justify-center'>

@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { ButtonPropsCTA } from '../types/buttonCTA';
 
 const ButtonCTA = ({ title: buttonText, linkTo }: ButtonPropsCTA) => {
-  const buttonDefault = 'py-4 px-6 lg:w-[16rem] w-48 mt-[2.75rem] bg-main-red flex items-center content-center rounded';
-  const buttonTextDefault = 'lg:text-2xl text-xl w-full text-main-white uppercase cursor-pointer text-center';
+  const buttonDefault = 'py-4 px-5 lg:w-64 h-auto w-40 bg-main-red flex items-center content-center rounded';
+  const buttonTextDefault = 'lg:text-2xl text-l w-full text-main-white uppercase cursor-pointer text-center';
 
   const generateLinkIfAny = () =>
     linkTo ? (

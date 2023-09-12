@@ -1,7 +1,13 @@
-import { ImageOfTheDayParams } from '@/app/types/imageOfTheDay';
+import { ImageOfTheDay, ImageOfTheDayParams } from '@/app/types/imageOfTheDay';
 
-export const getImageOfTheDay = async (params?: ImageOfTheDayParams) => {
-  const customErrorObj = {
+interface CustomErrorObj {
+  error: string;
+}
+
+export const getImageOfTheDay: (params: ImageOfTheDayParams) => Promise<ImageOfTheDay | CustomErrorObj> = async (
+  params?
+) => {
+  const customErrorObj: CustomErrorObj = {
     error: 'Something went wrong with network request!',
   };
   try {

@@ -6,7 +6,7 @@ import { RxHamburgerMenu as BurgerMenu } from 'react-icons/rx';
 
 const Navbar = () => {
   return (
-    <nav className='w-full pt-8'>
+    <nav className='w-full mt-4 inline-block'>
       <div className='flex w-full justify-between items-center'>
         <Link href={'/'} className={`${chakraP.className} lg:text-3xl text-2xl uppercase text-text-red z-10`}>
           au-delà

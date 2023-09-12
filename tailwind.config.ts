@@ -13,6 +13,7 @@ const config: Config = {
       lg: '976px',
       xl: '1440px',
     },
+
     extend: {
       backgroundImage: {
         'landing-bg': 'linear-gradient(0deg, rgba(23, 23, 23, 0) 0%, rgba(23, 23, 23, 0.72) 100%), url("img/BG.png")',
@@ -44,7 +45,7 @@ const config: Config = {
         title: ['Chakra Petch', 'sans-serif'],
       },
       letterSpacing: {
-        'headings-buttons': '-0.0125re;',
+        'headings-buttons': '-0.0125rem;',
       },
     },
   },
