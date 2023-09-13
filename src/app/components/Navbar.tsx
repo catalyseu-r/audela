@@ -5,8 +5,9 @@ const chakraP = Chakra_Petch({ weight: '400', subsets: ['latin'] });
 import { RxHamburgerMenu as BurgerMenu } from 'react-icons/rx';
 
 const Navbar = () => {
+  //border-bottom: 1px solid rgba(234, 234, 234, 0.24);
   return (
-    <nav className='w-full mt-4 inline-block'>
+    <nav className='w-full pt-4 inline-block  border-b border-[rgba(234,234,234,0.08)]'>
       <div className='flex w-full justify-between items-center'>
         <Link href={'/'} className={`${chakraP.className} lg:text-3xl text-2xl uppercase text-text-red z-10`}>
           au-delà

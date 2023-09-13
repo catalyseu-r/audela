@@ -9,8 +9,10 @@ interface HeaderPropsDefault {
 const Header = ({ title, isLanding }: HeaderPropsDefault) => {
   const headerClass = `w-3/4  ${isLanding && 'mt-40'}`;
 
-  const headerText = `${chakraP.className} w-full ${isLanding && 'lg:text-5xl md:text-4xl sm:text-2xl'} 
-  lg:text-2xl text-xl
+  const headerText = `${chakraP.className} w-full ${
+    isLanding ? 'lg:text-5xl md:text-4xl sm:text-2xl' : 'mt-12 lg:text-2xl md:text-1xl sm:text-lg'
+  } 
+
   text-main-white ${isLanding && 'uppercase'}`;
 
   return (

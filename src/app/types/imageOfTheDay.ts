@@ -6,6 +6,10 @@ export interface ImageOfTheDayParams {
   thumbs?: string;
 }
 
+export interface CustomErrorObject {
+  error: string;
+}
+
 export interface ImageOfTheDay {
   copyright?: string;
   date: string;
@@ -17,3 +21,7 @@ export interface ImageOfTheDay {
   url: string;
   error?: string;
 }
+
+// export interface ImageComponentData {
+//   data: ImageOfTheDay | CustomErrorObject;
+// }

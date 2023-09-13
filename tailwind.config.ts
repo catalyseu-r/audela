@@ -1,5 +1,7 @@
 import type { Config } from 'tailwindcss';
 
+//linear-gradient(0deg, rgba(23, 23, 23, 0) 0%, rgba(23, 23, 23, 0.72) 100%),
+
 const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -7,16 +9,16 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    screens: {
-      sm: '480px',
-      md: '768px',
-      lg: '976px',
-      xl: '1440px',
-    },
+    // screens: {
+    //   sm: '480px',
+    //   md: '768px',
+    //   lg: '976px',
+    //   xl: '1440px',
+    // },
 
     extend: {
       backgroundImage: {
-        'landing-bg': 'linear-gradient(0deg, rgba(23, 23, 23, 0) 0%, rgba(23, 23, 23, 0.72) 100%), url("img/BG.png")',
+        'landing-bg': 'url("img/BG.png")',
       },
       colors: {
         'text-red': '#CA6677',
@@ -24,6 +26,8 @@ const config: Config = {
         'main-black': '#090909',
         'main-blue': '#141B41',
         'main-white': '#eaeaea',
+        'dimmed-white': 'rgba(234, 234, 234, 0.56)',
+        'dimmed-red': 'rgba(166, 66, 83, 0.24)',
       },
       screens: {
         sm: '640px',
