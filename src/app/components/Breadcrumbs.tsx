@@ -21,7 +21,6 @@ const Breadcrumbs = () => {
         </Link>
       )
     );
-  console.log('FORMAT', formatCrumbs());
 
   return <div className='mt-2 flex justify-center items-center w-min gap-1'>{formatCrumbs()}</div>;
 };

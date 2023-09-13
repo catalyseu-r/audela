@@ -21,7 +21,3 @@ export interface ImageOfTheDay {
   url: string;
   error?: string;
 }
-
-// export interface ImageComponentData {
-//   data: ImageOfTheDay | CustomErrorObject;
-// }

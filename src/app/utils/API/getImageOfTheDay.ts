@@ -8,7 +8,8 @@ export const getImageOfTheDay: (params?: ImageOfTheDayParams) => Promise<ImageOf
   };
   try {
     const callApi = await fetch(
-      `${process.env.IMAGE_OF_THE_DAY_BASE_URL}${process.env.API_KEY}${params ? params : ''}`
+      `${process.env.IMAGE_OF_THE_DAY_BASE_URL}${process.env.API_KEY}${params ? params : ''}`,
+      { cache: 'no-cache' }
     );
 
     const data = await callApi.json();
