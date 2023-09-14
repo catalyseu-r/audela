@@ -12,7 +12,7 @@ const Breadcrumbs = () => {
   const formatCrumbs = () =>
     current.map((item, index, array) =>
       index === array.length - 1 ? (
-        <p className='text-red-400' key={index}>
+        <p className='text-text-red' key={index}>
           {`${item}`}
         </p>
       ) : (

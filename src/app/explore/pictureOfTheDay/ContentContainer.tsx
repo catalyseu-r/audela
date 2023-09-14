@@ -2,20 +2,57 @@
 
 import Breadcrumbs from '@/app/components/Breadcrumbs';
 import { ImageOfTheDay } from '@/app/types/imageOfTheDay';
-import Image from 'next/image';
-import React from 'react';
+import { getImageOfTheDay } from '@/app/utils/API/getImageOfTheDay';
+import dayjs from 'dayjs';
+import React, { Suspense, useEffect } from 'react';
 import Calendar from 'react-calendar';
+import ImageContainer from './ImageContainer';
+import DescriptionContainer from './DescriptionContainer';
+import Loading from './Loading';
 
-const ContentContainer = (props: ImageOfTheDay) => {
-  console.log('IMAGE', props);
-  const [currentImage, setCurrentImage] = React.useState(props);
-  const [currentDate, setCurrentDate] = React.useState<Date>(new Date());
+interface ContentInterface {
+  data: ImageOfTheDay;
+}
+
+const ContentContainer = (props: ContentInterface) => {
+  const [currentDate, setCurrentDate] = React.useState<Date | any>(new Date());
+
+  const [contentState, setContentState] = React.useState({
+    image: props.data.url,
+    desc: props.data.explanation,
+    date: props.data.date,
+    title: props.data.title,
+  });
+
+  useEffect(() => {
+    const handleUserCalendar = async () => {
+      try {
+        const callApi = await getImageOfTheDay({ date: dayjs(currentDate).format('YYYY-MM-DD') });
+        if (callApi) {
+          setContentState((_prev) => {
+            return {
+              ..._prev,
+              image: callApi.url,
+              desc: callApi.explanation,
+              date: callApi.date,
+              title: callApi.title,
+            };
+          });
+        }
+      } catch (error) {}
+    };
+
+    handleUserCalendar();
+  }, [currentDate]);
+
   return (
     <>
       <Breadcrumbs />
-      {props.explanation}
-      <Image src={currentImage.hdurl} width={640} height={640} alt='astronomy picture of the day provided by NASA' />
-      <Calendar onChange={(value) => console.log(value)} />
+      <Calendar onChange={(value) => setCurrentDate(value)} maxDate={new Date()} />
+      <Suspense fallback={<Loading />}>
+        <ImageContainer image={contentState.image} />
+      </Suspense>
+      <DescriptionContainer date={contentState.date} title={contentState.title} desc={contentState.desc} />
     </>
   );
 };
