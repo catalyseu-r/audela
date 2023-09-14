@@ -11,7 +11,7 @@ const Options = () => {
     ' lg:py-6 py-4 lg:px-8 px-4 flex items-center justify-between self-stretch border border-dimmed-red lg:text-xl md:text-lg text-base  text-main-white';
 
   return (
-    <>
+    <div className='mt-8'>
       <Breadcrumbs />
       <div className='flex items-center justify-center mt-8 w-full'>
         <div className='flex flex-col items-center justify-center gap-14 lg:w-[26rem]  w-5/6'>
@@ -40,7 +40,7 @@ const Options = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
