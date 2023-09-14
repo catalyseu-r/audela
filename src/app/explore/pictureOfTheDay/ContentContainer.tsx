@@ -51,7 +51,7 @@ const ContentContainer = (props: ContentInterface) => {
 
   const CalendarLabel = () => {
     return (
-      <div className='flex flex-col items-center justify-end gap-2 '>
+      <div className='flex flex-col items-start justify-end gap-2 '>
         <p className='text-text-red text-base italic font-light'>Got a specific date in mind?</p>
 
         <div className='flex items-center justify-between border-b border-b-main-red px-4 py-2 '>
