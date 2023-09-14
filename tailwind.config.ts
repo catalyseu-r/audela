@@ -32,7 +32,8 @@ const config: Config = {
       screens: {
         sm: '640px',
         md: '768px',
-        lg: '1024px',
+        lg: '1280px',
+        xl: '1820px',
       },
       fontSize: {
         xs: '0.75rem',
@@ -50,6 +51,11 @@ const config: Config = {
       },
       letterSpacing: {
         'headings-buttons': '-0.0125rem;',
+      },
+      spacing: {
+        xlscreen: '22rem',
+        mdscreen: '9rem',
+        smscreen: '1rem',
       },
     },
   },

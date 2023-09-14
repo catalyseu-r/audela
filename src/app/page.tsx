@@ -5,7 +5,7 @@ import Header from './components/Header';
 
 export default async function Home() {
   return (
-    <main className='bg-landing-bg h-screen bg-no-repeat lg:bg-[100%_100%] bg-cover bg-center  px-4 md:px-24 lg:px-40'>
+    <main className='bg-landing-bg h-screen bg-no-repeat lg:bg-[100%_100%] bg-cover bg-center  px-smscreen md:px-mdscreen xl:px-xlscreen'>
       <Navbar />
       <div className='flex flex-col items-start justify-start gap-32'>
         <div className='flex flex-col items-start justify-start lg:gap-8  gap-4 '>

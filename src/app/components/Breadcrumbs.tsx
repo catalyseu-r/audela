@@ -22,7 +22,7 @@ const Breadcrumbs = () => {
       )
     );
 
-  return <div className='mt-2 flex justify-center items-center w-min gap-1'>{formatCrumbs()}</div>;
+  return <div className=' flex justify-center items-center w-min gap-1'>{formatCrumbs()}</div>;
 };
 
 export default Breadcrumbs;

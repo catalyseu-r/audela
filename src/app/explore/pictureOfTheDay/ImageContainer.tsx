@@ -10,8 +10,14 @@ interface ImageContainerProps {
 
 const ImageContainer = (props: ImageContainerProps) => {
   return (
-    <div className='w-96 h-96 relative '>
-      <Image src={props.image} alt='astronomy picture of the day provided by NASA' fill priority />
+    <div className='lg:w-[40.125rem] lg:h-[40rem] md:w-[20rem] md:h-60 w-screen h-40 relative'>
+      <Image
+        src={props.image}
+        alt='astronomy picture of the day provided by NASA'
+        fill
+        priority
+        sizes='(max-width: 640px) 100%, (max-width: 768px) 50%, 25%'
+      />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 const roboto = Roboto({ weight: '400', subsets: ['latin'] });
-import 'react-calendar/dist/Calendar.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export const metadata: Metadata = {
   title: 'au-delà',
