@@ -10,9 +10,11 @@ export const getImageOfTheDay = async (params: ImageOfTheDayParams | null = null
       { cache: 'no-cache' }
     );
 
-    if (callApi.ok) {
+    if (callApi.ok && callApi.status !== 400) {
       const data: ImageOfTheDay = await callApi.json();
       return data;
+    } else {
+      return undefined;
     }
   } catch (error) {
     console.log(error);

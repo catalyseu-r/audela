@@ -4,11 +4,11 @@ import ContentContainer from './ContentContainer';
 
 export default async function pictureOfTheDay() {
   const imageData = await getImageOfTheDay();
-
   return (
     <main className='bg-main-black h-screen bg-no-repeat px-smscreen md:px-mdscreen xl:px-xlscreen  bg-center relative overflow-auto pb-24'>
       <Navbar />
-      {imageData && <ContentContainer data={imageData} />} {/* Fallback comp here */}
+      {/* make fallback here or in component */}
+      {imageData && <ContentContainer data={imageData} />}
     </main>
   );
 }

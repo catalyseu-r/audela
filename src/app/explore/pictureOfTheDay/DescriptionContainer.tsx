@@ -12,7 +12,7 @@ interface DescriptionContainerProps {
 
 const DescriptionContainer = (props: DescriptionContainerProps) => {
   const formatDesc = props.desc.split('. ').map((txt, index) => (
-    <p className='w-full text-main-white font-light text-xs xl:text-base' key={index}>
+    <p className='w-full text-main-white font-light text-sm xl:text-base leading-6' key={index}>
       {txt}
     </p>
   ));
