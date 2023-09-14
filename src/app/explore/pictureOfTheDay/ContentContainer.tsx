@@ -4,7 +4,7 @@ import Breadcrumbs from '@/app/components/Breadcrumbs';
 import { ImageOfTheDay } from '@/app/types/imageOfTheDay';
 import { getImageOfTheDay } from '@/app/utils/API/getImageOfTheDay';
 import dayjs from 'dayjs';
-import React, { Suspense, useEffect } from 'react';
+import React from 'react';
 import ImageContainer from './ImageContainer';
 import DescriptionContainer from './DescriptionContainer';
 import { BsCalendarDate as CalendarIcon } from 'react-icons/bs';
@@ -25,7 +25,7 @@ const ContentContainer = (props: ContentInterface) => {
     title: props.data.title,
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     const handleUserCalendar = async () => {
       controls.start({ opacity: 0, scale: 0.97 });
       try {
@@ -54,25 +54,36 @@ const ContentContainer = (props: ContentInterface) => {
       <div className='flex flex-col items-center justify-end gap-2 '>
         <p className='text-text-red text-base italic font-light'>Got a specific date in mind?</p>
 
-        <ReactDatePicker
-          selected={currentDate}
-          onChange={(date) => setCurrentDate(date)}
-          maxDate={new Date()}
-          className='w-full bg-transparent text-main-white text-base  border-b border-b-main-red px-4 py-2 cursor-pointer   focus:border-main-white focus:outline-none'
-        />
+        <div className='flex items-center justify-between border-b border-b-main-red px-4 py-2 '>
+          <ReactDatePicker
+            selected={currentDate}
+            onChange={(date) => setCurrentDate(date)}
+            maxDate={new Date()}
+            className='!italic w-full bg-transparent font-light text-main-white text-base cursor-pointer  focus:outline-none overflow-auto'
+            calendarClassName='!bg-main-white  !text-main-black'
+            scrollableYearDropdown
+            showYearDropdown
+            todayButton
+          />
+          <CalendarIcon className={`lg:text-2xl text-lg  text-main-white`} />
+        </div>
       </div>
     );
   };
 
   return (
     <div className='mt-8 flex flex-col gap-8'>
-      <div className=' flex w-full justify-between items-start flex-wrap gap-8'>
+      <div className=' flex w-full justify-between items-start flex-wrap gap-8 overflow-auto'>
         <Breadcrumbs />
         <CalendarLabel />
       </div>
       <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={controls} transition={{ duration: 0.5 }}>
         <div className='flex w-full justify-between flex-wrap-reverse gap-6 items-end'>
-          <DescriptionContainer date={contentState.date} title={contentState.title} desc={contentState.desc} />
+          <DescriptionContainer
+            date={dayjs(contentState.date).format('MM/DD/YYYY')}
+            title={contentState.title}
+            desc={contentState.desc}
+          />
           <ImageContainer image={contentState.image} />
         </div>
       </motion.div>
