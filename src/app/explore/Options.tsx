@@ -5,6 +5,7 @@ import { Chakra_Petch } from 'next/font/google';
 const chakraP = Chakra_Petch({ weight: '400', subsets: ['latin'] });
 import { AiOutlineLock as LockIcon } from 'react-icons/ai';
 import { BsImage as ImageIcon } from 'react-icons/bs';
+import { BiPlanet as PlanetIcon } from 'react-icons/bi';
 
 const Options = () => {
   const optionClass =
@@ -25,10 +26,10 @@ const Options = () => {
               <p>Image of the day</p>
             </Link>
 
-            <div className={optionClass}>
-              <LockIcon className={'text-dimmed-white lg:text-2xl md:text-xl sm:text-base'} />
-              <p className={'text-dimmed-white'}>Planets</p>
-            </div>
+            <Link href={'/explore/planets'} className={`${optionClass}` + ' ' + 'border-main-red'}>
+              <PlanetIcon className={'text-white lg:text-2xl md:text-xl sm:text-base'} />
+              <p className={'text-white'}>Planets</p>
+            </Link>
             <div className={optionClass}>
               <LockIcon className={'text-dimmed-white lg:text-2xl md:text-xl sm:text-base'} />
               <p className={'text-dimmed-white'}>Stars</p>

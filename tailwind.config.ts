@@ -28,6 +28,7 @@ const config: Config = {
         'main-white': '#eaeaea',
         'dimmed-white': 'rgba(234, 234, 234, 0.56)',
         'dimmed-red': 'rgba(166, 66, 83, 0.24)',
+        'dimmed-blue': 'rgba(20, 27, 65, 0.56)',
       },
       screens: {
         sm: '640px',
@@ -53,7 +54,7 @@ const config: Config = {
         'headings-buttons': '-0.0125rem;',
       },
       spacing: {
-        xlscreen: '22rem',
+        xlscreen: '23rem',
         mdscreen: '9rem',
         smscreen: '1rem',
       },
