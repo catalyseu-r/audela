@@ -27,7 +27,7 @@ const ContentContainer = (props: ContentInterface) => {
 
   React.useEffect(() => {
     const handleUserCalendar = async () => {
-      controls.start({ opacity: 0, scale: 0.97 });
+      controls.start({ opacity: 0, transform: 'translateX(10rem) ' });
       try {
         const callApi = await getImageOfTheDay({ date: dayjs(currentDate).format('YYYY-MM-DD') });
         if (callApi) {
@@ -41,7 +41,7 @@ const ContentContainer = (props: ContentInterface) => {
               title: title,
             };
           });
-          controls.start({ opacity: 1, scale: 1 });
+          controls.start({ opacity: 1, transform: 'translateX(0)' });
         }
       } catch (error) {}
     };
@@ -77,7 +77,11 @@ const ContentContainer = (props: ContentInterface) => {
         <Breadcrumbs />
         <CalendarLabel />
       </div>
-      <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={controls} transition={{ duration: 0.5 }}>
+      <motion.div
+        initial={{ opacity: 0, transform: 'translateX(-10rem)' }}
+        animate={controls}
+        transition={{ duration: 0.5 }}
+      >
         <div className='flex w-full justify-between flex-wrap-reverse gap-6 items-end'>
           <DescriptionContainer
             date={dayjs(contentState.date).format('MM/DD/YYYY')}
