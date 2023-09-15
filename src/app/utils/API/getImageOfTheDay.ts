@@ -5,7 +5,7 @@ export const getImageOfTheDay = async (params: ImageOfTheDayParams | null = null
   try {
     const callApi = await fetch(
       `${process.env.NEXT_PUBLIC_IMAGE_OF_THE_DAY_BASE_URL}${process.env.NEXT_PUBLIC_API_KEY}${
-        params ? `&date=${params.date}` : ''
+        params ? `&date=${params.date}&concept_tags=true&thumbs=true` : ''
       }`,
       { cache: 'no-cache' }
     );
