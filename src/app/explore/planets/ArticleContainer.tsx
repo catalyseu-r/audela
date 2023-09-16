@@ -4,17 +4,20 @@ import React from 'react';
 import { PlanetsContentContainerData } from './PlanetsContentContainer';
 import dayjs from 'dayjs';
 import { BsChevronDoubleRight as ArrowRight } from 'react-icons/bs';
+import { motion, useAnimation } from 'framer-motion';
 
 const ArticleContainer = (props: PlanetsContentContainerData) => {
+  //   const controls = useAnimation();
+
   return (
     <div className='flex flex-wrap items-center content-center md:justify-between justify-center w-full gap-8 lg:gap-y-8 mt-12'>
       {props.data.map((item, index) => (
-        <div className='flex items-start flex-wrap md:w-[34rem] w-full' key={index}>
+        <div key={index} className='flex items-start flex-wrap md:w-[34rem] w-full'>
           <div className='lg:w-[18rem] w-full h-[10.5rem] relative  '>
             <Image
               fill
               alt='lalalala'
-              src={item.links[0].href.toString()}
+              src={item?.links[0].href.toString()}
               sizes='(max-width: 640px) 100%, (max-width: 768px) 50%, 25%'
               objectFit='cover'
               loading='eager'

@@ -32,7 +32,7 @@ export interface PlanetaryDataApiResponse {
     metadata: {
       total_hits: number;
     };
-    links: {
+    links?: {
       0: {
         rel: string;
         prompt: string;
