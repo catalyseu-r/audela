@@ -13,7 +13,7 @@ const ImageContainer = (props: ImageContainerProps) => {
   const propUrl = new URL(props.image);
 
   return (
-    <div className='relative w-full sm:w-5/6 lg:max-w-md xl:h-[40rem] h-80'>
+    <div className='relative w-full sm:w-5/6 lg:max-w-lg xl:h-[40rem] h-80'>
       {propUrl.hostname.includes('youtube.com') || propUrl.hostname.includes('vimeo.com') ? (
         <div className='w-full h-full'>
           <ReactPlayer url={props.image} width='100%' height='100%' controls={true} />

@@ -15,7 +15,7 @@ const Options = () => {
     <div className='mt-8'>
       <Breadcrumbs />
       <div className='flex items-center justify-center mt-8 w-full'>
-        <div className='flex flex-col items-center justify-center gap-14 lg:w-[26rem]  w-5/6'>
+        <div className='flex flex-col items-center justify-center gap-14 lg:w-5/12 md:w-7/12 w-full'>
           <div className='flex flex-col items-center justify-center gap-1'>
             <h2 className={`${chakraP.className} text-main-white text-2xl`}>What do you want to search for?</h2>
             <h3 className='text-dimmed-white text-base'>Locked features will be released in future updates</h3>

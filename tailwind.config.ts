@@ -9,13 +9,6 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    // screens: {
-    //   sm: '480px',
-    //   md: '768px',
-    //   lg: '976px',
-    //   xl: '1440px',
-    // },
-
     extend: {
       backgroundImage: {
         'landing-bg': 'url("img/BG.png")',
@@ -25,10 +18,14 @@ const config: Config = {
         'main-red': '#A64253',
         'main-black': '#090909',
         'main-blue': '#141B41',
-        'main-white': '#eaeaea',
+        // 'main-white': '#eaeaea',
+        'main-white': '#F0F0F0',
         'dimmed-white': 'rgba(234, 234, 234, 0.56)',
         'dimmed-red': 'rgba(166, 66, 83, 0.24)',
         'dimmed-blue': 'rgba(20, 27, 65, 0.56)',
+        'second-black': '#171717',
+        'main-orange-accent': '#DB7C26',
+        'dimmed-accent': 'rgba(219, 124, 38, 0.56)',
       },
       screens: {
         sm: '640px',
@@ -53,10 +50,11 @@ const config: Config = {
       letterSpacing: {
         'headings-buttons': '-0.0125rem;',
       },
-      spacing: {
-        xlscreen: '23rem',
-        mdscreen: '9rem',
-        smscreen: '1rem',
+      maxWidth: {
+        'container-lg': '1120px',
+      },
+      boxShadow: {
+        'custom-article-shadow': '-8px 8px 0px 0px rgba(23, 23, 23, 0.24)',
       },
     },
   },

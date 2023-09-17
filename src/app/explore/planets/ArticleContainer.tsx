@@ -9,32 +9,34 @@ import { motion, useAnimation } from 'framer-motion';
 const ArticleContainer = (props: PlanetsContentContainerData) => {
   //   const controls = useAnimation();
 
-  return (
-    <div className='flex flex-wrap items-center content-center md:justify-between justify-center w-full gap-8 lg:gap-y-8 mt-12'>
-      {props.data.map((item, index) => (
-        <div key={index} className='flex items-start flex-wrap md:w-[34rem] w-full'>
-          <div className='lg:w-[18rem] w-full h-[10.5rem] relative  '>
-            <Image
-              fill
-              alt='lalalala'
-              src={item?.links[0].href.toString()}
-              sizes='(max-width: 640px) 100%, (max-width: 768px) 50%, 25%'
-              objectFit='cover'
-              loading='eager'
-            />
-          </div>
+  console.log('IM RENDERINFG');
 
-          <div className='flex p-4 flex-col justify-between items-start shrink-0 bg-dimmed-blue w-full lg:w-[16rem] h-auto lg:h-[10.5rem] gap-[1.375rem]'>
-            <div className='flex gap-3 md:justify-between items-end self-stretch w-full'>
-              <h2 className='text-base text-main-white md:truncate md:max-w-[15ch]'>{item.data[0].title}</h2>
-              <p className='text-xs text-main-white'>{dayjs(item.data[0].date_created).format('MM/DD/YYYY')}</p>
+  return (
+    <div className='flex flex-wrap justify-between lg:gap-8 md:gap-6 gap-4  w-full  mt-12'>
+      {props.data.map((item, index) => (
+        <div key={index} className='flex justify-between flex-wrap shadow-custom-article-shadow lg:w-auto w-full'>
+          <Image
+            width={288}
+            height={176}
+            alt='Astronomy article image'
+            src={item?.links[0].href.toString()}
+            loading='eager'
+            className='aspect-video'
+          />
+
+          <div className='flex p-4 flex-col justify-between gap-6 items-end  bg-second-black flex-1 w-full lg:w-64'>
+            <div className='flex gap-3 md:justify-between items-end w-full py-1 px-2'>
+              <h2 className='text-base text-main-white line-clamp-1'>{item.data[0].title}</h2>
+              <p className='text-xs text-main-white italic font-light'>
+                {dayjs(item.data[0].date_created).format('MM/DD/YYYY')}
+              </p>
             </div>
 
-            <p className='text-xs text-main-white truncate md:max-w-[25ch] max-w-full'>{item.data[0].description}</p>
+            <p className='text-xs font-light text-main-white line-clamp-3 px-4'>{item.data[0].description}</p>
 
-            <div className='flex py-1 justify-end items-center gap-2 self-stretch w-full text-right border-b border-dimmed-red cursor-pointer'>
-              <p className='text-main-white overflow-hidden text-xs text-ellipsis leading-6'>Read more</p>
-              <ArrowRight className='text-2xl text-main-red' />
+            <div className='flex px-2 justify-end items-center gap-2  text-right border rounded border-dimmed-accent cursor-pointer '>
+              <p className='text-main-white text-xs font-light  leading-6 itallic'>Read more</p>
+              <ArrowRight className='text-base text-dimmed-accent' />
             </div>
           </div>
         </div>
