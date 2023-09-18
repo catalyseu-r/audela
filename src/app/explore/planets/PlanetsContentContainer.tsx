@@ -11,7 +11,7 @@ import { BsArrowLeft as ArrowLeft, BsArrowRight as ArrorwRight } from 'react-ico
 
 export interface PlanetsContentContainerData {
   data: PlanetaryDataArticle[];
-  pageCount: number;
+  total_hits: number;
 }
 
 enum SortState {
@@ -22,15 +22,19 @@ enum SortState {
 const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
   const maxPages = 15;
   const articlesPerPage = 6;
+
   const [articleState, setArticleState] = React.useState(props.data);
   const [userQuery, setUserQuery] = React.useState<string>('');
 
   const [isNotFound, setIsNotFound] = React.useState<boolean>(false);
   const [sortState, setSortState] = React.useState<SortState>(SortState.desc);
   const [pagination, setPagination] = React.useState({
-    totalItems: props.pageCount >= maxPages ? maxPages : props.pageCount,
+    totalItems: props.total_hits,
     currentPage: 1,
   });
+
+  const startIndex = (pagination.currentPage - 1) * articlesPerPage;
+  const endIdex = startIndex + articlesPerPage;
 
   const handleUserQuery = async (query: string) => {
     const callApi = await planetarySearch({ query: query });
@@ -39,14 +43,14 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
       const totalHitCountFromApi = callApi.collection.metadata.total_hits;
 
       setPagination((_prev) => {
-        if (totalHitCountFromApi >= 15) {
-          return { ..._prev, totalItems: 15 };
+        if (totalHitCountFromApi >= maxPages * articlesPerPage) {
+          return { ..._prev, totalItems: maxPages * articlesPerPage };
         } else return { ..._prev, totalItems: totalHitCountFromApi };
       });
 
-      const cutResults = callApi.collection.items.slice(0, pagination.totalItems);
+      const fullResults = callApi.collection.items;
 
-      const prepareSort = sortByDate(cutResults, sortState);
+      const prepareSort = sortByDate(fullResults, sortState);
 
       setArticleState(prepareSort);
       setIsNotFound(false);
@@ -55,8 +59,6 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
     }
   };
 
-  React.useEffect(() => {}, [pagination.currentPage]);
-
   const handleDataSort = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const updated = [...articleState];
 
@@ -64,7 +66,13 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
   };
 
   const PrepareButtons = () => {
-    const arr = Array.from(Array(pagination.totalItems > 15 ? 15 : pagination.totalItems).keys());
+    const arr = Array.from(
+      Array(
+        pagination.totalItems >= maxPages * articlesPerPage
+          ? maxPages
+          : Math.ceil(pagination.totalItems / articlesPerPage)
+      ).keys()
+    );
 
     return (
       <div className='flex items-center gap-4'>
@@ -76,17 +84,20 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
           <ArrowLeft className='text-lg text-main-white' />
         </div>
         {arr.map((item, index) => {
+          const appendIndex = index + 1;
           return (
-            index !== 0 && (
-              <button
-                key={index}
-                className={`text-lg ${item === pagination.currentPage ? `text-main-orange-accent` : `text-main-white`}`}
-                onClick={(event) => {}}
-                value={item}
-              >
-                {item}
-              </button>
-            )
+            <button
+              key={appendIndex}
+              className={`text-lg ${
+                appendIndex === pagination.currentPage ? `text-main-orange-accent` : `text-main-white`
+              }`}
+              onClick={(event) =>
+                setPagination({ totalItems: pagination.totalItems, currentPage: Number(event.currentTarget.value) })
+              }
+              value={appendIndex}
+            >
+              {appendIndex}
+            </button>
           );
         })}
         <div
@@ -136,7 +147,7 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
       {isNotFound ? (
         <h2 className='text-main-white text-2xl'>NOT FOUND SCREEN HERE</h2>
       ) : (
-        <ArticleContainer data={...articleState} />
+        <ArticleContainer data={...articleState.slice(startIndex, endIdex)} />
       )}
       <PrepareButtons />
     </div>
