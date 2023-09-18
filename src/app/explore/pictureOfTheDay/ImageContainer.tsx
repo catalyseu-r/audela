@@ -24,8 +24,7 @@ const ImageContainer = (props: ImageContainerProps) => {
           alt='astronomy picture of the day provided by NASA'
           fill
           priority
-          sizes='(max-width: 640px) 100%, (max-width: 768px) 50%, 25%'
-          objectFit='cover'
+          className='object-cover'
           loading='eager'
         />
       )}

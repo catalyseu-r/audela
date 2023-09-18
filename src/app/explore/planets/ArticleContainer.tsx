@@ -4,7 +4,6 @@ import React from 'react';
 import { PlanetsContentContainerData } from './PlanetsContentContainer';
 import dayjs from 'dayjs';
 import { BsChevronDoubleRight as ArrowRight } from 'react-icons/bs';
-
 import { AnimatePresence, motion } from 'framer-motion';
 
 interface ArticleContainerData {
@@ -12,19 +11,30 @@ interface ArticleContainerData {
 }
 
 const ArticleContainer = (props: ArticleContainerData) => {
+  const winSize = window.innerWidth;
   return (
-    <div className='flex flex-wrap justify-between lg:gap-8 md:gap-6 gap-4  w-full  mt-16'>
+    <div
+      className={`${
+        winSize > 768 ? 'flex-wrap ' : 'flex-nowrap overflow-x-scroll  snap-x snap-proximity'
+      } flex  justify-between xl:gap-8 lg:gap-6 gap-4  w-full  mt-16 no-scrollbar`}
+    >
       <AnimatePresence>
         {props.data.map((item, index) => (
           <motion.div
-            className='flex justify-between flex-wrap shadow-custom-article-shadow lg:w-auto w-full'
+            className='flex justify-between flex-wrap shadow-custom-article-shadow lg:w-auto lg:min-w-[auto] min-w-[calc(100vw-6rem)] snap-center'
             key={index}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div className=' lg:w-72 lg:h-44  h-56  sm:w-48  w-full relative'>
-              <Image fill alt='Astronomy article image' src={item?.links[0].href.toString()} loading='lazy' />
+            <div className=' md:w-72 h-48     w-full relative'>
+              <Image
+                className='object-cover'
+                fill
+                alt='Astronomy article image'
+                src={item?.links[0].href.toString()}
+                loading='lazy'
+              />
             </div>
 
             <div className='flex p-4 flex-col justify-between gap-6 items-end  bg-second-black flex-1 w-full lg:w-64'>
