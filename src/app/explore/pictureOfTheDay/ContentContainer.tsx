@@ -27,7 +27,7 @@ const ContentContainer = (props: ContentInterface) => {
 
   React.useEffect(() => {
     const handleUserCalendar = async () => {
-      controls.start({ opacity: 0, transform: 'translateX(10rem) ' });
+      controls.start({ opacity: 0, transform: 'translateY(10rem) ' });
       try {
         const callApi = await getImageOfTheDay({ date: dayjs(currentDate).format('YYYY-MM-DD') });
         if (callApi) {
@@ -41,7 +41,7 @@ const ContentContainer = (props: ContentInterface) => {
               title: title,
             };
           });
-          controls.start({ opacity: 1, transform: 'translateX(0)' });
+          controls.start({ opacity: 1, transform: 'translateY(0)' });
         }
       } catch (error) {}
     };
@@ -79,7 +79,7 @@ const ContentContainer = (props: ContentInterface) => {
       </div>
       <div className='overflow-hidden'>
         <motion.div
-          initial={{ opacity: 0, transform: 'translateX(-10rem)' }}
+          initial={{ opacity: 0, transform: 'translateY(10rem)' }}
           animate={controls}
           transition={{ duration: 0.5 }}
         >
