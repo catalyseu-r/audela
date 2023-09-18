@@ -18,14 +18,12 @@ enum SortState {
   asc = 'asc',
   desc = 'desc',
 }
+const maxPages = 15;
+const articlesPerPage = 6;
 
 const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
-  const maxPages = 15;
-  const articlesPerPage = 6;
-
   const [articleState, setArticleState] = React.useState(props.data);
   const [userQuery, setUserQuery] = React.useState<string>('');
-
   const [isNotFound, setIsNotFound] = React.useState<boolean>(false);
   const [sortState, setSortState] = React.useState<SortState>(SortState.desc);
   const [pagination, setPagination] = React.useState({
@@ -66,7 +64,19 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
     setArticleState(sortByDate(updated, event.target.value as SortState));
   };
 
-  const PrepareButtons = () => {
+  const Pagination = () => {
+    const [windowWidth, setWindowWidth] = React.useState<number | undefined>(
+      window !== undefined ? window.innerWidth : undefined
+    );
+
+    const handleResize = () => setWindowWidth(window.innerWidth);
+
+    React.useEffect(() => {
+      window && window.addEventListener('resize', handleResize);
+
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     const buttonArray = Array.from(
       Array(
         pagination.totalItems >= maxPages * articlesPerPage
@@ -86,40 +96,62 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
     return (
       <div className='flex items-center justify-center gap-4 w-full mt-16'>
         <button
-          className={`w-6 h-6 flex items-center justify-center border p-1 rounded ${
+          onClick={() => isForwrard(pagination.currentPage, 'back')}
+          className={`lg:w-6 lg:h-6 w-9 h-9 flex items-center justify-center border p-1 rounded ${
             pagination.currentPage === 1 ? `cursor-not-allowed` : `cursor-pointer`
           } ${pagination.currentPage === 1 ? `border-dimmed-accent` : `border-main-orange-accent`}`}
           disabled={pagination.currentPage === 1}
         >
-          <ArrowLeft className='text-lg text-main-white' onClick={() => isForwrard(pagination.currentPage, 'back')} />
+          <ArrowLeft className='text-lg text-main-white' />
         </button>
-        {buttonArray.map((item, index) => {
-          const appendIndex = index + 1;
-          return (
-            <button
-              key={appendIndex}
-              className={`text-lg ${
-                appendIndex === pagination.currentPage ? `text-main-orange-accent` : `text-main-white`
-              }`}
-              onClick={(event) =>
-                setPagination({ totalItems: pagination.totalItems, currentPage: Number(event.currentTarget.value) })
-              }
-              value={appendIndex}
-            >
-              {appendIndex}
-            </button>
-          );
-        })}
+        {windowWidth && windowWidth > 768 ? (
+          buttonArray.map((item, index) => {
+            const appendIndex = index + 1;
+            return (
+              <button
+                key={appendIndex}
+                className={`text-lg ${
+                  appendIndex === pagination.currentPage ? `text-main-orange-accent` : `text-main-white`
+                }`}
+                onClick={(event) =>
+                  setPagination({ totalItems: pagination.totalItems, currentPage: Number(event.currentTarget.value) })
+                }
+                value={appendIndex}
+              >
+                {appendIndex}
+              </button>
+            );
+          })
+        ) : (
+          <select
+            value={pagination.currentPage}
+            onChange={(event) =>
+              setPagination({ totalItems: pagination.totalItems, currentPage: Number(event.currentTarget.value) })
+            }
+            className=' px-4 h-9 rounded bg-second-black border outline-none focus:border-main-orange-accent transition-all border-dimmed-accent text-base text-main-white  !font-sans cursor-pointer'
+          >
+            {buttonArray.map((item, index) => {
+              const appendIndex = index + 1;
+              return (
+                <option
+                  className={`${pagination.currentPage === appendIndex && `text-main-orange-accen`}`}
+                  key={appendIndex}
+                  value={appendIndex}
+                >
+                  {appendIndex}
+                </option>
+              );
+            })}
+          </select>
+        )}
         <button
-          className={`w-6 h-6 flex items-center justify-center border p-1 rounded ${
+          onClick={() => isForwrard(pagination.currentPage, 'forward')}
+          className={`lg:w-6 lg:h-6 w-9 h-9 flex items-center justify-center border p-1 rounded ${
             pagination.currentPage === buttonArray.length ? `cursor-not-allowed` : `cursor-pointer`
           } ${pagination.currentPage === buttonArray.length ? `border-dimmed-accent` : `border-main-orange-accent`}`}
           disabled={pagination.currentPage === buttonArray.length}
         >
-          <ArrorwRight
-            className='text-lg text-main-white'
-            onClick={() => isForwrard(pagination.currentPage, 'forward')}
-          />
+          <ArrorwRight className='text-lg text-main-white' />
         </button>
       </div>
     );
@@ -163,7 +195,7 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
       ) : (
         <>
           <ArticleContainer data={...articleState.slice(startIndex, endIdex)} />
-          <PrepareButtons />
+          {window !== undefined && <Pagination />}
         </>
       )}
     </div>

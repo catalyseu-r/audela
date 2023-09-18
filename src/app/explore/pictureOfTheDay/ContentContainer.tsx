@@ -77,20 +77,22 @@ const ContentContainer = (props: ContentInterface) => {
         <Breadcrumbs />
         <CalendarLabel />
       </div>
-      <motion.div
-        initial={{ opacity: 0, transform: 'translateX(-10rem)' }}
-        animate={controls}
-        transition={{ duration: 0.5 }}
-      >
-        <div className='flex w-full justify-between flex-wrap-reverse gap-6 items-end'>
-          <DescriptionContainer
-            date={dayjs(contentState.date).format('MM/DD/YYYY')}
-            title={contentState.title}
-            desc={contentState.desc}
-          />
-          <ImageContainer image={contentState.image} />
-        </div>
-      </motion.div>
+      <div className='overflow-hidden'>
+        <motion.div
+          initial={{ opacity: 0, transform: 'translateX(-10rem)' }}
+          animate={controls}
+          transition={{ duration: 0.5 }}
+        >
+          <div className='flex w-full justify-between flex-wrap-reverse gap-6 items-end'>
+            <DescriptionContainer
+              date={dayjs(contentState.date).format('MM/DD/YYYY')}
+              title={contentState.title}
+              desc={contentState.desc}
+            />
+            <ImageContainer image={contentState.image} />
+          </div>
+        </motion.div>
+      </div>
     </div>
   );
 };
