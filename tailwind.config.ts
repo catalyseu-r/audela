@@ -12,6 +12,7 @@ const config: Config = {
     extend: {
       backgroundImage: {
         'landing-bg': 'url("img/BG.png")',
+        'not-found-bg': 'url("img/not-found-n.png")',
       },
       colors: {
         'text-red': '#CA6677',
@@ -25,6 +26,7 @@ const config: Config = {
         'second-black': '#171717',
         'main-orange-accent': '#DB7C26',
         'dimmed-accent': 'rgba(219, 124, 38, 0.56)',
+        'disabled-accent': 'rgba(219, 124, 38, 0.24)',
       },
       screens: {
         sm: '640px',

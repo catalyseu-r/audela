@@ -8,6 +8,7 @@ import { SlMagnifier as SearchIcon } from 'react-icons/sl';
 import { planetarySearch } from '@/app/utils/API/planetarySearch';
 import { sortByDate } from '@/app/utils/lists/sort';
 import { BsArrowLeft as ArrowLeft, BsArrowRight as ArrorwRight } from 'react-icons/bs';
+import NotFound from '@/app/components/NotFound';
 
 export interface PlanetsContentContainerData {
   data: PlanetaryDataArticle[];
@@ -33,6 +34,18 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
 
   const startIndex = (pagination.currentPage - 1) * articlesPerPage;
   const endIdex = startIndex + articlesPerPage;
+
+  const [windowWidth, setWindowWidth] = React.useState<number | undefined>(
+    window !== undefined ? window.innerWidth : undefined
+  );
+
+  const handleResize = () => setWindowWidth(window.innerWidth);
+
+  React.useEffect(() => {
+    window && window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleUserQuery = async (query: string) => {
     const callApi = await planetarySearch({ query: query });
@@ -65,18 +78,6 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
   };
 
   const Pagination = () => {
-    const [windowWidth, setWindowWidth] = React.useState<number | undefined>(
-      window !== undefined ? window.innerWidth : undefined
-    );
-
-    const handleResize = () => setWindowWidth(window.innerWidth);
-
-    React.useEffect(() => {
-      window && window.addEventListener('resize', handleResize);
-
-      return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
     const buttonArray = Array.from(
       Array(
         pagination.totalItems >= maxPages * articlesPerPage
@@ -161,12 +162,15 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
     <div className='mt-8 flex flex-col gap-8 w-full'>
       <div className=' flex w-full justify-between items-center flex-wrap gap-8'>
         <Breadcrumbs />
-        <div className='flex lg:justify-end justify-between lg:gap-10 items-center  flex-wrap lg:w-auto w-full gap-5'>
+        <div className='flex lg:justify-end md:justify-start justify-center lg:gap-10 items-center  flex-wrap-reverse lg:w-auto w-full gap-5'>
           <select
             name=''
             id=''
             placeholder='Newest first (default)'
-            className='py-2 px-6 bg-second-black border outline-none focus:border-main-orange-accent transition-all border-dimmed-accent text-base text-main-white  !font-sans cursor-pointer'
+            className={`py-2 px-6 bg-second-black border outline-none focus:border-main-orange-accent transition-all ${
+              isNotFound ? 'border-disabled-accent' : 'border-dimmed-accent'
+            } text-base text-main-white  !font-sans ${isNotFound ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+            disabled={isNotFound}
             onChange={(e) => {
               setSortState(e.target.value as SortState);
               handleDataSort(e);
@@ -191,11 +195,11 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
         </div>
       </div>
       {isNotFound ? (
-        <h2 className='text-main-white text-2xl'>NOT FOUND SCREEN HERE</h2>
+        <NotFound />
       ) : (
         <>
           <ArticleContainer data={...articleState.slice(startIndex, endIdex)} />
-          {window !== undefined && <Pagination />}
+          <Pagination />
         </>
       )}
     </div>
