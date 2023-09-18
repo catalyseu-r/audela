@@ -1,10 +1,13 @@
 import { PlanetaryDataApiResponse } from '@/app/types/planetaryData';
 
-export const planetarySearch = async (params: string | null = null) => {
+interface PlanetarySearchParams {
+  query?: string;
+  page?: number;
+}
+
+export const planetarySearch = async ({ query = '', page = 1 }: PlanetarySearchParams) => {
   try {
-    const callApi = await fetch(`${process.env.NEXT_PUBLIC_PLANETARY_SEARCH_BASE_URL}${params ? `&q=${params}` : ''}`, {
-      cache: 'no-cache',
-    });
+    const callApi = await fetch(`${process.env.NEXT_PUBLIC_PLANETARY_SEARCH_BASE_URL}${query ? `&q=${query}` : ' '}`);
 
     if (callApi.ok && callApi.status !== 400) {
       const data: PlanetaryDataApiResponse = await callApi.json();

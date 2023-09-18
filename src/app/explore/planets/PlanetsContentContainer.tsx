@@ -7,9 +7,11 @@ import ArticleContainer from './ArticleContainer';
 import { SlMagnifier as SearchIcon } from 'react-icons/sl';
 import { planetarySearch } from '@/app/utils/API/planetarySearch';
 import { sortByDate } from '@/app/utils/lists/sort';
+import { BsArrowLeft as ArrowLeft, BsArrowRight as ArrorwRight } from 'react-icons/bs';
 
 export interface PlanetsContentContainerData {
   data: PlanetaryDataArticle[];
+  pageCount: number;
 }
 
 enum SortState {
@@ -18,19 +20,34 @@ enum SortState {
 }
 
 const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
-  const [articleState, setArticleState] = React.useState(props.data.slice(0, 6));
+  const maxPages = 15;
+  const articlesPerPage = 6;
+  const [articleState, setArticleState] = React.useState(props.data);
   const [userQuery, setUserQuery] = React.useState<string>('');
-  const [currentPage, setCurrentPage] = React.useState<number>(1);
+
   const [isNotFound, setIsNotFound] = React.useState<boolean>(false);
   const [sortState, setSortState] = React.useState<SortState>(SortState.desc);
+  const [pagination, setPagination] = React.useState({
+    totalItems: props.pageCount >= maxPages ? maxPages : props.pageCount,
+    currentPage: 1,
+  });
 
   const handleUserQuery = async (query: string) => {
-    const callApi = await planetarySearch(query);
+    const callApi = await planetarySearch({ query: query });
 
     if (callApi && callApi.collection.items.length > 0) {
-      const cutResults = callApi.collection.items.slice(0, 6);
+      const totalHitCountFromApi = callApi.collection.metadata.total_hits;
+
+      setPagination((_prev) => {
+        if (totalHitCountFromApi >= 15) {
+          return { ..._prev, totalItems: 15 };
+        } else return { ..._prev, totalItems: totalHitCountFromApi };
+      });
+
+      const cutResults = callApi.collection.items.slice(0, pagination.totalItems);
 
       const prepareSort = sortByDate(cutResults, sortState);
+
       setArticleState(prepareSort);
       setIsNotFound(false);
     } else {
@@ -38,10 +55,49 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
     }
   };
 
+  React.useEffect(() => {}, [pagination.currentPage]);
+
   const handleDataSort = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const updated = [...articleState];
 
     setArticleState(sortByDate(updated, event.target.value as SortState));
+  };
+
+  const PrepareButtons = () => {
+    const arr = Array.from(Array(pagination.totalItems > 15 ? 15 : pagination.totalItems).keys());
+
+    return (
+      <div className='flex items-center gap-4'>
+        <div
+          className={`w-6 h-6 flex items-center justify-center border p-1 rounded ${
+            pagination.currentPage === 1 ? `border-dimmed-accent` : `border-main-orange-accent`
+          }`}
+        >
+          <ArrowLeft className='text-lg text-main-white' />
+        </div>
+        {arr.map((item, index) => {
+          return (
+            index !== 0 && (
+              <button
+                key={index}
+                className={`text-lg ${item === pagination.currentPage ? `text-main-orange-accent` : `text-main-white`}`}
+                onClick={(event) => {}}
+                value={item}
+              >
+                {item}
+              </button>
+            )
+          );
+        })}
+        <div
+          className={`w-6 h-6 flex items-center justify-center border p-1 rounded ${
+            pagination.currentPage === 1 ? `border-dimmed-accent` : `border-main-orange-accent`
+          }`}
+        >
+          <ArrorwRight className='text-lg text-main-white' />
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -82,6 +138,7 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
       ) : (
         <ArticleContainer data={...articleState} />
       )}
+      <PrepareButtons />
     </div>
   );
 };

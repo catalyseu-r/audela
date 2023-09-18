@@ -6,10 +6,12 @@ import dayjs from 'dayjs';
 import { BsChevronDoubleRight as ArrowRight } from 'react-icons/bs';
 import { motion, useAnimation } from 'framer-motion';
 
-const ArticleContainer = (props: PlanetsContentContainerData) => {
-  //   const controls = useAnimation();
+interface ArticleContainerData {
+  data: PlanetsContentContainerData['data'];
+}
 
-  console.log('IM RENDERINFG');
+const ArticleContainer = (props: ArticleContainerData) => {
+  //   const controls = useAnimation();
 
   return (
     <div className='flex flex-wrap justify-between lg:gap-8 md:gap-6 gap-4  w-full  mt-12'>
