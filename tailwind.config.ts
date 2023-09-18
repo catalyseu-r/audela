@@ -18,7 +18,6 @@ const config: Config = {
         'main-red': '#A64253',
         'main-black': '#090909',
         'main-blue': '#141B41',
-        // 'main-white': '#eaeaea',
         'main-white': '#F0F0F0',
         'dimmed-white': 'rgba(234, 234, 234, 0.56)',
         'dimmed-red': 'rgba(166, 66, 83, 0.24)',

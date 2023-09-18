@@ -14,17 +14,12 @@ const ArticleContainer = (props: ArticleContainerData) => {
   //   const controls = useAnimation();
 
   return (
-    <div className='flex flex-wrap justify-between lg:gap-8 md:gap-6 gap-4  w-full  mt-12'>
+    <div className='flex flex-wrap justify-between lg:gap-8 md:gap-6 gap-4  w-full  mt-16'>
       {props.data.map((item, index) => (
         <div key={index} className='flex justify-between flex-wrap shadow-custom-article-shadow lg:w-auto w-full'>
-          <Image
-            width={288}
-            height={176}
-            alt='Astronomy article image'
-            src={item?.links[0].href.toString()}
-            loading='eager'
-            className='aspect-video'
-          />
+          <div className=' lg:w-72 lg:h-44 lg:aspect-auto h-56 aspect-video sm:w-48  w-full relative'>
+            <Image fill alt='Astronomy article image' src={item?.links[0].href.toString()} loading='eager' />
+          </div>
 
           <div className='flex p-4 flex-col justify-between gap-6 items-end  bg-second-black flex-1 w-full lg:w-64'>
             <div className='flex gap-3 md:justify-between items-end w-full py-1 px-2'>

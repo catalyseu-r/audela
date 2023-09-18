@@ -45,7 +45,8 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
       setPagination((_prev) => {
         if (totalHitCountFromApi >= maxPages * articlesPerPage) {
           return { ..._prev, totalItems: maxPages * articlesPerPage };
-        } else return { ..._prev, totalItems: totalHitCountFromApi };
+        } else
+          return { currentPage: Math.ceil(totalHitCountFromApi / articlesPerPage), totalItems: totalHitCountFromApi };
       });
 
       const fullResults = callApi.collection.items;
@@ -66,7 +67,7 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
   };
 
   const PrepareButtons = () => {
-    const arr = Array.from(
+    const buttonArray = Array.from(
       Array(
         pagination.totalItems >= maxPages * articlesPerPage
           ? maxPages
@@ -74,16 +75,25 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
       ).keys()
     );
 
+    const isForwrard = (current: number, button: 'forward' | 'back') => {
+      if (button === 'forward' && current < buttonArray.length) {
+        setPagination({ totalItems: pagination.totalItems, currentPage: pagination.currentPage + 1 });
+      } else if (button === 'back' && current !== 1) {
+        setPagination({ totalItems: pagination.totalItems, currentPage: pagination.currentPage - 1 });
+      }
+    };
+
     return (
-      <div className='flex items-center gap-4'>
-        <div
+      <div className='flex items-center justify-center gap-4 w-full mt-16'>
+        <button
           className={`w-6 h-6 flex items-center justify-center border p-1 rounded ${
-            pagination.currentPage === 1 ? `border-dimmed-accent` : `border-main-orange-accent`
-          }`}
+            pagination.currentPage === 1 ? `cursor-not-allowed` : `cursor-pointer`
+          } ${pagination.currentPage === 1 ? `border-dimmed-accent` : `border-main-orange-accent`}`}
+          disabled={pagination.currentPage === 1}
         >
-          <ArrowLeft className='text-lg text-main-white' />
-        </div>
-        {arr.map((item, index) => {
+          <ArrowLeft className='text-lg text-main-white' onClick={() => isForwrard(pagination.currentPage, 'back')} />
+        </button>
+        {buttonArray.map((item, index) => {
           const appendIndex = index + 1;
           return (
             <button
@@ -100,13 +110,17 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
             </button>
           );
         })}
-        <div
+        <button
           className={`w-6 h-6 flex items-center justify-center border p-1 rounded ${
-            pagination.currentPage === 1 ? `border-dimmed-accent` : `border-main-orange-accent`
-          }`}
+            pagination.currentPage === buttonArray.length ? `cursor-not-allowed` : `cursor-pointer`
+          } ${pagination.currentPage === buttonArray.length ? `border-dimmed-accent` : `border-main-orange-accent`}`}
+          disabled={pagination.currentPage === buttonArray.length}
         >
-          <ArrorwRight className='text-lg text-main-white' />
-        </div>
+          <ArrorwRight
+            className='text-lg text-main-white'
+            onClick={() => isForwrard(pagination.currentPage, 'forward')}
+          />
+        </button>
       </div>
     );
   };
@@ -147,9 +161,11 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
       {isNotFound ? (
         <h2 className='text-main-white text-2xl'>NOT FOUND SCREEN HERE</h2>
       ) : (
-        <ArticleContainer data={...articleState.slice(startIndex, endIdex)} />
+        <>
+          <ArticleContainer data={...articleState.slice(startIndex, endIdex)} />
+          <PrepareButtons />
+        </>
       )}
-      <PrepareButtons />
     </div>
   );
 };
