@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Triangle } from 'react-loader-spinner';
 const Loading = () => {
   return (
-    <div className='  bg-main-black w-screen h-screen  '>
+    <div className='bg-main-black w-screen h-screen  '>
       <AnimatePresence>
         <motion.div
           className='flex justify-center items-center w-full h-full'
@@ -12,7 +12,7 @@ const Loading = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <Triangle height='80%' width='80%' color='#DB7C26' ariaLabel='triangle-loading' visible={true} />
+          <Triangle height='240' width='240' color='#DB7C26' ariaLabel='triangle-loading' visible={true} />
         </motion.div>
       </AnimatePresence>
     </div>
