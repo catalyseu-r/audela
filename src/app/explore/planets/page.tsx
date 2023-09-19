@@ -1,6 +1,6 @@
 import Navbar from '../../components/Navbar';
 import { planetarySearch } from '@/app/utils/API/planetarySearch';
-import PlanetsContentContainer from './PlanetsContentContainer';
+
 import { sortByDate } from '@/app/utils/lists/sort';
 import { Suspense } from 'react';
 import Loading from './loading';
