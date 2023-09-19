@@ -24,8 +24,9 @@ const ImageContainer = (props: ImageContainerProps) => {
           alt='astronomy picture of the day provided by NASA'
           fill
           priority
-          className='object-cover'
+          className='object-cover transition-opacity opacity-0 duration-[2s]'
           loading='eager'
+          onLoadingComplete={(image) => image.classList.remove('opacity-0')}
         />
       )}
     </div>
