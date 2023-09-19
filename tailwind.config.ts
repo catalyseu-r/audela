@@ -57,6 +57,12 @@ const config: Config = {
       boxShadow: {
         'custom-article-shadow': '-8px 8px 0px 0px rgba(23, 23, 23, 0.24)',
       },
+      keyframes: {
+        glitch: {},
+      },
+      animation: {
+        'glitch-me': 'glitch 2s ease-in-out',
+      },
     },
   },
   plugins: [],
