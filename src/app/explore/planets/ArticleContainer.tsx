@@ -27,13 +27,14 @@ const ArticleContainer = (props: ArticleContainerData) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div className=' md:w-72 h-48     w-full relative'>
+            <div className=' md:w-72 h-48 w-full relative'>
               <Image
-                className='object-cover'
+                className='object-cover transition-opacity opacity-0 duration-[2s]'
                 fill
                 alt='Astronomy article image'
                 src={item?.links[0].href.toString()}
                 loading='lazy'
+                onLoadingComplete={(image) => image.classList.remove('opacity-0')}
               />
             </div>
 
