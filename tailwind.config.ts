@@ -28,6 +28,7 @@ const config: Config = {
         'main-orange-accent': '#DB7C26',
         'dimmed-accent': 'rgba(219, 124, 38, 0.56)',
         'disabled-accent': 'rgba(219, 124, 38, 0.24)',
+        'transparent-black': 'rgba(9,9,9,.24)',
       },
       screens: {
         sm: '640px',

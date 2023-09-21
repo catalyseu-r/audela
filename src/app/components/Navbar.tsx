@@ -7,33 +7,12 @@ const chakraP = Chakra_Petch({ weight: '400', subsets: ['latin'] });
 import { RxHamburgerMenu as BurgerMenu } from 'react-icons/rx';
 import { TfiClose as CloseIcon } from 'react-icons/tfi';
 import { motion, useAnimation } from 'framer-motion';
-import { TbNotebook as NoteBookIcon, TbMailbox as MailIcon } from 'react-icons/tb';
 import { BiPlanet as PlanetIcon } from 'react-icons/bi';
-import { IoTelescopeOutline as TelescopeIcon } from 'react-icons/io5';
 import { BsChevronDown as DownIcon, BsImage as ImageIcon } from 'react-icons/bs';
 import { AiOutlineLock as LockIcon } from 'react-icons/ai';
-
 import SocialStack from './SocialStack';
-
-const navLinks = [
-  {
-    title: 'Explore',
-    delay: 0.6,
-    icon: <TelescopeIcon className={`text-main-orange-accent w-6 h-6`} />,
-    subOptions: [
-      {
-        title: 'Image of the day',
-        href: '/explore/picture-of-the-day',
-      },
-      { title: 'Planets', href: '/explore/planets' },
-      { title: 'Stars', href: '/explore/stars' },
-      { title: 'Weather on Mars', href: '/weather-on-mars' },
-    ],
-  },
-  { title: 'Our mission', delay: 0.8, icon: <PlanetIcon className={`text-main-orange-accent w-6 h-6`} /> },
-  { title: 'About', delay: 1.2, icon: <NoteBookIcon className={`text-main-orange-accent w-6 h-6`} /> },
-  { title: 'Contact', delay: 1.4, icon: <MailIcon className={`text-main-orange-accent w-6 h-6`} /> },
-];
+import { navLinks } from '../staticData/navLinks';
+import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
@@ -41,6 +20,7 @@ const Navbar = () => {
   const containerControls = useAnimation();
   const linkControls = useAnimation();
   const handleNav = () => setIsOpen(!isOpen);
+  const pathName = usePathname();
 
   React.useEffect(() => {
     containerControls.start({ opacity: 0, transform: 'translateY(-100%)' });
@@ -54,34 +34,38 @@ const Navbar = () => {
   }, [containerControls, isOpen, linkControls]);
 
   return (
-    <nav className='w-full pt-8  inline-block  border-b border-[rgba(234,234,234,0.08)]'>
-      <div className='flex w-full justify-between items-center px-4'>
+    <nav
+      className={`w-full pt-4 inline-block  border-b border-dimmed-white-full  z-50 fixed top-0 ${
+        pathName === '/' ? 'bg-transparent' : 'bg-main-black'
+      }`}
+    >
+      <div className='flex w-full justify-between  items-center  lg:max-w-container-lg md:w-5/6 mx-auto md:px-0 px-4'>
         <Link
           href={'/'}
-          className={` ${chakraP.className} lg:text-3xl text-2xl uppercase  ${
-            isOpen ? 'text-main-orange-accent z-30' : 'text-text-red'
+          className={` ${chakraP.className} lg:text-3xl text-2xl uppercase z-40  ${
+            isOpen ? 'text-main-orange-accent ' : 'text-text-red'
           } transition-all `}
         >
           au-delà
         </Link>
-        <div className={` md:flex items-center justify-between text-base text-main-white hidden`}>
-          {navLinks.map((link) => (
-            <p key={link.title}>{link.title}</p>
-          ))}
+        <div className={` md:flex items-center justify-between gap-16 text-base font-light text-main-white hidden`}>
+          {navLinks.map((link) => {
+            return link.title !== 'Explore' ? <p key={link.title}>{link.title}</p> : null;
+          })}
         </div>
         {isOpen ? (
-          <CloseIcon className='md:hidden text-main-orange-accent text-2xl z-20' onClick={handleNav} />
+          <CloseIcon className='md:hidden text-main-orange-accent text-2xl z-40 ' onClick={handleNav} />
         ) : (
-          <BurgerMenu className='md:hidden text-main-white text-2xl z-20' onClick={handleNav} />
+          <BurgerMenu className='md:hidden text-main-white text-2xl z-40' onClick={handleNav} />
         )}
       </div>
       <motion.div
         animate={containerControls}
         initial={{ opacity: 0, transform: 'translateY(-100%)' }}
         transition={{ duration: 0.25 }}
-        className={`w-full  min-h-screen bg-main-black absolute top-0 px-4`}
+        className={`w-full  h-screen bg-main-black  px-4 z-30 fixed top-0`}
       >
-        <div className='flex flex-col mt-32 mx-auto gap-14 max-w-max'>
+        <div className='flex flex-col mt-32 mx-auto gap-14 max-w-max '>
           {navLinks.map((link, index) => {
             if (link.title === 'Explore') {
               return (
@@ -98,19 +82,19 @@ const Navbar = () => {
                   <motion.div
                     onClick={() => setIsDropdown(!isDropdown)}
                     className={`
-                    cursor-pointer 
-                    `}
+                    ${isOpen && 'cursor-auto '}
+                    cursor-pointer`}
                   >
                     <div className='flex justify-between items-center gap-4'>
-                      <p className='text-main-white text-xl font-light'>Explore</p>
+                      <p className='text-main-white text-base font-light'>Explore</p>
                       <DownIcon
-                        className={`text-xl  ${
+                        className={`text-base  ${
                           isDropdown ? 'rotate-180 text-main-orange-accent' : 'rotate-0 text-main-white'
                         } transition-all`}
                       />
                     </div>
                     <div
-                      className={`w-max transition-[top] duration-250 ease-in-out flex-col left-0 gap-16 absolute  h-auto bg-second-black px-4 py-2 items-start justify-start ${
+                      className={`w-max transition-[top] z-50 duration-250 ease-in-out flex-col left-0 gap-16 absolute  h-auto bg-second-black px-4 py-2 items-start justify-start ${
                         isDropdown ? 'flex top-12 border border-dimmed-accent' : 'invisible top-0'
                       }`}
                     >
@@ -120,7 +104,7 @@ const Navbar = () => {
                             sub.title === 'Image of the day' || sub.title === 'Planets'
                               ? 'text-main-white'
                               : 'text-dimmed-white'
-                          } text-lg font-light flex justify-start items-center content-start w-full gap-4`}
+                          } text-base font-light flex justify-start items-center content-start w-full gap-4`}
                           key={sub.title}
                           href={sub.href}
                         >
@@ -145,10 +129,10 @@ const Navbar = () => {
                 initial={{ opacity: 0 }}
                 transition={{ duration: 0.75, delay: link.delay }}
                 animate={linkControls}
-                className='flex justify-start items-center py-2 px-4 w-max gap-8 -z-10'
+                className={`${isDropdown ? '-z-10' : ''} flex justify-start items-center py-2 px-4 w-max gap-8 `}
               >
                 {link.icon}
-                <p className='text-main-white text-xl font-light leading-6 text-left'> {link.title}</p>
+                <p className='text-main-white text-base font-light leading-6 text-left'> {link.title}</p>
               </motion.div>
             );
           })}

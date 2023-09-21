@@ -31,7 +31,7 @@ const Breadcrumbs = () => {
       )
     );
 
-  return <div className=' flex justify-center items-center w-min gap-1'>{formatCrumbs()}</div>;
+  return <div className=' flex justify-center items-center w-max gap-1'>{formatCrumbs()}</div>;
 };
 
 export default Breadcrumbs;
