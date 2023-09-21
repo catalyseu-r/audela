@@ -29,6 +29,7 @@ const config: Config = {
         'dimmed-accent': 'rgba(219, 124, 38, 0.56)',
         'disabled-accent': 'rgba(219, 124, 38, 0.24)',
         'transparent-black': 'rgba(9,9,9,.24)',
+        'accent-dark': '#904E11',
       },
       screens: {
         sm: '640px',

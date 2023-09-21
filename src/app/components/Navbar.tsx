@@ -107,6 +107,7 @@ const Navbar = () => {
                           } text-base font-light flex justify-start items-center content-start w-full gap-4`}
                           key={sub.title}
                           href={sub.href}
+                          onClick={() => setIsOpen(false)}
                         >
                           {sub.title === 'Image of the day' ? (
                             <ImageIcon />
@@ -115,7 +116,7 @@ const Navbar = () => {
                           ) : (
                             <LockIcon />
                           )}
-                          <p>{sub.title}</p>
+                          <p onClick={() => setIsOpen(false)}>{sub.title}</p>
                         </Link>
                       ))}
                     </div>
@@ -132,7 +133,12 @@ const Navbar = () => {
                 className={`${isDropdown ? '-z-10' : ''} flex justify-start items-center py-2 px-4 w-max gap-8 `}
               >
                 {link.icon}
-                <p className='text-main-white text-base font-light leading-6 text-left'> {link.title}</p>
+                <p
+                  onClick={() => setIsOpen(false)}
+                  className='text-main-white text-base font-light leading-6 text-left'
+                >
+                  {link.title}
+                </p>
               </motion.div>
             );
           })}

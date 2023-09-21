@@ -1,11 +1,8 @@
 import React from 'react';
 
 import { AiFillDribbbleSquare as DribbleIcon, AiFillTwitterSquare as TwitterIcon } from 'react-icons/ai';
-import {
-  FaInstagramSquare as InstagramIcon,
-  FaPinterestSquare as PinterestIcon,
-  FaGithubSquare as GithubIcon,
-} from 'react-icons/fa';
+import { FaInstagramSquare as InstagramIcon, FaGithubSquare as GithubIcon } from 'react-icons/fa';
+import { BiLogoLinkedinSquare as LinkedinIcon } from 'react-icons/bi';
 import { ImTumblr2 as TumblrIcon } from 'react-icons/im';
 
 interface SocialStackProps {
@@ -17,15 +14,15 @@ const SocialStack = (props: SocialStackProps) => {
   return (
     <div
       className={`${
-        props.isInMenu ? 'w-auto gap-8' : 'lg:w-3/12 md:w-4/12 w-8/12 gap-12'
+        props.isInMenu ? 'w-auto gap-8' : 'lg:w-8/12 md:w-4/12 w-8/12 gap-12'
       } flex items-center justify-start flex-wrap `}
     >
       <DribbleIcon className={iconClass} />
-      <TwitterIcon className={iconClass} />
-      <InstagramIcon className={iconClass} />
-      <PinterestIcon className={iconClass} />
-      <GithubIcon className={iconClass} />
       <TumblrIcon className={iconClass} />
+      <GithubIcon className={iconClass} />
+      <InstagramIcon className={iconClass} />
+      <TwitterIcon className={iconClass} />
+      <LinkedinIcon className={iconClass} />
     </div>
   );
 };
