@@ -21,6 +21,7 @@ const config: Config = {
         'main-blue': '#141B41',
         'main-white': '#F0F0F0',
         'dimmed-white': 'rgba(234, 234, 234, 0.56)',
+        'dimmed-white-full': 'rgba(234, 234, 234, 0.08)',
         'dimmed-red': 'rgba(166, 66, 83, 0.24)',
         'dimmed-blue': 'rgba(20, 27, 65, 0.56)',
         'second-black': '#171717',
