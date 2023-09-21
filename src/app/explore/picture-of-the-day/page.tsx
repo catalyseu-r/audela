@@ -9,9 +9,8 @@ export default async function pictureOfTheDay() {
   return (
     <Suspense fallback={<Loading />}>
       <main className='bg-main-black h-screen bg-no-repeat bg-center relative overflow-auto pb-24'>
+        <Navbar />
         <div className='lg:max-w-container-lg md:w-5/6 w-full md:px-0 px-4 mx-auto'>
-          <Navbar />
-
           {imageData && <ContentContainer data={imageData} />}
         </div>
       </main>

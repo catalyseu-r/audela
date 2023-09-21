@@ -159,7 +159,7 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
   };
 
   return (
-    <div className='mt-8 flex flex-col gap-8 w-full'>
+    <div className='pt-24 flex flex-col gap-8 w-full'>
       <div className=' flex w-full justify-between items-center flex-wrap gap-8'>
         <Breadcrumbs />
         <div className='flex lg:justify-end md:justify-start justify-center lg:gap-10 items-center  flex-wrap-reverse lg:w-auto w-full gap-5'>

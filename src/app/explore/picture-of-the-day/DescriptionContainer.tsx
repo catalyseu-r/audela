@@ -12,14 +12,14 @@ interface DescriptionContainerProps {
 
 const DescriptionContainer = (props: DescriptionContainerProps) => {
   const formatDesc = props.desc.split('. ').map((txt, index) => (
-    <p className='w-full text-main-white font-light text-sm xl:text-base leading-6' key={index}>
+    <p className='w-full text-main-white font-light text-sm xl:text-base lg:px-8 px-4 leading-6' key={index}>
       {txt}
     </p>
   ));
 
   return (
     <div className='flex flex-col items-start gap-6 max-w-md'>
-      <div className='flex items-center justify-between w-full  py-0 px-4 flex-wrap gap-2'>
+      <div className='flex items-center justify-between w-full  py-0 flex-wrap gap-2'>
         <h2 className={`${chakraP.className} lg:text-2xl md:text-xl text-lg text-main-white `}>{props.title}</h2>
         <div className='bg-dimmed-red w-[0.0625rem] h-[1.75rem]'></div>
         <p className='text-main-white italic weight-300 font-light text-base'>{props.date}</p>
