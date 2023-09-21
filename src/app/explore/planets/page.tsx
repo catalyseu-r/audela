@@ -27,9 +27,9 @@ export default async function planets() {
 
   return (
     <Suspense fallback={<Loading />}>
-      <main className='bg-main-black h-screen bg-no-repeat bg-center relative overflow-auto pb-24'>
+      <main className='bg-main-black h-screen bg-no-repeat bg-center relative overflow-auto pb-24 '>
+        <Navbar />
         <div className='lg:max-w-container-lg md:w-5/6 w-full md:px-0 px-4 mx-auto '>
-          <Navbar />
           {planetsData && <DynamicContainer data={preSortData()} total_hits={total_hits()} />}
         </div>
       </main>
