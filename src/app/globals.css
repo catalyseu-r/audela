@@ -31,9 +31,17 @@
   }
 }
 
-.react-datepicker {
-  min-width: calc(100vw - 5rem);
+/* .react-datepicker {
+  
+
+  width: auto !important
 }
+
+@media (max-width: 768px) {
+  .react-datepicker {
+    min-width:  calc(100vw - 5rem) !important
+  }
+} */
 
 .react-datepicker__month-container {
   width: 100% !important;
