@@ -14,6 +14,9 @@ const config: Config = {
         'landing-bg': 'url("img/BG.png")',
         'not-found-bg': 'url("img/not-found-n.png")',
       },
+      minHeight: {
+        'custom-page-min': 'calc(100vh + 5rem)',
+      },
       colors: {
         'text-red': '#CA6677',
         'main-red': '#A64253',

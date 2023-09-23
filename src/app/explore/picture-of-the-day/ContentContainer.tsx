@@ -59,11 +59,12 @@ const ContentContainer = (props: ContentInterface) => {
             selected={currentDate}
             onChange={(date) => setCurrentDate(date)}
             maxDate={new Date()}
-            className='!italic w-full bg-transparent font-light text-main-white text-base cursor-pointer  focus:outline-none overflow-auto'
+            className='!italic w-full bg-transparent font-light text-main-white text-base cursor-pointer  focus:outline-none '
             calendarClassName='!bg-main-white  !text-main-black'
+            disabledKeyboardNavigation
+            onFocus={(e) => e.target.blur()}
             scrollableYearDropdown
             showYearDropdown
-            todayButton
           />
           <CalendarIcon className={`lg:text-2xl text-lg  text-main-white`} />
         </div>
