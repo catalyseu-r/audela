@@ -5,6 +5,8 @@ import { PlanetsContentContainerData } from './PlanetsContentContainer';
 import dayjs from 'dayjs';
 import { BsChevronDoubleRight as ArrowRight } from 'react-icons/bs';
 import { AnimatePresence, motion } from 'framer-motion';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface ArticleContainerData {
   data: PlanetsContentContainerData['data'];
@@ -12,6 +14,9 @@ interface ArticleContainerData {
 
 const ArticleContainer = (props: ArticleContainerData) => {
   const winSize = window.innerWidth;
+
+  const pathName = usePathname();
+
   return (
     <div
       className={`${
@@ -48,10 +53,13 @@ const ArticleContainer = (props: ArticleContainerData) => {
 
               <p className='text-xs font-light text-main-white line-clamp-3 px-4'>{item.data[0].description}</p>
 
-              <div className='flex px-2 justify-end items-center gap-2  text-right border rounded border-dimmed-accent cursor-pointer '>
+              <Link
+                href={`${pathName}/${item.data[0].nasa_id}`}
+                className='flex px-2 justify-end items-center gap-2  text-right border rounded border-dimmed-accent cursor-pointer '
+              >
                 <p className='text-main-white text-xs font-light  leading-6 itallic'>Read more</p>
                 <ArrowRight className='text-base text-dimmed-accent' />
-              </div>
+              </Link>
             </div>
           </motion.div>
         ))}

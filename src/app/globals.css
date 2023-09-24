@@ -30,7 +30,7 @@
     }
 
     .scrollbar-custom {
-      scrollbar-gutter: stable both-edges;
+      /* scrollbar-gutter: stable both-edges; */
       scrollbar-width: thin;
       scrollbar-color: #db7c26 #090909;
     }
