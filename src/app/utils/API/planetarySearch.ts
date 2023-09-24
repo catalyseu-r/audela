@@ -18,6 +18,7 @@ export const planetarySearch = async ({ query = '', nasa_id = '' }: PlanetarySea
 
     if (callApi.ok && callApi.status !== 400) {
       const data: PlanetaryDataApiResponse = await callApi.json();
+
       return data;
     } else {
       return undefined;
