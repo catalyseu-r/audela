@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='en' className=''>
+    <html lang='en' className='scrollbar-custom bg-main-black'>
       <body className={`${roboto.className} m-0 p-0`}>{children}</body>
     </html>
   );
