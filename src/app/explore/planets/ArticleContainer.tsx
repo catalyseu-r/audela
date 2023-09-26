@@ -51,7 +51,7 @@ const ArticleContainer = (props: ArticleContainerData) => {
                 </p>
               </div>
 
-              <p className='text-xs font-light text-main-white line-clamp-3 px-4'>{item.data[0].description}</p>
+              <p className='text-xs font-light text-main-white line-clamp-3 px-4'>{item.data[0].description_508}</p>
 
               <Link
                 href={`${pathName}/${item.data[0].nasa_id}`}

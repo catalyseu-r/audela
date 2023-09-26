@@ -7,14 +7,15 @@ import Loading from '../loading';
 export default async function ArticleDetail({ params }: { params: { nasa_id: string } }) {
   const singleArticleData = await planetarySearch({ nasa_id: params.nasa_id });
 
-  const prepareDataForClient = singleArticleData?.collection.items[0];
+  const prepareDataForClient = singleArticleData?.collection.items[0].data[0];
 
   const getLargeMedia = await fetch(singleArticleData?.collection.items[0].href as string);
 
   const prepareMediaForClient: string[] = await getLargeMedia.json();
 
   const getImageUrl = prepareMediaForClient.find((item) => item.endsWith('orig.jpg'));
-  const getVideoUrl = prepareMediaForClient.find((item) => item.endsWith('large.mp4'));
+  const getVideoUrl = prepareMediaForClient.find((item) => item.endsWith('orig.mp4'));
+  const getMediaThumb = prepareMediaForClient.find((item) => item.endsWith('thumb.jpg'));
 
   const DynamicContainer = dynamic(() => import('./ArticlePageContainer'), { ssr: false });
 
@@ -29,8 +30,9 @@ export default async function ArticleDetail({ params }: { params: { nasa_id: str
               mainImage={{
                 isVideo: getImageUrl === undefined,
                 url: getImageUrl ?? getVideoUrl,
+                mediaThumb: getMediaThumb ?? '',
               }}
-              data={singleArticleData ? prepareDataForClient : undefined}
+              articleData={prepareDataForClient ? prepareDataForClient : undefined}
             />
           )}
         </div>
