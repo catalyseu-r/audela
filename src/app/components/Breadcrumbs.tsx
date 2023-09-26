@@ -12,6 +12,8 @@ const Breadcrumbs = () => {
 
   const formatCurrentPath = currentPath.map((item, index, array) => array.slice(0, index + 1).join('/'));
 
+  console.log('KURENT', currentPath);
+
   const formatCrumbs = () => {
     return currentPath.map((item, index, array) => {
       if (index === 0) {
