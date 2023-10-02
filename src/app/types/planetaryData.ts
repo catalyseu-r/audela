@@ -3,9 +3,7 @@ export interface PlanetaryDataArticleBody {
   title: string;
   nasa_id: string;
   media_type: string;
-  keywords: {
-    0: string;
-  };
+  keywords: string[];
   date_created: string;
   description_508: string;
   description: string;

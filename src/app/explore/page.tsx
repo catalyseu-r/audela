@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import Navbar from '../components/Navbar';
 import Loading from '../loading';
 import Options from './Options';
+import { GlobalContextProvider } from '../contexts/store';
 
 export default function Explore() {
   return (

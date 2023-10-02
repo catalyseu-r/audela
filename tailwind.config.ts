@@ -16,6 +16,9 @@ const config: Config = {
       },
       minHeight: {
         'custom-page-min': 'calc(100vh + 5rem)',
+        'iframes-images-lg': 'calc(35vh + 2.5rem)',
+        'iframes-images-md': 'calc(30vh + 2.5rem)',
+        'iframes-images-sm': 'calc(15vh + 2.5rem)',
       },
       colors: {
         'text-red': '#CA6677',
