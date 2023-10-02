@@ -63,7 +63,7 @@ const Navbar = () => {
         animate={containerControls}
         initial={{ opacity: 0, transform: 'translateY(-100%)' }}
         transition={{ duration: 0.25 }}
-        className={`w-full  h-screen bg-main-black  px-4 z-30 fixed top-0`}
+        className={`w-full  h-screen bg-main-black  px-4 z-30 fixed top-0 lg:hidden`}
       >
         <div className='flex flex-col mt-32 mx-auto gap-14 max-w-max '>
           {navLinks.map((link, index) => {
