@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { GlobalContextProvider } from './contexts/store';
 
 export const metadata: Metadata = {
-  title: 'au-delà',
+  title: 'au-delà - 🚧 Under Construction 🛠️',
   description: 'Astronomy app',
 };
 
