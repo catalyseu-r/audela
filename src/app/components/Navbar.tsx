@@ -13,6 +13,8 @@ import { AiOutlineLock as LockIcon } from 'react-icons/ai';
 import SocialStack from './SocialStack';
 import { navLinks } from '../staticData/navLinks';
 import { usePathname } from 'next/navigation';
+import UserInput from './UserInput';
+import { useGlobalContext } from '../contexts/store';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
@@ -22,8 +24,10 @@ const Navbar = () => {
   const handleNav = () => setIsOpen(!isOpen);
   const pathName = usePathname();
 
+  const { isSearchActive } = useGlobalContext();
+
   React.useEffect(() => {
-    containerControls.start({ opacity: 0, transform: 'translateY(-100%)' });
+    containerControls.start({ opacity: 0, transform: 'translateY(-200%)' });
     linkControls.start({ opacity: 0, transform: 'translateX(-25%)', transition: { delay: 0 } });
     if (isOpen) {
       containerControls.start({ opacity: 1, transform: 'translateY(0)' });
@@ -35,16 +39,16 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`w-full pt-4 inline-block  border-b border-dimmed-white-full  z-50 fixed top-0 ${
+      className={`w-full pt-4 inline-block   border-b py-2 border-dimmed-white-full  z-50 fixed top-0 ${
         pathName === '/' ? 'bg-transparent' : 'bg-main-black'
       }`}
     >
-      <div className='flex w-full justify-between  items-center  lg:max-w-container-lg md:w-5/6 mx-auto md:px-0 px-4'>
+      <div className='flex  gap-4 justify-between  items-center  lg:max-w-container-lg md:w-5/6 mx-auto md:px-0 px-4 overflow-hidden'>
         <Link
           href={'/'}
           className={` ${chakraP.className} lg:text-3xl text-2xl uppercase z-40  ${
             isOpen ? 'text-main-orange-accent ' : 'text-text-red'
-          } transition-all `}
+          }  ${isSearchActive ? 'scale-0 hidden' : ''}`}
         >
           au-delà
         </Link>
@@ -53,15 +57,23 @@ const Navbar = () => {
             return link.title !== 'Explore' ? <p key={link.title}>{link.title}</p> : null;
           })}
         </div>
-        {isOpen ? (
-          <CloseIcon className='md:hidden text-main-orange-accent text-2xl z-40 ' onClick={handleNav} />
-        ) : (
-          <BurgerMenu className='md:hidden text-main-white text-2xl z-40' onClick={handleNav} />
-        )}
+        <div className={`flex items-center gap-6 ${isSearchActive ? 'w-full' : ''} transition-all`}>
+          <UserInput />
+          {isOpen ? (
+            <CloseIcon className='md:hidden text-main-orange-accent text-2xl z-40 flex-shrink-0 ' onClick={handleNav} />
+          ) : (
+            <BurgerMenu
+              className={`${
+                isSearchActive ? 'scale-0 hidden' : ''
+              } md:hidden text-main-white text-2xl z-40 transition-all`}
+              onClick={handleNav}
+            />
+          )}
+        </div>
       </div>
       <motion.div
         animate={containerControls}
-        initial={{ opacity: 0, transform: 'translateY(-100%)' }}
+        initial={{ opacity: 0, transform: 'translateY(-200%)' }}
         transition={{ duration: 0.25 }}
         className={`w-full  h-screen bg-main-black  px-4 z-30 fixed top-0 lg:hidden`}
       >
