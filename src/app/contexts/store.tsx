@@ -23,6 +23,7 @@ interface ContextProps {
   maxPages: number;
   isNotFound: boolean;
   sortState: SortState;
+  isSearchActive: boolean;
   //
   setUserQuery: React.Dispatch<SetStateAction<string>>;
   setArticleState: React.Dispatch<SetStateAction<PlanetaryDataArticle[]>>;
@@ -34,6 +35,7 @@ interface ContextProps {
       currentPage: number;
     }>
   >;
+  setIsSearchActive: React.Dispatch<SetStateAction<boolean>>;
   handleUserQuery: (query: string) => Promise<void>;
 }
 
@@ -46,6 +48,7 @@ const GlobalContext = React.createContext<ContextProps>({
   endIndex: 0,
   isNotFound: false,
   sortState: SortState.desc,
+  isSearchActive: false,
   pagination: {
     totalItems: 0,
     currentPage: 1,
@@ -57,6 +60,7 @@ const GlobalContext = React.createContext<ContextProps>({
   setSortState: () => SortState.desc || SortState.asc,
   setPagination: () => {},
   handleUserQuery: (): any => Promise,
+  setIsSearchActive: () => {},
 });
 
 export const GlobalContextProvider = ({ children }: any) => {
@@ -72,6 +76,7 @@ export const GlobalContextProvider = ({ children }: any) => {
   const [userQuery, setUserQuery] = React.useState<string>('');
   const [articleState, setArticleState] = React.useState<PlanetaryDataArticle[]>([]);
   const [isNotFound, setIsNotFound] = React.useState<boolean>(false);
+  const [isSearchActive, setIsSearchActive] = React.useState<boolean>(false);
 
   const maxPages = 15;
   const articlesPerPage = 6;
@@ -118,6 +123,8 @@ export const GlobalContextProvider = ({ children }: any) => {
         isNotFound,
         sortState,
         pagination,
+        isSearchActive,
+        setIsSearchActive,
         setUserQuery,
         setArticleState,
         setIsNotFound,

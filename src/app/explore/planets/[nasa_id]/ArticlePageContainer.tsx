@@ -63,7 +63,6 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
     <div className='pt-24 flex flex-col gap-8 w-full'>
       <div className=' flex w-full justify-between items-center flex-wrap gap-8'>
         <Breadcrumbs />
-        <UserInput />
       </div>
 
       <div className=' w-full lg:min-h-iframes-images-lg md:min-h-iframes-images-md min-h-iframes-images-sm aspect-video relative'>
