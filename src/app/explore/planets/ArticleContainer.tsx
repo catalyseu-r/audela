@@ -21,12 +21,12 @@ const ArticleContainer = (props: ArticleContainerData) => {
     <div
       className={`${
         winSize > 768 ? 'flex-wrap ' : 'flex-nowrap overflow-x-scroll  snap-x snap-proximity'
-      } flex  justify-between xl:gap-8 lg:gap-6 gap-4  w-full  mt-16 no-scrollbar`}
+      } flex  justify-between xl:gap-8 lg:gap-6 gap-4  w-full h-full  mt-16 no-scrollbar`}
     >
       <AnimatePresence>
         {props.data.map((item, index) => (
           <motion.div
-            className='flex justify-between flex-wrap shadow-custom-article-shadow lg:w-auto lg:min-w-[auto] min-w-[calc(100vw-6rem)] snap-center'
+            className='flex justify-between flex-wrap shadow-custom-article-shadow  lg:min-w-[auto] min-w-[calc(100vw-6rem)] snap-center'
             key={index}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
