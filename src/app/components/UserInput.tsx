@@ -39,18 +39,20 @@ const UserInput = () => {
   return (
     <div
       className={` ${
-        isSearchActive ? 'w-full' : ''
-      } overflow-hidden border rounded border-dimmed-accent flex justify-end items-center  lg:px-6 px-2 py-2 focus-within:border-main-orange-accent transition-all`}
+        isSearchActive
+          ? 'bg-main-black w-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 '
+          : ''
+      } overflow-hidden  border rounded border-transparent flex justify-end items-center  lg:px-6 px-2 py-2 focus-within:border-main-orange-accent transition-all`}
     >
       <SearchIcon
         onClick={handleUserActionInput}
         className={`${
           isSearchActive ? 'scale-0' : 'scale-100'
-        } text-main-white text-2xl cursor-pointer transition-all `}
+        } text-main-white text-2xl cursor-pointer transition-all ease-in-out `}
       />
 
       <div
-        className={` transition-all overflow-hidden  ${
+        className={` transition-all duration-500 ${
           isSearchActive ? 'w-full' : 'w-0'
         } flex gap-6 justify-between items-center`}
       >
@@ -59,21 +61,20 @@ const UserInput = () => {
           type='text'
           name='userQuery'
           id='userQuery'
-          className={`bg-transparent  text-main-white text-sm lg:text-base  focus:outline-none `}
+          className={`bg-transparent  text-main-white text-sm lg:text-base  focus:outline-none w-full`}
           placeholder='Your search term'
           onChange={(event) => setUserQuery(event.target.value)}
           onKeyDown={(keyDown) => keyDown.key === 'Enter' && handleUserQuery(userQuery)}
           defaultValue={userQuery}
         />
 
-        <SearchIcon
-          onClick={() => handleUserQuery(userQuery)}
-          className={` text-main-white text-2xl cursor-pointer transition-all shrink-0`}
-        />
-        <CloseIcon
-          onClick={() => setIsSearchActive(false)}
-          className={`text-main-white text-lg cursor-pointer transition-all shrink-0`}
-        />
+        <div className='flex gap-6 items-center'>
+          <SearchIcon
+            onClick={() => handleUserQuery(userQuery)}
+            className={` text-main-white text-2xl cursor-pointer`}
+          />
+          <CloseIcon onClick={() => setIsSearchActive(false)} className={`text-main-white text-lg cursor-pointer`} />
+        </div>
       </div>
     </div>
   );

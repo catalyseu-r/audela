@@ -39,28 +39,31 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`w-full pt-4 inline-block   border-b py-2 border-dimmed-white-full  z-50 fixed top-0 ${
-        pathName === '/' ? 'bg-transparent' : 'bg-main-black'
-      }`}
+      className={`w-full pt-4 inline-block   border-b py-2 border-dimmed-white-full  z-10 fixed top-0 ${
+        isSearchActive ? 'px-4' : ''
+      } ${pathName === '/' ? 'bg-transparent' : 'bg-main-black'}`}
     >
-      <div className='flex  gap-4 justify-between  items-center  lg:max-w-container-lg md:w-5/6 mx-auto md:px-0 px-4 overflow-hidden'>
+      <div className='flex  gap-4 justify-between relative  items-center  lg:max-w-container-lg md:w-5/6 mx-auto md:px-0 px-4 '>
         <Link
           href={'/'}
-          className={` ${chakraP.className} lg:text-3xl text-2xl uppercase z-40  ${
+          className={` ${chakraP.className} sm:grow lg:text-3xl text-2xl uppercase z-40  ${
             isOpen ? 'text-main-orange-accent ' : 'text-text-red'
-          }  ${isSearchActive ? 'scale-0 hidden' : ''}`}
+          }  ${isSearchActive ? 'hidden' : 'block'}`}
         >
           au-delà
         </Link>
-        <div className={` md:flex items-center justify-between gap-16 text-base font-light text-main-white hidden`}>
-          {navLinks.map((link) => {
-            return link.title !== 'Explore' ? <p key={link.title}>{link.title}</p> : null;
-          })}
+        <div
+          className={` ${
+            isSearchActive ? 'md:hidden' : 'md:flex'
+          } items-center justify-between gap-16 text-base font-light text-main-white hidden`}
+        >
+          {navLinks.map((link) => (link.title !== 'Explore' ? <p key={link.title}>{link.title}</p> : null))}
         </div>
-        <div className={`flex items-center gap-6 ${isSearchActive ? 'w-full' : ''} transition-all`}>
+
+        <div className={`flex items-center gap-6 ${isSearchActive ? 'w-full h-[42px]' : ''} z-20 transition-all`}>
           <UserInput />
           {isOpen ? (
-            <CloseIcon className='md:hidden text-main-orange-accent text-2xl z-40 flex-shrink-0 ' onClick={handleNav} />
+            <CloseIcon className='md:hidden text-main-orange-accent text-2xl z-40' onClick={handleNav} />
           ) : (
             <BurgerMenu
               className={`${
@@ -71,6 +74,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
+
       <motion.div
         animate={containerControls}
         initial={{ opacity: 0, transform: 'translateY(-200%)' }}
