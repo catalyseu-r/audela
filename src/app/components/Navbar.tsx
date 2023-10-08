@@ -19,6 +19,7 @@ import { useGlobalContext } from '../contexts/store';
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [isDropdown, setIsDropdown] = React.useState<boolean>(false);
+  const [scrollPosition, setScrollPosition] = React.useState<number>(0);
   const containerControls = useAnimation();
   const linkControls = useAnimation();
   const handleNav = () => setIsOpen(!isOpen);
@@ -34,20 +35,27 @@ const Navbar = () => {
       linkControls.start({ opacity: 1, transform: 'translateX(0)' });
     }
 
-    return () => setIsDropdown(false);
+    const updatePosition = () => setScrollPosition(window.scrollY);
+
+    document.addEventListener('scroll', updatePosition);
+
+    return () => {
+      setIsDropdown(false);
+      document.removeEventListener('scroll', () => updatePosition);
+    };
   }, [containerControls, isOpen, linkControls]);
 
   return (
     <nav
-      className={`w-full pt-4 inline-block   border-b py-2 border-dimmed-white-full  z-10 fixed top-0 ${
-        isSearchActive ? 'px-4' : ''
-      } ${pathName === '/' ? 'bg-transparent' : 'bg-main-black'}`}
+      className={`w-full pt-4 inline-block py-2  z-10 fixed top-0 ${isSearchActive ? 'px-4' : ''} ${
+        pathName === '/' ? 'bg-transparent' : 'bg-bg-black/50'
+      } ${scrollPosition > 150 ? 'backdrop-blur-sm' : ''} transition-all`}
     >
       <div className='flex  gap-4 justify-between relative  items-center  lg:max-w-container-lg md:w-5/6 mx-auto md:px-0 px-4 '>
         <Link
           href={'/'}
           className={` ${chakraP.className} sm:grow lg:text-3xl text-2xl uppercase z-40  ${
-            isOpen ? 'text-main-orange-accent ' : 'text-text-red'
+            isOpen ? 'text-main-orange-accent ' : 'text-accent-pink'
           }  ${isSearchActive ? 'hidden' : 'block'}`}
         >
           au-delà
@@ -57,7 +65,13 @@ const Navbar = () => {
             isSearchActive ? 'md:hidden' : 'md:flex'
           } items-center justify-between gap-16 text-base font-light text-main-white hidden`}
         >
-          {navLinks.map((link) => (link.title !== 'Explore' ? <p key={link.title}>{link.title}</p> : null))}
+          {navLinks.map((link) =>
+            link.title !== 'Explore' ? (
+              <p key={link.title} className='cursor-pointer transition-all hover:text-interactive-green'>
+                {link.title}
+              </p>
+            ) : null
+          )}
         </div>
 
         <div className={`flex items-center gap-6 ${isSearchActive ? 'w-full h-[42px]' : ''} z-20 transition-all`}>

@@ -32,7 +32,11 @@
     .scrollbar-custom {
       /* scrollbar-gutter: stable both-edges; */
       scrollbar-width: thin;
-      scrollbar-color: #db7c26 #090909;
+      scrollbar-color: #00a86b #0e0e0e;
+      transition: all 0.25s ease-in-out;
+    }
+    .scrollbar-custom::hover {
+      scrollbar-color: #66ff66 #0e0e0e;
     }
   }
 }
@@ -134,4 +138,10 @@
 .react-datepicker__day--disabled {
   background: rgba(166, 66, 83, 0.24) !important;
   color: rgba(234, 234, 234, 0.56) !important;
+}
+
+@media (max-height: 875px) {
+  .overlay-custom {
+    min-height: 875px !important;
+  }
 }

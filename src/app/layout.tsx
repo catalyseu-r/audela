@@ -8,6 +8,7 @@ import { GlobalContextProvider } from './contexts/store';
 export const metadata: Metadata = {
   title: 'au-delà - 🚧 Under Construction 🛠️',
   description: 'Astronomy app',
+
   viewport: {
     width: 'device-width',
     initialScale: 1.0,
@@ -18,8 +19,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='en' contentEditable={false} className='lg:scrollbar-custom no-scrollbar bg-main-black'>
-      <body className={`${roboto.className} m-0 p-0 transition-all`}>
+    <html lang='en' contentEditable={false} className='lg:scrollbar-custom no-scrollbar bg-bg-black'>
+      <body className={`${roboto.className} m-0 p-0`}>
         <GlobalContextProvider>{children}</GlobalContextProvider>
       </body>
     </html>

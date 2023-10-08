@@ -1,28 +1,39 @@
 import React from 'react';
 
-import { AiFillDribbbleSquare as DribbleIcon, AiFillTwitterSquare as TwitterIcon } from 'react-icons/ai';
-import { FaInstagramSquare as InstagramIcon, FaGithubSquare as GithubIcon } from 'react-icons/fa';
-import { BiLogoLinkedinSquare as LinkedinIcon } from 'react-icons/bi';
-import { ImTumblr2 as TumblrIcon } from 'react-icons/im';
+import {
+  FaDribbbleSquare as DribbleIcon,
+  FaTumblrSquare as TumblrIcon,
+  FaGithubSquare as GithubIcon,
+  FaInstagramSquare as InstagramIcon,
+  FaTwitterSquare as TwitterIcon,
+  FaLinkedin as LinkedinIcon,
+} from 'react-icons/fa';
 
 interface SocialStackProps {
   isInMenu?: boolean;
 }
 
 const SocialStack = (props: SocialStackProps) => {
-  const iconClass = 'lg:text-4xl md:text-3xl text-2xl text-main-white';
   return (
-    <div
-      className={`${
-        props.isInMenu ? 'w-auto gap-8' : 'lg:w-8/12 md:w-4/12 w-8/12 gap-12'
-      } flex items-center justify-start flex-wrap `}
-    >
-      <DribbleIcon className={iconClass} />
-      <TumblrIcon className={iconClass} />
-      <GithubIcon className={iconClass} />
-      <InstagramIcon className={iconClass} />
-      <TwitterIcon className={iconClass} />
-      <LinkedinIcon className={iconClass} />
+    <div className={`${props.isInMenu ? '' : 'w-full'} flex items-center justify-between gap-8 `}>
+      <LinkedinIcon
+        className={`text-deep-green  text-xl cursor-pointer hover:text-interactive-green transform duration-500 hover:scale-125 transition-all `}
+      />
+      <GithubIcon
+        className={`text-deep-green  text-xl cursor-pointer hover:text-interactive-green transform duration-500 hover:scale-125 transition-all `}
+      />
+      <DribbleIcon
+        className={`text-deep-green  text-xl cursor-pointer hover:text-interactive-green transform duration-500 hover:scale-125 transition-all `}
+      />
+      <InstagramIcon
+        className={`text-deep-green  text-xl cursor-pointer hover:text-interactive-green transform duration-500 hover:scale-125 transition-all `}
+      />
+      <TwitterIcon
+        className={`text-deep-green  text-xl cursor-pointer hover:text-interactive-green transform duration-500 hover:scale-125 transition-all `}
+      />
+      <TumblrIcon
+        className={`text-deep-green  text-xl cursor-pointer hover:text-interactive-green transform duration-500 hover:scale-125 transition-all `}
+      />
     </div>
   );
 };

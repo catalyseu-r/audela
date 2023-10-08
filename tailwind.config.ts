@@ -1,7 +1,5 @@
 import type { Config } from 'tailwindcss';
 
-//linear-gradient(0deg, rgba(23, 23, 23, 0) 0%, rgba(23, 23, 23, 0.72) 100%),
-
 const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -11,11 +9,12 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        'landing-bg': 'url("img/BG.png")',
+        'landing-bg':
+          'linear-gradient(to left, rgba(14, 14, 14, .72) 100%, rgba(14, 14, 14, 0.72) 100%), url("img/landing-bg.jpg")',
         'not-found-bg': 'url("img/not-found-n.png")',
       },
       minHeight: {
-        'custom-page-min': 'calc(100vh + 5rem)',
+        'custom-page-min': 'calc(100svh + 1rem)',
         'iframes-images-lg': 'calc(35vh + 2.5rem)',
         'iframes-images-md': 'calc(30vh + 2.5rem)',
         'iframes-images-sm': 'calc(15vh + 2.5rem)',
@@ -36,6 +35,15 @@ const config: Config = {
         'disabled-accent': 'rgba(219, 124, 38, 0.24)',
         'transparent-black': 'rgba(9,9,9,.24)',
         'accent-dark': '#904E11',
+
+        //
+        'interactive-green': '#66FF66',
+        'bg-black': '#0E0E0E',
+        'error-red': '#FF3333',
+        'accent-pink': '#FF6B6B',
+        'text-white': '#E4E4E4',
+        'deep-green': '#00A86B',
+        'sha-blue': '#6A89CC',
       },
       screens: {
         sm: '640px',
@@ -53,6 +61,7 @@ const config: Config = {
         '3xl': '1.875rem',
         '4xl': '2.25rem',
         '5xl': '3rem',
+        '6xl': '4rem',
       },
       fontFamily: {
         title: ['Chakra Petch', 'sans-serif'],
@@ -71,6 +80,15 @@ const config: Config = {
       },
       animation: {
         'glitch-me': 'glitch 2s ease-in-out',
+      },
+      lineHeight: {
+        '2xl': '4.5rem',
+      },
+      dropShadow: {
+        'landing-txt': '-4px 4px 16px rgba(102, 255, 102, 0.32)',
+      },
+      gap: {
+        'base-gap': '4.5rem',
       },
     },
   },

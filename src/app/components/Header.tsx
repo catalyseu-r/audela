@@ -3,21 +3,17 @@ const chakraP = Chakra_Petch({ weight: '400', subsets: ['latin'] });
 
 interface HeaderPropsDefault {
   title: string;
-  isLanding: boolean;
+  isLanding?: boolean;
 }
 
-const Header = ({ title, isLanding }: HeaderPropsDefault) => {
-  const headerClass = `w-3/4  ${isLanding && 'mt-40'}`;
-
-  const headerText = `${chakraP.className} w-full ${
-    isLanding ? 'lg:text-5xl md:text-4xl text-3xl' : 'mt-12 lg:text-2xl md:text-1xl sm:text-lg'
-  } 
-
-  text-main-white ${isLanding && 'uppercase'}`;
-
+const Header = ({ title }: HeaderPropsDefault) => {
   return (
-    <header className={headerClass}>
-      <h1 className={headerText}>{title}</h1>
+    <header className={`lg:w-6/12 md:w-8/12  w-10/12`}>
+      <h1
+        className={`${chakraP.className} lg:text-6xl md:text-5xl tracking-tighter text-4xl lg:leading-2xl leading-normal drop-shadow-landing-txt text-text-white uppercase`}
+      >
+        {title}
+      </h1>
     </header>
   );
 };
