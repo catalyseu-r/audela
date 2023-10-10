@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='en' contentEditable={false} className='lg:scrollbar-custom no-scrollbar bg-bg-black'>
+    <html lang='en' contentEditable={false} className='no-scrollbar scroll-smooth bg-bg-black overflow-x-hidden'>
       <body className={`${roboto.className} m-0 p-0`}>
         <GlobalContextProvider>{children}</GlobalContextProvider>
       </body>
