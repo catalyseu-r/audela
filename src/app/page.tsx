@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import Loading from './loading';
-import LandingContent from './LandingContent';
+import LandingContent from './sections/LandingContent';
 
 export default async function Home() {
   return (

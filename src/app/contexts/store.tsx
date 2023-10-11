@@ -16,6 +16,11 @@ interface ContextProps {
     totalItems: number;
     currentPage: number;
   };
+  intersectionElements: {
+    landing: boolean;
+    mission: boolean;
+    about: boolean;
+  };
   articleState: PlanetaryDataArticle[];
   startIndex: number;
   endIndex: number;
@@ -33,6 +38,13 @@ interface ContextProps {
     React.SetStateAction<{
       totalItems: number;
       currentPage: number;
+    }>
+  >;
+  setIntersectionElements: React.Dispatch<
+    React.SetStateAction<{
+      landing: boolean;
+      mission: boolean;
+      about: boolean;
     }>
   >;
   setIsSearchActive: React.Dispatch<SetStateAction<boolean>>;
@@ -53,7 +65,13 @@ const GlobalContext = React.createContext<ContextProps>({
     totalItems: 0,
     currentPage: 1,
   },
+  intersectionElements: {
+    landing: false,
+    mission: false,
+    about: false,
+  },
   //
+  setIntersectionElements: () => {},
   setArticleState: (): [] => [],
   setUserQuery: (): string => '',
   setIsNotFound: () => {},
@@ -77,6 +95,12 @@ export const GlobalContextProvider = ({ children }: any) => {
   const [articleState, setArticleState] = React.useState<PlanetaryDataArticle[]>([]);
   const [isNotFound, setIsNotFound] = React.useState<boolean>(false);
   const [isSearchActive, setIsSearchActive] = React.useState<boolean>(false);
+
+  const [intersectionElements, setIntersectionElements] = React.useState({
+    landing: false,
+    mission: false,
+    about: false,
+  });
 
   const maxPages = 15;
   const articlesPerPage = 6;
@@ -124,6 +148,8 @@ export const GlobalContextProvider = ({ children }: any) => {
         sortState,
         pagination,
         isSearchActive,
+        intersectionElements,
+        setIntersectionElements,
         setIsSearchActive,
         setUserQuery,
         setArticleState,
