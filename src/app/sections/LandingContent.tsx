@@ -111,9 +111,11 @@ const LandingContent = () => {
         </div>
       </section>
 
-      <MissionContent scrollPosition={scrollPosition} />
+      <div className='grid grid-cols-1 gap-20'>
+        <MissionContent scrollPosition={scrollPosition} />
 
-      <AboutContent scrollPosition={scrollPosition} />
+        <AboutContent scrollPosition={scrollPosition} />
+      </div>
     </div>
   );
 };
