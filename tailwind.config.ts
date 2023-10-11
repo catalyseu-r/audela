@@ -88,8 +88,9 @@ const config: Config = {
         },
       },
       animation: {
-        'animate-elipse': 'elipseTransform 10s infinite alternate ease-in-out',
-        'animate-reverse': 'elipseTransform 10s infinite alternate-reverse ease-in-out',
+        'animate-elipse': 'elipseTransform 15s infinite alternate ease-in-out',
+        'animate-elipse-short': 'elipseTransform 10s infinite alternate ease-in-out',
+        'animate-reverse': 'elipseTransform 15s infinite alternate-reverse ease-in-out',
       },
       lineHeight: {
         '2xl': '4.5rem',

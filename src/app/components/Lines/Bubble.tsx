@@ -4,9 +4,8 @@ import React from 'react';
 
 interface BubbleProps {
   linkTo: string | null;
+  currentInView: string | null;
 }
-
-//
 
 const Bubble = (props: BubbleProps) => {
   const [isHover, setIsHover] = React.useState<boolean>(false);
@@ -18,7 +17,7 @@ const Bubble = (props: BubbleProps) => {
         width={17}
         height={17}
         fill='none'
-        transform={props.linkTo ? undefined : `translate(112,225)`}
+        transform={props.linkTo ? undefined : `translate(72,260)`}
         className='cursor-pointer transition-colors'
       >
         {props.linkTo ? (
@@ -28,7 +27,7 @@ const Bubble = (props: BubbleProps) => {
               cy={8.5}
               r={8.5}
               fill='#6F6'
-              fillOpacity={isHover ? 1 : 0.24}
+              fillOpacity={isHover || props.currentInView === props.linkTo ? 1 : 0.24}
               className='transition-all duration-500'
             />
           </a>

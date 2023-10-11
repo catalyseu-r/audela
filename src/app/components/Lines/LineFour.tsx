@@ -4,7 +4,7 @@ const LineFour = (props: any) => (
     xmlns='http://www.w3.org/2000/svg'
     width={props.isIntersecting ? 17 : 0}
     height={props.isIntersecting ? 2 : 0}
-    transform='translate(50,225)'
+    transform='translate(10,258)'
     fill='none'
     className='transition-all duration-800 delay-800 origin-right ease-in-out'
   >
