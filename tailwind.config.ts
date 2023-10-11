@@ -13,6 +13,7 @@ const config: Config = {
         'landing-bg':
           'linear-gradient(to left, rgba(14, 14, 14, .72) 100%, rgba(14, 14, 14, 0.72) 100%), url("img/landing-bg.jpg")',
         'not-found-bg': 'url("img/not-found-n.png")',
+        'overlay-landing': 'url(img/overlay-landing.png)',
       },
       minHeight: {
         'custom-page-min': 'calc(100svh + 1rem)',

@@ -20,6 +20,7 @@ interface ContextProps {
     landing: boolean;
     mission: boolean;
     about: boolean;
+    contact: boolean;
   };
   articleState: PlanetaryDataArticle[];
   startIndex: number;
@@ -45,6 +46,7 @@ interface ContextProps {
       landing: boolean;
       mission: boolean;
       about: boolean;
+      contact: boolean;
     }>
   >;
   setIsSearchActive: React.Dispatch<SetStateAction<boolean>>;
@@ -69,6 +71,7 @@ const GlobalContext = React.createContext<ContextProps>({
     landing: false,
     mission: false,
     about: false,
+    contact: false,
   },
   //
   setIntersectionElements: () => {},
@@ -100,6 +103,7 @@ export const GlobalContextProvider = ({ children }: any) => {
     landing: false,
     mission: false,
     about: false,
+    contact: false,
   });
 
   const maxPages = 15;
@@ -120,8 +124,8 @@ export const GlobalContextProvider = ({ children }: any) => {
       setPagination((_prev) => {
         if (totalHitCountFromApi >= maxPages * articlesPerPage) {
           return { ..._prev, totalItems: maxPages * articlesPerPage };
-        } else
-          return { currentPage: Math.ceil(totalHitCountFromApi / articlesPerPage), totalItems: totalHitCountFromApi };
+        }
+        return { currentPage: Math.ceil(totalHitCountFromApi / articlesPerPage), totalItems: totalHitCountFromApi };
       });
 
       const fullResults = callApi.collection.items;

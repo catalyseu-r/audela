@@ -10,7 +10,6 @@ import Image from 'next/image';
 import elipseOne from '../img/Ellipse 20.png';
 
 const AboutContent = (props: CommonSectionProps) => {
-  const { scrollPosition } = props;
   const { setIntersectionElements, intersectionElements } = useGlobalContext();
 
   const aboutSectionRef = React.useRef(null);
@@ -33,7 +32,7 @@ const AboutContent = (props: CommonSectionProps) => {
   }, [setIntersectionElements]);
 
   return (
-    <section id='about' className='relative'>
+    <section id='about' className='relative pt-40'>
       <Image
         src={elipseOne}
         alt='elipse'
@@ -65,7 +64,7 @@ const AboutContent = (props: CommonSectionProps) => {
       <div
         ref={aboutSectionRef}
         style={{ opacity: intersectionElements.about ? '1' : '0.5' }}
-        className={`transition-all min-h-custom-page-min lg:max-w-container-lg md:w-5/6  w-full md:px-0 px-4 mx-auto mt-20 flex flex-col relative  transform-gpu will-change-transform  duration-300`}
+        className={`transition-opacity min-h-custom-page-min lg:max-w-container-lg md:w-5/6  w-full md:px-0 px-4 mx-auto  grid grid-cols-1 relative  duration-300`}
       >
         {/* start section wrap */}
         <div className='grid grid-cols-1 gap-16'>

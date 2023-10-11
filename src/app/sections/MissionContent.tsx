@@ -29,10 +29,8 @@ const MissionContent = (props: CommonSectionProps) => {
         setIntersectionElements((_prev) => {
           return { ..._prev, mission: entry.isIntersecting };
         }),
-      {
-        rootMargin: '120px',
-        threshold: 0.5,
-      }
+
+      { rootMargin: '0px', threshold: 1 }
     );
 
     missionSectionRef.current && missionObserver.observe(missionSectionRef.current);
@@ -43,8 +41,8 @@ const MissionContent = (props: CommonSectionProps) => {
   return (
     <section
       id='mission'
-      className='target:pt-48 relative bg-bg-black'
-      style={{ transform: `translateY(-${scrollPosition / 5.5}px` }}
+      className='relative bg-bg-black pt-40 transform-gpu will-change-transform'
+      style={{ transform: `translateY(-${scrollPosition / 5.5}px) translateZ(0)` }}
     >
       <Image
         src={elipseOne}
@@ -78,8 +76,7 @@ const MissionContent = (props: CommonSectionProps) => {
 
       <div
         ref={missionSectionRef}
-        className=' lg:max-w-container-lg md:w-5/6 w-full md:px-0 px-4 mx-auto mt-20 flex flex-col relative 
-        transform-gpu will-change-transform duration-0'
+        className=' lg:max-w-container-lg md:w-5/6 w-full md:px-0 px-4 mx-auto grid grid-cols-1 relative'
       >
         <div className='flex gap-16 flex-wrap items-start justify-start w-full'>
           <div className='flex flex-col gap-10 items-start justify-center max-w-xl'>

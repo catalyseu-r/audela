@@ -10,6 +10,7 @@ import Bubble from '../components/Lines/Bubble';
 import MissionContent from './MissionContent';
 import AboutContent from './AboutContent';
 import { useGlobalContext } from '../contexts/store';
+import ContactContent from './ContactContent';
 
 const LandingContent = () => {
   const [containerWidth, setContainerWidth] = React.useState<number>(1120);
@@ -27,7 +28,7 @@ const LandingContent = () => {
           return { ..._prev, landing: entry.isIntersecting };
         }),
 
-      { rootMargin: '120px', threshold: 0.5 }
+      { rootMargin: '100px', threshold: 1 }
     );
 
     landingSectionRef.current && landingSectionObserver.observe(landingSectionRef.current);
@@ -69,7 +70,7 @@ const LandingContent = () => {
         {/* container */}
         <div
           ref={containerRef}
-          className='master-cont md:px-0 px-4  md:w-5/6 relative lg:max-w-container-lg flex flex-col mx-auto'
+          className='master-cont md:px-0 px-4  md:w-5/6 relative lg:max-w-container-lg grid grid-cols-1 mx-auto'
         >
           {/* custom-scrollbar */}
           <div
@@ -82,8 +83,10 @@ const LandingContent = () => {
           </div>
           {/* custom-scrollbar */}
           <div
-            style={{ transform: `translateY(${scrollPosition / 5.5}px` }}
-            className='w-full  mx-auto flex flex-col transform-gpu will-change-transform duration-0 '
+            style={{
+              transform: `translateY(${scrollPosition / 5.5}px) translateZ(0) `,
+            }}
+            className='w-full  mx-auto flex flex-col transform-gpu will-change-transform'
           >
             {/* container */}
             {/* overlay */}
@@ -111,10 +114,12 @@ const LandingContent = () => {
         </div>
       </section>
 
-      <div className='grid grid-cols-1 gap-20'>
+      <div className='grid grid-cols-1 gap-80'>
         <MissionContent scrollPosition={scrollPosition} />
 
         <AboutContent scrollPosition={scrollPosition} />
+
+        <ContactContent scrollPosition={scrollPosition} />
       </div>
     </div>
   );
