@@ -42,33 +42,37 @@ const MissionContent = (props: CommonSectionProps) => {
     <section
       id='mission'
       className='relative bg-bg-black pt-40 transform-gpu will-change-transform'
-      style={{ transform: `translateY(-${scrollPosition / 5.5}px) translateZ(0)` }}
+      style={{
+        transform: `translateY(-${scrollPosition / 5.5}px) translateZ(0)`,
+        transitionTimingFunction: 'cubic-bezier(0,.79,.65,.99)',
+        transitionDuration: '250ms',
+      }}
     >
       <Image
         src={elipseOne}
         alt='elipse'
-        className='blur-lg object-cover animate-animate-elipse absolute top-0 left-0'
+        className=' object-cover animate-animate-elipse transition-transform absolute top-0 left-0'
         width={240}
         height={240}
       />
       <Image
         src={elipseOne}
         alt='elipse'
-        className='blur-lg object-cover animate-animate-elipse-short absolute top-1/2 left-1/2 delay-300'
+        className=' object-cover animate-animate-elipse-short transition-transform  absolute top-1/2 left-1/2 delay-300'
         width={240}
         height={240}
       />
       <Image
         src={elipseOne}
         alt='elipse'
-        className='blur-lg object-cover animate-animate-reverse absolute top-1/3 left-1/3 delay-500'
+        className='object-cover animate-animate-reverse absolute transition-transform  top-1/3 left-1/3 delay-500'
         width={240}
         height={240}
       />
       <Image
         src={elipseOne}
         alt='elipse'
-        className='blur-lg object-cover animate-animate-reverse absolute top-1/3 right-1/3 delay-700'
+        className=' object-cover animate-animate-reverse absolute transition-transform  top-1/3 right-1/3 delay-700'
         width={240}
         height={240}
       />
@@ -103,11 +107,11 @@ const MissionContent = (props: CommonSectionProps) => {
           </div>
 
           <div className='flex relative flex-col w-full md:w-5/12 lg:w-5/12'>
-            <div className='relative  h-80 lg:max-w-[416px] bg-red-500 aspect-video shadow-custom-img-shadow hover:shadow-none transition-shadow duration-500 cursor-pointer'>
+            <div className='relative  h-80 lg:max-w-[416px] aspect-video lg:shadow-custom-img-shadow lg:hover:shadow-none lg:transition-shadow duration-500 cursor-pointer'>
               <Image className='object-cover' src={roverImg} fill loading='lazy' alt='Mars rover in action' />
             </div>
 
-            <div className='absolute z-10 w-full '>
+            <div className='absolute z-10 w-full will-change-contents '>
               <Bubble linkTo={null} currentInView={'mission'} />
               <LineOne isIntersecting={mission} />
               <LineTwo isIntersecting={mission} />
@@ -115,8 +119,8 @@ const MissionContent = (props: CommonSectionProps) => {
               <LineFour isIntersecting={mission} />
 
               <div
-                className={` transition-all duration-700 ${mission ? 'opacity-100' : 'opacity-0'} ${
-                  mission ? 'delay-1000' : 'delay-0'
+                className={` transition-opacity duration-700 ${
+                  mission ? 'opacity-100' : 'opacity-0'
                 } flex  flex-col items-end w-8/12 absolute top-full translate-x-6 rounded translate-y-48 lg:w-[22rem] bg-text-white p-4 gap-6 `}
               >
                 <h3 className='text-bg-black font-normal leading-6 text-xl self-stretch px-4'>Photographing Mars</h3>

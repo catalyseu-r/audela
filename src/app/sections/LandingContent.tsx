@@ -85,8 +85,10 @@ const LandingContent = () => {
           <div
             style={{
               transform: `translateY(${scrollPosition / 5.5}px) translateZ(0) `,
+              transitionTimingFunction: 'cubic-bezier(0,.79,.65,.99)',
+              transitionDuration: '250ms',
             }}
-            className='w-full  mx-auto flex flex-col transform-gpu will-change-transform'
+            className='w-full  mx-auto flex flex-col transform-gpu will-change-transform transition-custom-anim'
           >
             {/* container */}
             {/* overlay */}

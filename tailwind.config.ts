@@ -94,6 +94,9 @@ const config: Config = {
         'animate-elipse-short': 'elipseTransform 10s infinite alternate ease-in-out',
         'animate-reverse': 'elipseTransform 15s infinite alternate-reverse ease-in-out',
       },
+      transitionTimingFunction: {
+        'custom-anim': 'cubic-bezier(.31,.05,0,1.03)',
+      },
       lineHeight: {
         '2xl': '4.5rem',
       },

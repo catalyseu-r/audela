@@ -18,7 +18,7 @@ const Bubble = (props: BubbleProps) => {
         height={17}
         fill='none'
         transform={props.linkTo ? undefined : `translate(72,260)`}
-        className='cursor-pointer transition-colors'
+        className='cursor-pointer transition-all'
       >
         {props.linkTo ? (
           <a href={`/#${props.linkTo}`}>
