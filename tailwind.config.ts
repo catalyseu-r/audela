@@ -78,6 +78,7 @@ const config: Config = {
       boxShadow: {
         'custom-article-shadow': '-8px 8px 0px 0px rgba(23, 23, 23, 0.24)',
         'custom-img-shadow': '0px 4px 10px 1px rgba(106, 137, 204, 0.80)',
+        'custom-image-strong-shadow': '12px 12px 4px -4px #00A86B',
       },
       keyframes: {
         glitch: {},

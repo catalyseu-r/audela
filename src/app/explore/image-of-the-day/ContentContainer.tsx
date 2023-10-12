@@ -74,26 +74,25 @@ const ContentContainer = (props: ContentInterface) => {
 
   return (
     <div className='mt-24 flex flex-col gap-8'>
-      <div className=' flex w-full justify-between items-start flex-wrap gap-8 overflow-auto'>
+      <div className=' flex w-full justify-between items-start flex-wrap gap-8 '>
         <Breadcrumbs />
         <CalendarLabel />
       </div>
-      <div className='overflow-hidden'>
-        <motion.div
-          initial={{ opacity: 0, transform: 'translateY(10rem)' }}
-          animate={controls}
-          transition={{ duration: 0.5 }}
-        >
-          <div className='flex w-full justify-between flex-wrap-reverse gap-6 items-end'>
-            <DescriptionContainer
-              date={dayjs(contentState.date).format('MM/DD/YYYY')}
-              title={contentState.title}
-              desc={contentState.desc}
-            />
-            <ImageContainer image={contentState.image} />
-          </div>
-        </motion.div>
-      </div>
+
+      <motion.div
+        initial={{ opacity: 0, transform: 'translateY(10rem)' }}
+        animate={controls}
+        transition={{ duration: 0.5 }}
+      >
+        <div className='flex w-full justify-between flex-wrap-reverse gap-6 items-end'>
+          <DescriptionContainer
+            date={dayjs(contentState.date).format('MM/DD/YYYY')}
+            title={contentState.title}
+            desc={contentState.desc}
+          />
+          <ImageContainer image={contentState.image} />
+        </div>
+      </motion.div>
     </div>
   );
 };

@@ -13,7 +13,7 @@ const ImageContainer = (props: ImageContainerProps) => {
   const propUrl = new URL(props.image);
 
   return (
-    <div className='relative w-full sm:w-5/6 lg:max-w-lg xl:h-[40rem] h-80'>
+    <div className='relative w-full sm:w-5/6 lg:max-w-lg xl:h-[40rem] h-80 shadow-custom-image-strong-shadow '>
       {propUrl.hostname.includes('youtube.com') || propUrl.hostname.includes('vimeo.com') ? (
         <div className='w-full h-full'>
           <ReactPlayer url={props.image} width='100%' height='100%' controls={true} />
@@ -24,7 +24,7 @@ const ImageContainer = (props: ImageContainerProps) => {
           alt='astronomy picture of the day provided by NASA'
           fill
           priority
-          className='object-cover transition-opacity opacity-0 duration-[2s]'
+          className='object-cover transition-opacity opacity-0 duration-500 shadow-custom-image-strong-shadow'
           loading='eager'
           onLoadingComplete={(image) => image.classList.remove('opacity-0')}
         />

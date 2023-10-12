@@ -12,7 +12,7 @@ const Loading = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <Triangle height='240' width='240' color='#DB7C26' ariaLabel='triangle-loading' visible={true} />
+          <Triangle height='240' width='240' color='#66FF66' ariaLabel='triangle-loading' visible={true} />
         </motion.div>
       </AnimatePresence>
     </div>

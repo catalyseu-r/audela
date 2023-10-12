@@ -2,9 +2,10 @@ import * as React from 'react';
 const LineOne = (props: any) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
+    style={{ transitionTimingFunction: 'cubic-bezier(0,.79,.65,.99)', transitionDuration: '250ms' }}
     width={props.isIntersecting ? 2 : 0}
     height={props.isIntersecting ? 132 : 0}
-    className='transition-all duration-200 origin-top-left ease-in-out '
+    className='origin-top-left'
     transform='translate(80,260)'
     fill='none'
   >
