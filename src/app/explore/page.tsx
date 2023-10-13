@@ -9,7 +9,7 @@ import elipseOne from '../img/Ellipse 20.png';
 export default function Explore() {
   return (
     <Suspense fallback={<Loading />}>
-      <main className='bg-main-black bg-no-repeat  min-h-custom-page-min   relative overflow-x-hidden'>
+      <main className='bg-main-black  min-h-custom-page-min overflow-hidden   relative'>
         <Image
           src={elipseOne}
           alt='elipse'
