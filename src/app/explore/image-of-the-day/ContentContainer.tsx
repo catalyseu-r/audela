@@ -9,9 +9,10 @@ import ImageContainer from './ImageContainer';
 import DescriptionContainer from './DescriptionContainer';
 import { BsCalendarDate as CalendarIcon } from 'react-icons/bs';
 import ReactDatePicker from 'react-datepicker';
-import { motion, useAnimation } from 'framer-motion';
+import { Variants, motion } from 'framer-motion';
 import { FaHandHolding as HandIcon, FaRegHeart as HearthIcon } from 'react-icons/fa';
 import { GoShareAndroid as ShareIcon } from 'react-icons/go';
+import Loading from './loading';
 
 interface ContentInterface {
   data: ImageOfTheDay;
@@ -19,8 +20,7 @@ interface ContentInterface {
 
 const ContentContainer = (props: ContentInterface) => {
   const [currentDate, setCurrentDate] = React.useState<Date | any>(new Date());
-  const articleControls = useAnimation();
-  const imageControls = useAnimation();
+
   const [contentState, setContentState] = React.useState({
     image: props.data.url,
     desc: props.data.explanation,
@@ -28,18 +28,21 @@ const ContentContainer = (props: ContentInterface) => {
     title: props.data.title,
   });
 
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  const variantsArticle: Variants = {
+    exit: { opacity: 0, transform: 'translateX(-100%)' },
+    enter: { opacity: 1, transform: 'translateX(0)' },
+  };
+
+  const variantsImage: Variants = {
+    exit: { opacity: 0, transform: 'translateX(100%)' },
+    enter: { opacity: 1, transform: 'translateX(0)' },
+  };
+
   React.useEffect(() => {
-    const exitAnime = async () => {
-      await imageControls.start({ opacity: 0, transform: 'translateX(100%)' });
-      await articleControls.start({ opacity: 0, transform: 'translateX(-100%)' });
-    };
-
-    const enterAnime = async () => {
-      await imageControls.start({ opacity: 1, transform: 'translateX(0)' });
-      await articleControls.start({ opacity: 1, transform: 'translateX(0)' });
-    };
-
     const handleUserCalendar = async () => {
+      setIsLoading(true);
       try {
         const callApi = await getImageOfTheDay({ date: dayjs(currentDate).format('YYYY-MM-DD') });
         if (callApi) {
@@ -53,14 +56,15 @@ const ContentContainer = (props: ContentInterface) => {
               title: title,
             };
           });
-          await exitAnime();
-          await enterAnime();
+          setIsLoading(false);
         }
-      } catch (error) {}
+      } catch (error) {
+        setIsLoading(false);
+      }
     };
 
     handleUserCalendar();
-  }, [currentDate, imageControls, articleControls]);
+  }, [currentDate]);
 
   const CalendarLabel = () => {
     return (
@@ -93,32 +97,35 @@ const ContentContainer = (props: ContentInterface) => {
       </div>
 
       <div className='grid w-full lg:grid-cols-2 md:grid-cols-1 gap-6 md:items-start items-center grid-flow-dense'>
-        <motion.div
-          initial={{ opacity: 0, transform: 'translateX(-100%)' }}
-          animate={articleControls}
-          transition={{ duration: 0.5 }}
-        >
-          <DescriptionContainer
-            date={dayjs(contentState.date).format('MM/DD/YYYY')}
-            title={contentState.title}
-            desc={contentState.desc}
-          />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, transform: 'translateX(100%)' }}
-          animate={imageControls}
-          transition={{ duration: 0.5 }}
-          className='relative'
-        >
-          <div className='relative w-full lg:max-w-lg xl:h-[40rem] md:h-[30rem] shadow-custom-image-strong-shadow aspect-square lg:col-start-2 col-start-1'>
-            <ImageContainer image={contentState.image} />
-          </div>
-          <div className=''>
-            <ShareIcon className={`text-2xl text-interactive-green/50`} />
-            <HandIcon className={`text-2xl text-interactive-green/50`} />
-            <HearthIcon className={`text-2xl text-interactive-green/50`} />
-          </div>
-        </motion.div>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <motion.div variants={variantsArticle} initial='exit' animate='enter' transition={{ duration: 0.5 }}>
+              <DescriptionContainer
+                date={dayjs(contentState.date).format('MM/DD/YYYY')}
+                title={contentState.title}
+                desc={contentState.desc}
+              />
+            </motion.div>
+            <motion.div
+              variants={variantsImage}
+              initial='exit'
+              animate='enter'
+              transition={{ duration: 0.5, delay: 1 }}
+              className='relative'
+            >
+              <div className='relative w-full lg:max-w-lg xl:h-[40rem] md:h-[30rem] shadow-custom-image-strong-shadow aspect-square lg:col-start-2 col-start-1'>
+                <ImageContainer image={contentState.image} />
+              </div>
+              <div className=''>
+                <ShareIcon className={`text-2xl text-interactive-green/50`} />
+                <HandIcon className={`text-2xl text-interactive-green/50`} />
+                <HearthIcon className={`text-2xl text-interactive-green/50`} />
+              </div>
+            </motion.div>
+          </>
+        )}
       </div>
     </div>
   );
