@@ -82,6 +82,23 @@ const config: Config = {
       },
       keyframes: {
         glitch: {},
+
+        baseFadeIn: {
+          from: {
+            opacity: '0',
+            transform: 'translateY(50%)',
+          },
+          to: {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
+
+        baseFadeOut: {
+          from: { opacity: '1' },
+          to: { opacity: '0', transform: 'translateX(-50%)' },
+        },
+
         elipseTransform: {
           '0%': { transform: 'translate(80px,100px) scale(1.1)' },
           '25%': { transform: 'translate(20px, 150px) scale(1.2)' },
@@ -89,11 +106,32 @@ const config: Config = {
           '75%': { transform: 'translate(20px, 100px) scale(1.2)' },
           '100%': { transform: 'translate(-10px, -20px)scale(1.3)' },
         },
+        heartTransform: {
+          '0%, 100%': {
+            transform: 'translateY(0) scale(0)',
+            color: 'initial',
+          },
+          '50%': { transform: 'translateY(-50%) scale(1.5)', color: '#66FF66', fill: '#66FF66' },
+        },
+
+        handTransform: {
+          '0%, 100%': {
+            transform: 'skewY(0)',
+          },
+
+          '50%': {
+            transform: 'skewY(-12deg)',
+          },
+        },
       },
       animation: {
+        enter: 'baseFadeIn 1s ease',
+        leave: 'baseFadeOut 1s ease-in ',
         'animate-elipse': 'elipseTransform 15s infinite alternate ease-in-out',
         'animate-elipse-short': 'elipseTransform 10s infinite alternate ease-in-out',
         'animate-reverse': 'elipseTransform 15s infinite alternate-reverse ease-in-out',
+        'animate-heart': 'heartTransform .5s ease-in-out .25s',
+        'animate-hand': 'handTransform .5s ease-in-out',
       },
       transitionTimingFunction: {
         'custom-anim': 'cubic-bezier(.31,.05,0,1.03)',

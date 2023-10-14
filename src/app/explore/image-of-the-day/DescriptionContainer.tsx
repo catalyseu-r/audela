@@ -18,13 +18,13 @@ const DescriptionContainer = (props: DescriptionContainerProps) => {
   ));
 
   return (
-    <div className='grid grid-cols-1 items-start gap-6 lg:max-w-lg  w-full col-start-1 '>
+    <div className='grid grid-cols-1 items-start gap-6 '>
       <div className='flex items-center justify-between max-w-md  py-0 flex-wrap gap-2'>
         <h2 className={`${chakraP.className} lg:text-2xl md:text-xl text-lg text-accent-pink leading-10 `}>
           {props.title}
         </h2>
         <div className='bg-text-white/50 w-px h-6'></div>
-        <p className='text-text-white italic weight-300 font-light text-base'>{props.date}</p>
+        <p className='text-text-white/50 italic weight-300 font-light text-base'>{props.date}</p>
       </div>
       {formatDesc}
     </div>

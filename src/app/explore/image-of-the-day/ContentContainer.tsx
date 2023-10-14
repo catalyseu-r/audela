@@ -10,9 +10,10 @@ import DescriptionContainer from './DescriptionContainer';
 import { BsCalendarDate as CalendarIcon } from 'react-icons/bs';
 import ReactDatePicker from 'react-datepicker';
 import { Variants, motion } from 'framer-motion';
-import { FaHandHolding as HandIcon, FaRegHeart as HearthIcon } from 'react-icons/fa';
+import { FaHandHolding as HandIcon, FaRegHeart as HeartIcon } from 'react-icons/fa';
 import { GoShareAndroid as ShareIcon } from 'react-icons/go';
 import Loading from './loading';
+import toast from 'react-hot-toast';
 
 interface ContentInterface {
   data: ImageOfTheDay;
@@ -20,6 +21,7 @@ interface ContentInterface {
 
 const ContentContainer = (props: ContentInterface) => {
   const [currentDate, setCurrentDate] = React.useState<Date | any>(new Date());
+  const [isLikeAnimation, setIsLikeAnimation] = React.useState<boolean>(false);
 
   const [contentState, setContentState] = React.useState({
     image: props.data.url,
@@ -39,6 +41,43 @@ const ContentContainer = (props: ContentInterface) => {
     exit: { opacity: 0, transform: 'translateX(100%)' },
     enter: { opacity: 1, transform: 'translateX(0)' },
   };
+
+  const handleLikeAnimation = React.useCallback(() => {
+    setIsLikeAnimation(true);
+
+    setTimeout(
+      () =>
+        toast.custom(
+          (t) => (
+            <div
+              // draggable
+              className={`${t.visible ? 'animate-enter ' : 'animate-leave'} max-w-md w-full bg-text-white rounded-sm 
+              z-50 pointer-events-auto transition-all grid grid-cols-1 px-4 py-2 gap-4`}
+            >
+              <div className='grid grid-cols-1 gap-2'>
+                <p className='text-base font-light leading-normal text-bg-black/50'>
+                  Looks like you&apos;ve hit the like button 😍
+                </p>
+                <p className='text-base leading-normal font-light text-bg-black'>
+                  I will build comment/like/save system soon. In the meantime you can enjoy this amazing message.
+                </p>
+              </div>
+
+              <button
+                onClick={() => toast.dismiss(t.id)}
+                className='bg-deep-green text-text-white font-normal text-base w-max place-self-end px-4 py-2 rounded'
+              >
+                Ok 👩🏻‍🚀
+              </button>
+            </div>
+          ),
+          { duration: 1500 }
+        ),
+      700
+    );
+
+    setTimeout(() => setIsLikeAnimation(false), 600);
+  }, []);
 
   React.useEffect(() => {
     const handleUserCalendar = async () => {
@@ -68,7 +107,7 @@ const ContentContainer = (props: ContentInterface) => {
 
   const CalendarLabel = () => {
     return (
-      <div className='flex flex-col items-start justify-end gap-2 lg:px-5 '>
+      <div className='flex flex-col items-start justify-end gap-2  lg:px-5 '>
         <p className='text-text-white text-base italic font-light leading-normal'>Got a specific date in mind?</p>
 
         <div className='flex group items-center justify-between border-b max-w-[11.5rem]  border-b-interactive-green/50 focus-within:border-b-interactive-green transition-colors duration-300 px-4 py-2 '>
@@ -90,13 +129,13 @@ const ContentContainer = (props: ContentInterface) => {
   };
 
   return (
-    <div className='mt-24 flex flex-col gap-8'>
+    <div className='mt-24 w-full flex flex-col gap-8'>
       <div className=' flex w-full justify-between items-center flex-wrap gap-8 '>
         <Breadcrumbs />
         <CalendarLabel />
       </div>
 
-      <div className='grid w-full lg:grid-cols-2 md:grid-cols-1 gap-6 md:items-start items-center grid-flow-dense'>
+      <div className='grid w-full lg:grid-cols-2 grid-cols-1 gap-6 md:place-items-start items-center grid-flow-dense'>
         {isLoading ? (
           <Loading />
         ) : (
@@ -113,15 +152,31 @@ const ContentContainer = (props: ContentInterface) => {
               initial='exit'
               animate='enter'
               transition={{ duration: 0.5, delay: 1 }}
-              className='relative'
             >
-              <div className='relative w-full lg:max-w-lg xl:h-[40rem] md:h-[30rem] shadow-custom-image-strong-shadow aspect-square lg:col-start-2 col-start-1'>
+              <div className='relative md:h-[40rem] h-[35rem] flex flex-col gap-20 items-start justify-start '>
                 <ImageContainer image={contentState.image} />
-              </div>
-              <div className=''>
-                <ShareIcon className={`text-2xl text-interactive-green/50`} />
-                <HandIcon className={`text-2xl text-interactive-green/50`} />
-                <HearthIcon className={`text-2xl text-interactive-green/50`} />
+
+                <div className='flex lg:w-5/6 items-center justify-end gap-9 '>
+                  <div
+                    onClick={() => !isLikeAnimation && handleLikeAnimation()}
+                    className='w-12 h-12 group hover:border-interactive-green transition-all cursor-pointer relative rounded-full border border-interactive-green/50 grid place-items-center'
+                  >
+                    <HeartIcon
+                      className={`text-lg text-interactive-green/50 absolute bottom-1/2 left-[47%] ${
+                        isLikeAnimation && 'animate-animate-heart'
+                      }  transition-all`}
+                    />
+                    <HandIcon
+                      className={`text-3xl transition-all origin-left ${
+                        isLikeAnimation && 'animate-animate-hand'
+                      } text-interactive-green/50`}
+                    />
+                  </div>
+
+                  <div className='w-12 h-12 rounded-full border border-interactive-green/50 grid place-items-center'>
+                    <ShareIcon className={`text-3xl text-interactive-green/50`} />
+                  </div>
+                </div>
               </div>
             </motion.div>
           </>
