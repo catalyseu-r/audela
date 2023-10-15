@@ -19,6 +19,7 @@ interface ContextProps {
   intersectionElements: {
     landing: boolean;
     mission: boolean;
+    missionArticle: boolean;
     about: boolean;
     contact: boolean;
   };
@@ -45,6 +46,7 @@ interface ContextProps {
     React.SetStateAction<{
       landing: boolean;
       mission: boolean;
+      missionArticle: boolean;
       about: boolean;
       contact: boolean;
     }>
@@ -70,6 +72,7 @@ const GlobalContext = React.createContext<ContextProps>({
   intersectionElements: {
     landing: false,
     mission: false,
+    missionArticle: false,
     about: false,
     contact: false,
   },
@@ -102,6 +105,7 @@ export const GlobalContextProvider = ({ children }: any) => {
   const [intersectionElements, setIntersectionElements] = React.useState({
     landing: false,
     mission: false,
+    missionArticle: false,
     about: false,
     contact: false,
   });

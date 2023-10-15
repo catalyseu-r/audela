@@ -18,8 +18,8 @@ const LandingContent = () => {
   const { setIntersectionElements, intersectionElements } = useGlobalContext();
 
   const pageSections = ['landing', 'mission', 'about', 'contact'];
-  const landingSectionRef = React.useRef(null);
-  const containerRef = React.useRef(null);
+  const landingSectionRef = React.useRef<HTMLDivElement | null>(null);
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
     const landingSectionObserver = new IntersectionObserver(
@@ -34,7 +34,6 @@ const LandingContent = () => {
     landingSectionRef.current && landingSectionObserver.observe(landingSectionRef.current);
 
     const updateClientContainerWidth = () =>
-      //@ts-ignore
       setContainerWidth(containerRef.current ? containerRef.current.clientWidth : 0);
 
     window && window.addEventListener('resize', updateClientContainerWidth);
@@ -46,7 +45,7 @@ const LandingContent = () => {
   }, [setIntersectionElements]);
 
   React.useEffect(() => {
-    const updateClientScrollPostion = () => setScrollPosition(window.scrollY);
+    const updateClientScrollPostion = () => window.scrollY < 772 && setScrollPosition(window.scrollY);
 
     window && window.addEventListener('scroll', updateClientScrollPostion);
 
@@ -84,7 +83,7 @@ const LandingContent = () => {
           {/* custom-scrollbar */}
           <div
             style={{
-              transform: `translateY(${scrollPosition / 5.5}px) translateZ(0) `,
+              transform: `translateY(${scrollPosition / 3.5}px) translateZ(0) `,
               transitionTimingFunction: 'cubic-bezier(0,.79,.65,.99)',
               transitionDuration: '250ms',
             }}

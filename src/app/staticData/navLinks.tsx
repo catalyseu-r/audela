@@ -18,7 +18,7 @@ export const navLinks = [
       { title: 'Weather on Mars', href: '/weather-on-mars', icon: LockIcon },
     ],
   },
-  { title: 'Our mission', delay: 0.8, icon: PlanetIcon },
-  { title: 'About', delay: 1.2, icon: NoteBookIcon },
-  { title: 'Contact', delay: 1.4, icon: MailIcon },
+  { title: 'Our mission', delay: 0.8, icon: PlanetIcon, href: '/#mission' },
+  { title: 'About', delay: 1.2, icon: NoteBookIcon, href: '/#about' },
+  { title: 'Contact', delay: 1.4, icon: MailIcon, href: '/#contact' },
 ];

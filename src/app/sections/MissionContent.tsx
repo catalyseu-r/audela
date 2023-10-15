@@ -19,9 +19,10 @@ const MissionContent = (props: CommonSectionProps) => {
 
   const { setIntersectionElements, intersectionElements } = useGlobalContext();
 
-  const { mission } = intersectionElements;
+  const { missionArticle } = intersectionElements;
 
   const missionSectionRef = React.useRef(null);
+  const missionArticleRef = React.useRef(null);
 
   React.useEffect(() => {
     const missionObserver = new IntersectionObserver(
@@ -30,12 +31,24 @@ const MissionContent = (props: CommonSectionProps) => {
           return { ..._prev, mission: entry.isIntersecting };
         }),
 
-      { rootMargin: '350px', threshold: 0.5 }
+      { rootMargin: '142px', threshold: 0.5 }
+    );
+
+    const missionArticleObserver = new IntersectionObserver(
+      ([entry]) =>
+        setIntersectionElements((_prev) => {
+          return { ..._prev, missionArticle: entry.isIntersecting };
+        }),
+      { rootMargin: '-200px' }
     );
 
     missionSectionRef.current && missionObserver.observe(missionSectionRef.current);
+    missionArticleRef.current && missionArticleObserver.observe(missionArticleRef.current);
 
-    return () => missionObserver.disconnect();
+    return () => {
+      missionObserver.disconnect();
+      missionArticleObserver.disconnect();
+    };
   }, [setIntersectionElements]);
 
   return (
@@ -108,19 +121,26 @@ const MissionContent = (props: CommonSectionProps) => {
 
           <div className='flex relative flex-col w-full md:w-8/12 lg:w-5/12'>
             <div className='relative  h-80 lg:max-w-[416px]  aspect-square lg:shadow-custom-img-shadow lg:hover:shadow-none lg:transition-shadow duration-500 cursor-pointer'>
-              <Image className='object-cover' src={roverImg} fill loading='lazy' alt='Mars rover in action' />
+              <Image
+                ref={missionArticleRef}
+                className='object-cover'
+                src={roverImg}
+                fill
+                loading='lazy'
+                alt='Mars rover in action'
+              />
             </div>
 
-            <div className='absolute z-10 w-full will-change-contents '>
+            <div className='absolute bottom-0 z-10 w-full will-change-contents '>
               <Bubble linkTo={null} currentInView={'mission'} />
-              <LineOne isIntersecting={mission} />
-              <LineTwo isIntersecting={mission} />
-              <LineThree isIntersecting={mission} />
-              <LineFour isIntersecting={mission} />
+              <LineOne isIntersecting={missionArticle} />
+              <LineTwo isIntersecting={missionArticle} />
+              <LineThree isIntersecting={missionArticle} />
+              <LineFour isIntersecting={missionArticle} />
 
               <div
                 className={` transition-opacity duration-700 ${
-                  mission ? 'opacity-100' : 'opacity-0'
+                  missionArticle ? 'opacity-100' : 'opacity-0'
                 } flex  flex-col items-end w-10/12 md:w-8/12 absolute top-full translate-x-6 rounded translate-y-48 lg:w-[22rem] bg-text-white p-4 lg:gap-6 md:gap-4 gap-2 `}
               >
                 <h3 className='text-bg-black font-normal leading-6 text-xl self-stretch px-4'>Photographing Mars</h3>

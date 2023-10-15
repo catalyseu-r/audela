@@ -15,7 +15,7 @@ interface SocialStackProps {
 
 const SocialStack = (props: SocialStackProps) => {
   return (
-    <div className={`${props.isInMenu ? '' : 'w-full'} flex items-center justify-between gap-8 `}>
+    <div className={`${props.isInMenu ? 'w-32 flex-wrap ' : 'w-full'} flex items-center content-center gap-8 `}>
       <LinkedinIcon
         className={`text-deep-green  text-xl cursor-pointer hover:text-interactive-green transform duration-500 hover:scale-125 transition-all `}
       />

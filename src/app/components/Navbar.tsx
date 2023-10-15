@@ -17,14 +17,15 @@ import UserInput from './UserInput';
 import { useGlobalContext } from '../contexts/store';
 import Image from 'next/image';
 import elipseOne from '../img/Ellipse 20.png';
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [isMobileNavOpen, setisMobileNavOpen] = React.useState<boolean>(false);
   const [isDropdown, setIsDropdown] = React.useState<boolean>(false);
   const [scrollPosition, setScrollPosition] = React.useState<number>(0);
   const containerControls = useAnimation();
   const linkControls = useAnimation();
-  const handleNav = () => setIsOpen(!isOpen);
+  const handleNav = () => setisMobileNavOpen(!isMobileNavOpen);
   const pathName = usePathname();
 
   const { isSearchActive } = useGlobalContext();
@@ -32,7 +33,7 @@ const Navbar = () => {
   React.useEffect(() => {
     containerControls.start({ opacity: 0, transform: 'translateY(-200%)' });
     linkControls.start({ opacity: 0, transform: 'translateX(-25%)', transition: { delay: 0 } });
-    if (isOpen) {
+    if (isMobileNavOpen) {
       containerControls.start({ opacity: 1, transform: 'translateY(0)' });
       linkControls.start({ opacity: 1, transform: 'translateX(0)' });
     }
@@ -45,7 +46,36 @@ const Navbar = () => {
       setIsDropdown(false);
       document.removeEventListener('scroll', () => updatePosition);
     };
-  }, [containerControls, isOpen, linkControls]);
+  }, [containerControls, isMobileNavOpen, linkControls]);
+
+  const handleProfileClick = () =>
+    toast.custom(
+      (t) => (
+        <div
+          // draggable
+          className={`${t.visible ? 'animate-enter ' : 'animate-leave'} max-w-md w-full bg-text-white rounded-sm 
+              z-50 pointer-events-auto transition-all grid grid-cols-1 px-4 py-2 gap-4`}
+        >
+          <div className='grid grid-cols-1 gap-2'>
+            <p className='text-base font-light leading-normal text-bg-black/50'>
+              Looks like you&apos;ve hit profile button 😍
+            </p>
+            <p className='text-base leading-normal font-light text-bg-black'>
+              I&apos;m planning on building profile feature together with comments etc, maybe you will event be able to
+              upload your own profile photo 😮 so stay tuned!
+            </p>
+          </div>
+
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className='bg-deep-green text-text-white font-normal text-base w-max place-self-end px-4 py-2 rounded'
+          >
+            Ok 👩🏻‍🚀
+          </button>
+        </div>
+      ),
+      { duration: 4000 }
+    );
 
   return (
     <nav
@@ -54,46 +84,50 @@ const Navbar = () => {
       } ${scrollPosition > 150 ? 'backdrop-blur-sm' : ''} transition-all`}
     >
       <div className='flex  gap-4 justify-between relative  items-center  lg:max-w-container-lg md:w-5/6 mx-auto md:px-0 px-4 '>
-        <div className={`flex gap-2 items-center ${!isOpen && 'hidden'} z-40`}>
+        <button onClick={handleProfileClick} className={`flex gap-2 items-center ${!isMobileNavOpen && 'hidden'} z-40`}>
           <UserIcon className={`text-text-white/50 text-xl`} />
           <p className='text-text-white leading-6 text-xl font-light italic'>Visitor</p>
-        </div>
+        </button>
         <Link
           href={'/'}
           className={` ${chakraP.className}  lg:text-3xl text-2xl uppercase z-40  ${
-            isOpen ? 'hidden ' : 'text-accent-pink'
-          }  ${isSearchActive ? 'hidden' : 'inline-block w-fit'}`}
+            isMobileNavOpen ? 'hidden ' : 'text-accent-pink'
+          }  ${isSearchActive ? 'hidden' : 'inline-block'} w-fit`}
         >
           au-delà
         </Link>
-        <div className='flex items-center gap-14'>
-          <div
-            className={` ${
-              isSearchActive ? 'md:hidden' : 'md:flex'
-            } items-center justify-between gap-16 text-base font-light text-main-white hidden`}
-          >
-            {navLinks.map((link) =>
-              link.title !== 'Explore' ? (
-                <p key={link.title} className='cursor-pointer transition-all hover:text-interactive-green'>
-                  {link.title}
-                </p>
-              ) : null
-            )}
-          </div>
 
-          <div className={`flex items-center gap-6 ${isSearchActive ? 'w-full h-[42px]' : ''}  transition-all`}>
-            <UserInput />
-            {isOpen ? (
-              <CloseIcon className='md:hidden text-deep-green text-2xl z-50' onClick={handleNav} />
-            ) : (
-              <BurgerMenu
-                className={`${
-                  isSearchActive ? 'scale-0 hidden' : ''
-                } md:hidden text-main-white text-2xl z-50 transition-all`}
-                onClick={handleNav}
-              />
-            )}
-          </div>
+        <div
+          className={` ${
+            isSearchActive ? 'md:hidden' : 'md:flex'
+          } items-center justify-between gap-16 text-base font-light text-main-white hidden`}
+        >
+          {navLinks.map((link) =>
+            link.title !== 'Explore' ? (
+              <Link
+                href={link.href || ''}
+                replace
+                key={link.title}
+                className='cursor-pointer transition-all hover:text-interactive-green'
+              >
+                {link.title}
+              </Link>
+            ) : null
+          )}
+        </div>
+
+        <div className={`flex items-center gap-6 ${isSearchActive && 'w-full h-[42px]'}  `}>
+          <UserInput />
+          {isMobileNavOpen ? (
+            <CloseIcon className='md:hidden text-deep-green text-2xl z-50' onClick={handleNav} />
+          ) : (
+            <BurgerMenu
+              className={`${
+                isSearchActive ? 'scale-0 hidden' : ''
+              } md:hidden text-main-white text-2xl z-50 transition-all`}
+              onClick={handleNav}
+            />
+          )}
         </div>
       </div>
 
@@ -149,11 +183,11 @@ const Navbar = () => {
                   <motion.div
                     onClick={() => setIsDropdown(!isDropdown)}
                     className={`
-                    ${isOpen && 'cursor-auto '}
+                    ${isMobileNavOpen && 'cursor-auto '}
                     cursor-pointer`}
                   >
                     <div className='flex justify-between items-center gap-4'>
-                      <p className='text-text-white text-xl font-light'>Explore</p>
+                      <p className='text-text-white text-xl font-light'>{link.title}</p>
                       <DownIcon
                         className={`text-base  ${
                           isDropdown ? 'rotate-180 text-deep-green' : 'rotate-0 text-text-white'
@@ -161,7 +195,7 @@ const Navbar = () => {
                       />
                     </div>
                     <div
-                      className={` transition-[top]  duration-250 ease-in-out flex-col left-0 gap-14 absolute  bg-bg-black px-4 py-8 items-start justify-start rounded ${
+                      className={` transition-[top]  duration-250 ease-in-out flex-col left-0 gap-14 absolute  bg-bg-black px-4 py-12 items-start justify-start rounded ${
                         isDropdown ? 'flex top-12 border border-deep-green' : 'invisible top-0'
                       }`}
                     >
@@ -173,10 +207,10 @@ const Navbar = () => {
                           text-base leading-6 text-text-white font-light flex justify-start items-center content-start  gap-4`}
                             key={sub.title}
                             href={sub.href}
-                            onClick={() => setIsOpen(false)}
+                            onClick={() => setisMobileNavOpen(false)}
                           >
-                            <Icon className={`text-xl text-text-white`} />
-                            <p onClick={() => setIsOpen(false)}>{sub.title}</p>
+                            <Icon className={`text-xl text-deep-green`} />
+                            <p onClick={() => setisMobileNavOpen(false)}>{sub.title}</p>
                           </Link>
                         );
                       })}
@@ -194,29 +228,36 @@ const Navbar = () => {
                 className={`${isDropdown ? '-z-10' : ''} flex justify-start items-center py-2 px-4 w-max gap-8 `}
               >
                 <Icon className={`text-2xl text-deep-green`} />
-                <p onClick={() => setIsOpen(false)} className='text-main-white text-xl font-light leading-6 text-left'>
+                <Link
+                  replace
+                  onClick={() => setisMobileNavOpen(false)}
+                  href={link.href || ''}
+                  className='text-main-white text-xl font-light leading-6 text-left'
+                >
                   {link.title}
-                </p>
+                </Link>
               </motion.div>
             );
           })}
         </div>
 
-        <div className='w-48 h-px bg-dimmed-white-full mx-auto mt-16'></div>
+        <div className='w-20 h-px bg-accent-pink/10 mx-auto mt-16'></div>
 
-        <div className='flex w-full justify-between items-center gap-4 mt-16'>
+        <div className='flex w-full justify-between items-center gap-4 mt-16 px-4'>
           <SocialStack isInMenu />
-          <div className='w-px h-20 bg-dimmed-white-full'></div>
-          <p className='text-main-white text-xl leading-10 font-light'>Have an app idea? Get in touch! 📱</p>
+
+          <p className='text-main-white text-base leading-10 font-light max-w-[8rem]'>
+            Have an app idea? Get in touch! 📱
+          </p>
         </div>
 
         <div className='flex flex-col items-center justify-center mt-16'>
           <h2
-            className={` ${chakraP.className}  text-main-red text-3xl leading-[3.5rem] uppercase tracking-wide text-center`}
+            className={` ${chakraP.className}  text-accent-pink text-subHeading leading-10 uppercase tracking-wide text-center`}
           >
             au-delà
           </h2>
-          <p className='text-dimmed-white text-center lowercase text-xs'>The stargazer’s dream</p>
+          <p className='text-dimmed-white text-center lowercase text-xs'>The stargazer&apos;s dream</p>
         </div>
       </motion.div>
     </nav>
