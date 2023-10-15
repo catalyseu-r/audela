@@ -78,36 +78,36 @@ const AboutContent = (props: CommonSectionProps) => {
           <div className='grid col-span-1 gap-7 max-w-3xl self-stretch mx-auto'>
             <div className='flex items-center gap-3'>
               <FlameIcon className={`text-interactive-green text-xl shrink-0`} />
-              <p className='text-text-white text-xl leading-8 font-medium'>
+              <p className='text-text-white lg:text-xl md:text-lg text-base leading-8 font-medium'>
                 Ignited by a love for art and design, I embarked on a journey of self-discovery.
               </p>
             </div>
-            <p className='text-text-white text-xl leading-8 font-light px-8'>
+            <p className='text-text-white lg:text-xl md:text-lg text-base leading-8 font-light px-8'>
               This project is a labour of love, designed and developed from scratch by a self-taught frontend developer
               who is passionate about exploring the realms of UI/UX design. It&apos;s a testament to the dedication and
               commitment of an individual on a mission to merge art and technology.
             </p>
 
-            <p className='text-deep-green text-xl leading-8 font-light italic px-8'>
+            <p className='text-deep-green lg:text-xl md:text-lg text-base leading-8 font-light italic px-8'>
               Every pixel, every line of code, meticulously designed and developed to deliver a seamless and captivating
               experience.
             </p>
             <div className='flex items-center gap-3'>
-              <RocketIcon className={`text-interactive-green text-xl shrink-0`} />
-              <p className='text-text-white text-xl leading-8 font-medium'>
+              <RocketIcon className={`text-interactive-green lg:text-xl md:text-lg text-base shrink-0`} />
+              <p className='text-text-white lg:text-xl md:text-lg text-base leading-8 font-medium'>
                 I am actively pursuing new career opportunities.
               </p>
             </div>
 
-            <p className='text-text-white text-xl leading-8 font-light px-8'>
+            <p className='text-text-white lg:text-xl md:text-lg text-base leading-8 font-light px-8'>
               As part of my professional journey, I dedicate my time to both job-seeking and developing this app.
               It&apos;s a strategic move towards personal and career growth, all while continuing to work on this
               ambitious project.
             </p>
-            <p className='text-text-white text-xl leading-8 font-light px-8'>
+            <p className='text-text-white lg:text-xl md:text-lg text-base leading-8 font-light px-8'>
               Thank you for joining me on this cosmic journey.
             </p>
-            <p className='text-text-white text-xl leading-8 font-light px-8'>
+            <p className='text-text-white lg:text-xl md:text-lg text-base leading-8 font-light px-8'>
               Together, we&apos;`re reaching for the stars.
             </p>
           </div>

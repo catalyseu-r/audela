@@ -39,7 +39,7 @@ export default function Explore() {
           height={140}
         />
         <Navbar />
-        <div className='lg:max-w-container-lg md:w-5/6 w-full mt-32 md:px-0 px-4 mx-auto '>
+        <div className='lg:max-w-container-lg md:w-5/6 w-full lg:mt-24 mt-16 md:px-0 px-4 mx-auto '>
           <Breadcrumbs />
           <Options />
         </div>

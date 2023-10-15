@@ -16,13 +16,17 @@ const Options = () => {
     <div className='grid content-center justify-items-center gap-16 mt-8 w-full'>
       <div className='flex flex-col items-center justify-center gap-14 max-w-[26rem] w-full'>
         <div className='flex flex-col items-center justify-center gap-1'>
-          <h2 className={`${chakraP.className} text-text-white text-2xl`}>What do you want to search for?</h2>
-          <h3 className='text-text-white/50 text-base'>Locked features will be released in future updates</h3>
+          <h2 className={`${chakraP.className} text-text-white text-2xl text-center md:text-left`}>
+            What do you want to search for?
+          </h2>
+          <h3 className='text-text-white/50 text-base text-center md:text-left'>
+            Locked features will be released in future updates
+          </h3>
         </div>
         <div className='w-full  grid grid-cols-1 items-center gap-12'>
-          {featureOptions.map((option, id) => {
-            const Icon = featureOptions[id].icon;
-            return (
+          {featureOptions.map((option, index) => {
+            const Icon = featureOptions[index].icon;
+            return index !== featureOptions.length - 1 ? (
               <Link
                 className='z-10 group lg:py-6 py-4 lg:px-8 px-4 flex items-center justify-between self-stretch border border-interactive-green/50 lg:text-2xl md:text-lg text-base  text-text-white rounded hover:border-interactive-green transition-all duration-300'
                 href={`/explore/${option.title.split(' ').join('-').toLowerCase()}`}
@@ -33,6 +37,17 @@ const Options = () => {
                 />
                 {option.title}
               </Link>
+            ) : (
+              <button
+                className='z-10 group lg:py-6 py-4 lg:px-8 px-4 flex items-center justify-between self-stretch border border-interactive-green/10 lg:text-2xl md:text-lg text-base  text-text-white rounded hover:border-interactive-green transition-all duration-300'
+                key={option.title}
+                disabled
+              >
+                <Icon
+                  className={'group-hover:text-interactive-green group-hover:scale-125 transition-all duration-300'}
+                />
+                {option.title}
+              </button>
             );
           })}
         </div>

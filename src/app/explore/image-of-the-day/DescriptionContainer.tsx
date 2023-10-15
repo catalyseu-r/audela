@@ -19,7 +19,7 @@ const DescriptionContainer = (props: DescriptionContainerProps) => {
 
   return (
     <div className='grid grid-cols-1 items-start gap-6 '>
-      <div className='flex items-center justify-between max-w-md  py-0 flex-wrap gap-2'>
+      <div className='flex items-center justify-start w-full lg:max-w-md  py-0 flex-wrap lg:gap-2 gap-4'>
         <h2 className={`${chakraP.className} lg:text-2xl md:text-xl text-lg text-accent-pink leading-10 `}>
           {props.title}
         </h2>

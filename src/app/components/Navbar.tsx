@@ -7,7 +7,7 @@ const chakraP = Chakra_Petch({ weight: '400', subsets: ['latin'] });
 import { RxHamburgerMenu as BurgerMenu } from 'react-icons/rx';
 import { TfiClose as CloseIcon } from 'react-icons/tfi';
 import { motion, useAnimation } from 'framer-motion';
-import { BiPlanet as PlanetIcon } from 'react-icons/bi';
+import { BiPlanet as PlanetIcon, BiUserCircle as UserIcon } from 'react-icons/bi';
 import { BsChevronDown as DownIcon, BsImage as ImageIcon } from 'react-icons/bs';
 import { AiOutlineLock as LockIcon } from 'react-icons/ai';
 import SocialStack from './SocialStack';
@@ -15,6 +15,8 @@ import { navLinks } from '../staticData/navLinks';
 import { usePathname } from 'next/navigation';
 import UserInput from './UserInput';
 import { useGlobalContext } from '../contexts/store';
+import Image from 'next/image';
+import elipseOne from '../img/Ellipse 20.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
@@ -47,45 +49,51 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`w-full pt-4 inline-block py-2  z-10 fixed top-0 ${isSearchActive ? 'px-4' : ''} ${
+      className={`w-full pt-4 inline-block py-2  z-40 fixed top-0 ${isSearchActive ? 'px-4' : ''} ${
         pathName === '/' ? 'bg-transparent' : 'bg-bg-black/50'
       } ${scrollPosition > 150 ? 'backdrop-blur-sm' : ''} transition-all`}
     >
       <div className='flex  gap-4 justify-between relative  items-center  lg:max-w-container-lg md:w-5/6 mx-auto md:px-0 px-4 '>
+        <div className={`flex gap-2 items-center ${!isOpen && 'hidden'} z-40`}>
+          <UserIcon className={`text-text-white/50 text-xl`} />
+          <p className='text-text-white leading-6 text-xl font-light italic'>Visitor</p>
+        </div>
         <Link
           href={'/'}
-          className={` ${chakraP.className} sm:grow lg:text-3xl text-2xl uppercase z-40  ${
-            isOpen ? 'text-main-orange-accent ' : 'text-accent-pink'
-          }  ${isSearchActive ? 'hidden' : 'block'}`}
+          className={` ${chakraP.className}  lg:text-3xl text-2xl uppercase z-40  ${
+            isOpen ? 'hidden ' : 'text-accent-pink'
+          }  ${isSearchActive ? 'hidden' : 'inline-block w-fit'}`}
         >
           au-delà
         </Link>
-        <div
-          className={` ${
-            isSearchActive ? 'md:hidden' : 'md:flex'
-          } items-center justify-between gap-16 text-base font-light text-main-white hidden`}
-        >
-          {navLinks.map((link) =>
-            link.title !== 'Explore' ? (
-              <p key={link.title} className='cursor-pointer transition-all hover:text-interactive-green'>
-                {link.title}
-              </p>
-            ) : null
-          )}
-        </div>
+        <div className='flex items-center gap-14'>
+          <div
+            className={` ${
+              isSearchActive ? 'md:hidden' : 'md:flex'
+            } items-center justify-between gap-16 text-base font-light text-main-white hidden`}
+          >
+            {navLinks.map((link) =>
+              link.title !== 'Explore' ? (
+                <p key={link.title} className='cursor-pointer transition-all hover:text-interactive-green'>
+                  {link.title}
+                </p>
+              ) : null
+            )}
+          </div>
 
-        <div className={`flex items-center gap-6 ${isSearchActive ? 'w-full h-[42px]' : ''} z-20 transition-all`}>
-          <UserInput />
-          {isOpen ? (
-            <CloseIcon className='md:hidden text-main-orange-accent text-2xl z-40' onClick={handleNav} />
-          ) : (
-            <BurgerMenu
-              className={`${
-                isSearchActive ? 'scale-0 hidden' : ''
-              } md:hidden text-main-white text-2xl z-40 transition-all`}
-              onClick={handleNav}
-            />
-          )}
+          <div className={`flex items-center gap-6 ${isSearchActive ? 'w-full h-[42px]' : ''}  transition-all`}>
+            <UserInput />
+            {isOpen ? (
+              <CloseIcon className='md:hidden text-deep-green text-2xl z-50' onClick={handleNav} />
+            ) : (
+              <BurgerMenu
+                className={`${
+                  isSearchActive ? 'scale-0 hidden' : ''
+                } md:hidden text-main-white text-2xl z-50 transition-all`}
+                onClick={handleNav}
+              />
+            )}
+          </div>
         </div>
       </div>
 
@@ -93,10 +101,39 @@ const Navbar = () => {
         animate={containerControls}
         initial={{ opacity: 0, transform: 'translateY(-200%)' }}
         transition={{ duration: 0.25 }}
-        className={`w-full  h-screen bg-main-black  px-4 z-30 fixed top-0 lg:hidden`}
+        className={`w-full  h-screen bg-bg-black  px-4 z-30 fixed top-0 lg:hidden`}
       >
-        <div className='flex flex-col mt-32 mx-auto gap-14 max-w-max '>
+        <Image
+          src={elipseOne}
+          alt='elipse'
+          className='object-cover animate-animate-elipse absolute top-0 left-0'
+          width={240}
+          height={240}
+        />
+        <Image
+          src={elipseOne}
+          alt='elipse'
+          className='object-cover animate-animate-elipse-short absolute top-1/2 left-1/2 delay-300'
+          width={240}
+          height={240}
+        />
+        <Image
+          src={elipseOne}
+          alt='elipse'
+          className='object-cover animate-animate-reverse absolute top-2/3 left-2/3 delay-500'
+          width={240}
+          height={240}
+        />
+        <Image
+          src={elipseOne}
+          alt='elipse'
+          className='object-cover animate-animate-reverse absolute bottom-2/3 left-4/4 delay-700'
+          width={140}
+          height={140}
+        />
+        <div className='flex flex-col mt-32 mx-auto gap-14 max-w-[12.815rem] '>
           {navLinks.map((link, index) => {
+            const Icon = navLinks[index].icon;
             if (link.title === 'Explore') {
               return (
                 <motion.div
@@ -104,11 +141,11 @@ const Navbar = () => {
                   transition={{ duration: 0.75, delay: link.delay }}
                   animate={linkControls}
                   key={link.title}
-                  className={`flex justify-start items-center py-2 px-4 border  gap-8 relative ${
-                    isDropdown ? ' border-transparent' : 'border-dimmed-accent'
+                  className={`flex justify-start items-center py-2 px-4 border  gap-8 relative rounded ${
+                    isDropdown ? ' border-transparent' : 'border-deep-green'
                   }`}
                 >
-                  {link.icon}
+                  <Icon className={`text-2xl text-deep-green`} />
                   <motion.div
                     onClick={() => setIsDropdown(!isDropdown)}
                     className={`
@@ -116,39 +153,33 @@ const Navbar = () => {
                     cursor-pointer`}
                   >
                     <div className='flex justify-between items-center gap-4'>
-                      <p className='text-main-white text-base font-light'>Explore</p>
+                      <p className='text-text-white text-xl font-light'>Explore</p>
                       <DownIcon
                         className={`text-base  ${
-                          isDropdown ? 'rotate-180 text-main-orange-accent' : 'rotate-0 text-main-white'
+                          isDropdown ? 'rotate-180 text-deep-green' : 'rotate-0 text-text-white'
                         } transition-all`}
                       />
                     </div>
                     <div
-                      className={`w-max transition-[top] z-50 duration-250 ease-in-out flex-col left-0 gap-16 absolute  h-auto bg-second-black px-4 py-2 items-start justify-start ${
-                        isDropdown ? 'flex top-12 border border-dimmed-accent' : 'invisible top-0'
+                      className={` transition-[top]  duration-250 ease-in-out flex-col left-0 gap-14 absolute  bg-bg-black px-4 py-8 items-start justify-start rounded ${
+                        isDropdown ? 'flex top-12 border border-deep-green' : 'invisible top-0'
                       }`}
                     >
-                      {link.subOptions?.map((sub) => (
-                        <Link
-                          className={`${
-                            sub.title === 'Image of the day' || sub.title === 'Planets'
-                              ? 'text-main-white'
-                              : 'text-dimmed-white'
-                          } text-base font-light flex justify-start items-center content-start w-full gap-4`}
-                          key={sub.title}
-                          href={sub.href}
-                          onClick={() => setIsOpen(false)}
-                        >
-                          {sub.title === 'Image of the day' ? (
-                            <ImageIcon />
-                          ) : sub.title === 'Planets' ? (
-                            <PlanetIcon />
-                          ) : (
-                            <LockIcon />
-                          )}
-                          <p onClick={() => setIsOpen(false)}>{sub.title}</p>
-                        </Link>
-                      ))}
+                      {link.subOptions?.map((sub, index) => {
+                        const Icon = link.subOptions[index].icon;
+                        return (
+                          <Link
+                            className={`
+                          text-base leading-6 text-text-white font-light flex justify-start items-center content-start  gap-4`}
+                            key={sub.title}
+                            href={sub.href}
+                            onClick={() => setIsOpen(false)}
+                          >
+                            <Icon className={`text-xl text-text-white`} />
+                            <p onClick={() => setIsOpen(false)}>{sub.title}</p>
+                          </Link>
+                        );
+                      })}
                     </div>
                   </motion.div>
                 </motion.div>
@@ -162,11 +193,8 @@ const Navbar = () => {
                 animate={linkControls}
                 className={`${isDropdown ? '-z-10' : ''} flex justify-start items-center py-2 px-4 w-max gap-8 `}
               >
-                {link.icon}
-                <p
-                  onClick={() => setIsOpen(false)}
-                  className='text-main-white text-base font-light leading-6 text-left'
-                >
+                <Icon className={`text-2xl text-deep-green`} />
+                <p onClick={() => setIsOpen(false)} className='text-main-white text-xl font-light leading-6 text-left'>
                   {link.title}
                 </p>
               </motion.div>

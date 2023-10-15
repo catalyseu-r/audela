@@ -28,6 +28,7 @@ const ContentContainer = (props: ContentInterface) => {
     desc: props.data.explanation,
     date: props.data.date,
     title: props.data.title,
+    error: false,
   });
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -71,7 +72,7 @@ const ContentContainer = (props: ContentInterface) => {
               </button>
             </div>
           ),
-          { duration: 1500 }
+          { duration: 4000 }
         ),
       700
     );
@@ -93,12 +94,22 @@ const ContentContainer = (props: ContentInterface) => {
               desc: explanation,
               date: date,
               title: title,
+              error: false,
             };
           });
           setIsLoading(false);
+        } else {
+          setIsLoading(false);
+          setContentState((_prev) => {
+            return { ..._prev, error: true };
+          });
+          toast.error(
+            "There was a problem with your request (if current time is 00-05am it's very possible that the image has not been updated for today)"
+          );
         }
       } catch (error) {
         setIsLoading(false);
+        console.log(error);
       }
     };
 
@@ -107,7 +118,7 @@ const ContentContainer = (props: ContentInterface) => {
 
   const CalendarLabel = () => {
     return (
-      <div className='flex flex-col items-start justify-end gap-2  lg:px-5 '>
+      <div className='flex flex-col lg:items-start items-end justify-end gap-2  lg:px-5 lg:w-auto w-full lg:justify-self-auto justify-self-center'>
         <p className='text-text-white text-base italic font-light leading-normal'>Got a specific date in mind?</p>
 
         <div className='flex group items-center justify-between border-b max-w-[11.5rem]  border-b-interactive-green/50 focus-within:border-b-interactive-green transition-colors duration-300 px-4 py-2 '>
@@ -129,18 +140,26 @@ const ContentContainer = (props: ContentInterface) => {
   };
 
   return (
-    <div className='mt-24 w-full flex flex-col gap-8'>
+    <div className='lg:mt-24 mt-16 w-full flex flex-col gap-8'>
       <div className=' flex w-full justify-between items-center flex-wrap gap-8 '>
         <Breadcrumbs />
         <CalendarLabel />
       </div>
 
-      <div className='grid w-full lg:grid-cols-2 grid-cols-1 gap-6 md:place-items-start items-center grid-flow-dense'>
+      <div className='grid w-full  md:mt-24 lg:grid-cols-2 grid-cols-1 lg:gap-6 gap-24 md:place-items-start items-center'>
         {isLoading ? (
           <Loading />
+        ) : contentState.error ? (
+          <></>
         ) : (
           <>
-            <motion.div variants={variantsArticle} initial='exit' animate='enter' transition={{ duration: 0.5 }}>
+            <motion.div
+              variants={variantsArticle}
+              initial='exit'
+              animate='enter'
+              transition={{ duration: 0.5 }}
+              className='lg:order-1 order-2'
+            >
               <DescriptionContainer
                 date={dayjs(contentState.date).format('MM/DD/YYYY')}
                 title={contentState.title}
@@ -152,11 +171,12 @@ const ContentContainer = (props: ContentInterface) => {
               initial='exit'
               animate='enter'
               transition={{ duration: 0.5, delay: 1 }}
+              className='order-1 lg:order-2 w-auto md:w-full'
             >
-              <div className='relative md:h-[40rem] h-[35rem] flex flex-col gap-20 items-start justify-start '>
+              <div className='relative md:h-[40rem] h-[35rem] flex flex-col  gap-6 lg:gap-20 items-start justify-start '>
                 <ImageContainer image={contentState.image} />
 
-                <div className='flex lg:w-5/6 items-center justify-end gap-9 '>
+                <div className='flex lg:w-5/6 w-full  items-center justify-start gap-9 '>
                   <div
                     onClick={() => !isLikeAnimation && handleLikeAnimation()}
                     className='w-12 h-12 group hover:border-interactive-green transition-all cursor-pointer relative rounded-full border border-interactive-green/50 grid place-items-center'

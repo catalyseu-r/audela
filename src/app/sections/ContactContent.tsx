@@ -73,22 +73,24 @@ const ContactContent = (props: CommonSectionProps) => {
         className='transition-opacity min-h-custom-page-min lg:max-w-container-lg md:w-5/6  w-full md:px-0 px-4 mx-auto  grid grid-cols-1 relative '
       >
         <div className='max-w-3xl grid grid-cols-1 gap-14 items-start py-2 px-4'>
-          <h2 className='text-text-white text-subHeading leading-10 font-normal'>Got an App Idea? Let&lsquo;s Talk!</h2>
-          <p className='text-text-white text-2xl leading-10 font-light'>
+          <h2 className='text-text-white lg:text-subHeading md:text-2xl text-xl leading-10 font-normal'>
+            Got an App Idea? Let&lsquo;s Talk!
+          </h2>
+          <p className='text-text-white lg:text-2xl md:text-xl text-base leading-10 font-light'>
             Have a brilliant app concept in mind? I&lsquo;m all ears! Whether you&lsquo;re looking to bring your vision
             to life or explore new possibilities, don&lsquo;t hesitate to reach out.
           </p>
 
-          <p className='text-deep-green italic text-subHeading leading-10 font-light'>
+          <p className='text-deep-green italic lg:text-subHeading md:text-2xl text-xl leading-10 font-light'>
             I&lsquo;m excited to hear about your ideas and discuss how we can make them a reality.
           </p>
 
           <div className='flex items-center gap-2'>
-            <MailIcon className={`text-2xl text-interactive-green`} />
-            <p className='text-2xl text-text-white leading-6 font-normal'>
+            <MailIcon className={`lg:text-2xl md:text-xl text-base text-interactive-green`} />
+            <p className='lg:text-2xl md:text-xl text-base text-text-white leading-6 font-normal'>
               Contact me at:{' '}
               <a
-                className='underline text-deep-green text-2xl leading-6 font-normal'
+                className='underline text-deep-green lg:text-2xl md:text-xl text-base leading-6 font-normal'
                 href='mailto:catalysteur@gmail.com'
               >
                 catalysteur@gmail.com
@@ -97,43 +99,43 @@ const ContactContent = (props: CommonSectionProps) => {
           </div>
 
           <div className='grid items-start gap-4 grid-cols-1'>
-            <p className='text-text-white text-2xl leading-10 font-normal'>👋🏻 Say hi</p>
-            <div className='grid grid-cols-3 max-w-3xl gap-6 '>
+            <p className='text-text-white lg:text-2xl md:text-xl text-base leading-10 font-normal'>👋🏻 Say hi</p>
+            <div className='grid md:grid-cols-3 grid-cols-2 max-w-3xl gap-6 '>
               <div className='py-4 px-6 flex items-center justify-center gap-4 rounded border border-deep-green hover:border-interactive-green transition-all ease-in-out cursor-pointer group'>
                 <LinkedinIcon
-                  className={`text-deep-green  text-2xl cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
+                  className={`text-deep-green  lg:text-2xl md:text-xl text-base cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
                 />
-                <p className='text-text-white text-2xl leading-6 font-light'>@rudvl</p>
+                <p className='text-text-white lg:text-2xl md:text-xl text-base leading-6 font-light'>@rudvl</p>
               </div>
               <div className='py-4 px-6 flex items-center justify-center gap-4 rounded border border-deep-green hover:border-interactive-green transition-all ease-in-out cursor-pointer group'>
                 <GithubIcon
-                  className={`text-deep-green  text-2xl cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
+                  className={`text-deep-green  lg:text-2xl md:text-xl text-base cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
                 />
-                <p className='text-text-white text-2xl leading-6 font-light'>@rudvl</p>
+                <p className='text-text-white lg:text-2xl md:text-xl text-base leading-6 font-light'>@rudvl</p>
               </div>
               <div className='py-4 px-6 flex items-center justify-center gap-4 rounded border border-deep-green hover:border-interactive-green transition-all ease-in-out cursor-pointer group'>
                 <DribbleIcon
-                  className={`text-deep-green  text-2xl cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
+                  className={`text-deep-green  lg:text-2xl md:text-xl text-base cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
                 />
-                <p className='text-text-white text-2xl leading-6 font-light'>@rudvl</p>
+                <p className='text-text-white lg:text-2xl md:text-xl text-base leading-6 font-light'>@rudvl</p>
               </div>
               <div className='py-4 px-6 flex items-center justify-center gap-4 rounded border border-deep-green hover:border-interactive-green transition-all ease-in-out cursor-pointer group'>
                 <InstagramIcon
-                  className={`text-deep-green  text-2xl cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
+                  className={`text-deep-green  lg:text-2xl md:text-xl text-base cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
                 />
-                <p className='text-text-white text-2xl leading-6 font-light'>@rudvl</p>
+                <p className='text-text-white lg:text-2xl md:text-xl text-base leading-6 font-light'>@rudvl</p>
               </div>
               <div className='py-4 px-6 flex items-center justify-center gap-4 rounded border border-deep-green hover:border-interactive-green transition-all ease-in-out cursor-pointer group'>
                 <TwitterIcon
-                  className={`text-deep-green  text-2xl cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
+                  className={`text-deep-green  lg:text-2xl md:text-xl text-base cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
                 />
-                <p className='text-text-white text-2xl leading-6 font-light'>@rudvl</p>
+                <p className='text-text-white lg:text-2xl md:text-xl text-base leading-6 font-light'>@rudvl</p>
               </div>
               <div className='py-4 px-6 flex items-center justify-center gap-4 rounded border border-deep-green hover:border-interactive-green transition-all ease-in-out cursor-pointer group'>
                 <TumblrIcon
-                  className={`text-deep-green  text-2xl cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
+                  className={`text-deep-green  lg:text-2xl md:text-xl text-base cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
                 />
-                <p className='text-text-white text-2xl leading-6 font-light'>@rudvl</p>
+                <p className='text-text-white lg:text-2xl md:text-xl text-base leading-6 font-light'>@rudvl</p>
               </div>
             </div>
           </div>

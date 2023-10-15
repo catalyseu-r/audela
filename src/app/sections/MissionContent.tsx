@@ -30,7 +30,7 @@ const MissionContent = (props: CommonSectionProps) => {
           return { ..._prev, mission: entry.isIntersecting };
         }),
 
-      { rootMargin: '0px', threshold: 1 }
+      { rootMargin: '350px', threshold: 0.5 }
     );
 
     missionSectionRef.current && missionObserver.observe(missionSectionRef.current);
@@ -83,31 +83,31 @@ const MissionContent = (props: CommonSectionProps) => {
         className=' lg:max-w-container-lg md:w-5/6 w-full md:px-0 px-4 mx-auto grid grid-cols-1 relative'
       >
         <div className='flex gap-16 flex-wrap items-start justify-start w-full'>
-          <div className='flex flex-col gap-10 items-start justify-center max-w-xl'>
-            <p className='text-text-white leading-10 font-light text-xl'>
+          <div className='flex flex-col gap-10 items-start justify-center lg:max-w-xl w-full'>
+            <p className='text-text-white leading-10 font-light lg:text-xl md:text-lg text-base'>
               At Au-delà my unwavering commitment is to broaden the horizons of space exploration, knowledge, and news,
               ensuring their accessibility to a global audience.
             </p>
 
-            <p className='text-text-white leading-10 font-light text-xl'>
+            <p className='text-text-white leading-10 font-light lg:text-xl md:text-lg text-base'>
               As a solo designer and developer, I believe that the wonders of the cosmos should be within reach for
               everyone. My mission is to bring the marvels of space closer to your fingertips.
             </p>
 
-            <p className='text-text-white leading-10 font-light text-xl'>
+            <p className='text-text-white leading-10 font-light lg:text-xl md:text-lg text-base'>
               Through the power of technology and the vast resources of NASA&apos;s Open API, I strive to deliver the
               latest discoveries, awe-inspiring imagery, and educational insights directly to your device. Join me on
               this cosmic journey as we explore the mysteries of the universe, share the excitement of space
               exploration, and inspire a new generation of space enthusiasts.
             </p>
 
-            <p className='text-text-white leading-10 font-light text-xl'>
+            <p className='text-text-white leading-10 font-light lg:text-xl md:text-lg text-base'>
               Together, we&apos;re reaching for the stars.
             </p>
           </div>
 
-          <div className='flex relative flex-col w-full md:w-5/12 lg:w-5/12'>
-            <div className='relative  h-80 lg:max-w-[416px] aspect-video lg:shadow-custom-img-shadow lg:hover:shadow-none lg:transition-shadow duration-500 cursor-pointer'>
+          <div className='flex relative flex-col w-full md:w-8/12 lg:w-5/12'>
+            <div className='relative  h-80 lg:max-w-[416px]  aspect-square lg:shadow-custom-img-shadow lg:hover:shadow-none lg:transition-shadow duration-500 cursor-pointer'>
               <Image className='object-cover' src={roverImg} fill loading='lazy' alt='Mars rover in action' />
             </div>
 
@@ -121,7 +121,7 @@ const MissionContent = (props: CommonSectionProps) => {
               <div
                 className={` transition-opacity duration-700 ${
                   mission ? 'opacity-100' : 'opacity-0'
-                } flex  flex-col items-end w-8/12 absolute top-full translate-x-6 rounded translate-y-48 lg:w-[22rem] bg-text-white p-4 gap-6 `}
+                } flex  flex-col items-end w-10/12 md:w-8/12 absolute top-full translate-x-6 rounded translate-y-48 lg:w-[22rem] bg-text-white p-4 lg:gap-6 md:gap-4 gap-2 `}
               >
                 <h3 className='text-bg-black font-normal leading-6 text-xl self-stretch px-4'>Photographing Mars</h3>
                 <p className='text-bg-black font-light leading-6 text-base self-stretch px-6 '>
