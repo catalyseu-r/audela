@@ -9,6 +9,7 @@ import UserInput from '@/app/components/UserInput';
 import { useGlobalContext } from '@/app/contexts/store';
 import SortArticlesMenu from '@/app/components/SortArticlesMenu';
 import PaginationArticles from '@/app/components/PaginationArticles';
+import Loading from './loading';
 
 export interface PlanetsContentContainerData {
   data: PlanetaryDataArticle[];
@@ -20,7 +21,8 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
     return props.data;
   }, [props.data]);
 
-  const { setArticleState, articleState, isNotFound, setPagination, startIndex, endIndex } = useGlobalContext();
+  const { setArticleState, articleState, isNotFound, setPagination, startIndex, endIndex, isSearchLoading } =
+    useGlobalContext();
 
   React.useEffect(() => {
     if (articleState.length === 0) {
@@ -39,6 +41,8 @@ const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
       </div>
       {isNotFound ? (
         <NotFound />
+      ) : isSearchLoading ? (
+        <Loading />
       ) : (
         <>
           <ArticleContainer data={...articleState.slice(startIndex, endIndex)} />

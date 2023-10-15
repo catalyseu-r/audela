@@ -39,10 +39,10 @@ const PaginationArticles = () => {
         onClick={() => isForwrard(pagination.currentPage, 'back')}
         className={`lg:w-6 lg:h-6 w-9 h-9 flex items-center justify-center border p-1 rounded ${
           pagination.currentPage === 1 ? `cursor-not-allowed` : `cursor-pointer`
-        } ${pagination.currentPage === 1 ? `border-dimmed-accent` : `border-main-orange-accent`}`}
+        } ${pagination.currentPage === 1 ? `border-deep-green/50` : `border-interactive-green`}`}
         disabled={pagination.currentPage === 1}
       >
-        <ArrowLeft className='text-lg text-main-white' />
+        <ArrowLeft className='text-lg text-text-white' />
       </button>
       {windowWidth && windowWidth > 768 ? (
         buttonArray.map((item, index) => {
@@ -50,8 +50,8 @@ const PaginationArticles = () => {
           return (
             <button
               key={appendIndex}
-              className={`text-lg ${
-                appendIndex === pagination.currentPage ? `text-main-orange-accent` : `text-main-white`
+              className={`text-lg transition-all ${
+                appendIndex === pagination.currentPage ? `text-interactive-green scale-150` : `text-text-white`
               }`}
               onClick={(event) =>
                 setPagination({ totalItems: pagination.totalItems, currentPage: Number(event.currentTarget.value) })
@@ -88,7 +88,9 @@ const PaginationArticles = () => {
         onClick={() => isForwrard(pagination.currentPage, 'forward')}
         className={`lg:w-6 lg:h-6 w-9 h-9 flex items-center justify-center border p-1 rounded ${
           pagination.currentPage === buttonArray.length ? `cursor-not-allowed` : `cursor-pointer`
-        } ${pagination.currentPage === buttonArray.length ? `border-dimmed-accent` : `border-main-orange-accent`}`}
+        } ${
+          pagination.currentPage === buttonArray.length ? `border-interactive-green/50` : `border-interactive-green`
+        }`}
         disabled={pagination.currentPage === buttonArray.length}
       >
         <ArrorwRight className='text-lg text-main-white' />

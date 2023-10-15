@@ -7,6 +7,8 @@ export interface PlanetaryDataArticleBody {
   date_created: string;
   description_508: string;
   description: string;
+  secondary_creator: string;
+  photographer: string;
 }
 
 export interface PlanetaryDataArticle {

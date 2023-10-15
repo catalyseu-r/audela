@@ -31,6 +31,7 @@ interface ContextProps {
   isNotFound: boolean;
   sortState: SortState;
   isSearchActive: boolean;
+  isSearchLoading: boolean;
   //
   setUserQuery: React.Dispatch<SetStateAction<string>>;
   setArticleState: React.Dispatch<SetStateAction<PlanetaryDataArticle[]>>;
@@ -51,6 +52,7 @@ interface ContextProps {
       contact: boolean;
     }>
   >;
+  setIsSearchLoading: React.Dispatch<SetStateAction<boolean>>;
   setIsSearchActive: React.Dispatch<SetStateAction<boolean>>;
   handleUserQuery: (query: string) => Promise<void>;
 }
@@ -76,7 +78,9 @@ const GlobalContext = React.createContext<ContextProps>({
     about: false,
     contact: false,
   },
+  isSearchLoading: false,
   //
+  setIsSearchLoading: () => {},
   setIntersectionElements: () => {},
   setArticleState: (): [] => [],
   setUserQuery: (): string => '',
@@ -101,6 +105,7 @@ export const GlobalContextProvider = ({ children }: any) => {
   const [articleState, setArticleState] = React.useState<PlanetaryDataArticle[]>([]);
   const [isNotFound, setIsNotFound] = React.useState<boolean>(false);
   const [isSearchActive, setIsSearchActive] = React.useState<boolean>(false);
+  const [isSearchLoading, setIsSearchLoading] = React.useState<boolean>(false);
 
   const [intersectionElements, setIntersectionElements] = React.useState({
     landing: false,
@@ -116,10 +121,12 @@ export const GlobalContextProvider = ({ children }: any) => {
   const endIndex = startIndex + articlesPerPage;
 
   const handleUserQuery = async (query: string) => {
+    setIsSearchLoading(true);
+    setIsNotFound(false);
     const callApi = await planetarySearch({ query: query });
 
-    if (pathName !== '/explore/planets') {
-      router.push('/explore/planets');
+    if (pathName !== '/explore/news-and-studies') {
+      router.push('/explore/news-and-studies');
     }
 
     if (callApi && callApi.collection.items.length > 0) {
@@ -138,6 +145,7 @@ export const GlobalContextProvider = ({ children }: any) => {
 
       setArticleState(prepareSort);
       setIsNotFound(false);
+      setIsSearchLoading(false);
     } else {
       setIsNotFound(true);
     }
@@ -156,7 +164,9 @@ export const GlobalContextProvider = ({ children }: any) => {
         sortState,
         pagination,
         isSearchActive,
+        isSearchLoading,
         intersectionElements,
+        setIsSearchLoading,
         setIntersectionElements,
         setIsSearchActive,
         setUserQuery,

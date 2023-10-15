@@ -97,37 +97,39 @@ const Navbar = () => {
           au-delà
         </Link>
 
-        <div
-          className={` ${
-            isSearchActive ? 'md:hidden' : 'md:flex'
-          } items-center justify-between gap-16 text-base font-light text-main-white hidden`}
-        >
-          {navLinks.map((link) =>
-            link.title !== 'Explore' ? (
-              <Link
-                href={link.href || ''}
-                replace
-                key={link.title}
-                className='cursor-pointer transition-all hover:text-interactive-green'
-              >
-                {link.title}
-              </Link>
-            ) : null
-          )}
-        </div>
+        <div className='flex items-center gap-14'>
+          <div
+            className={` ${
+              isSearchActive ? 'md:hidden' : 'md:flex'
+            } items-center justify-between gap-16 text-base font-light text-main-white hidden`}
+          >
+            {navLinks.map((link) =>
+              link.title !== 'Explore' ? (
+                <Link
+                  href={link.href || ''}
+                  replace
+                  key={link.title}
+                  className='cursor-pointer transition-all hover:text-interactive-green'
+                >
+                  {link.title}
+                </Link>
+              ) : null
+            )}
+          </div>
 
-        <div className={`flex items-center gap-6 ${isSearchActive && 'w-full h-[42px]'}  `}>
-          <UserInput />
-          {isMobileNavOpen ? (
-            <CloseIcon className='md:hidden text-deep-green text-2xl z-50' onClick={handleNav} />
-          ) : (
-            <BurgerMenu
-              className={`${
-                isSearchActive ? 'scale-0 hidden' : ''
-              } md:hidden text-main-white text-2xl z-50 transition-all`}
-              onClick={handleNav}
-            />
-          )}
+          <div className={`flex items-center gap-6 ${isSearchActive && 'w-full h-[42px]'}  `}>
+            <UserInput />
+            {isMobileNavOpen ? (
+              <CloseIcon className='md:hidden text-deep-green text-2xl z-50' onClick={handleNav} />
+            ) : (
+              <BurgerMenu
+                className={`${
+                  isSearchActive ? 'scale-0 hidden' : ''
+                } md:hidden text-main-white text-2xl z-50 transition-all`}
+                onClick={handleNav}
+              />
+            )}
+          </div>
         </div>
       </div>
 

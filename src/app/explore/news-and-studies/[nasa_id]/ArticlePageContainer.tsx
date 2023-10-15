@@ -1,7 +1,6 @@
 'use client';
 
 import Breadcrumbs from '@/app/components/Breadcrumbs';
-import UserInput from '@/app/components/UserInput';
 import { PlanetaryDataArticleBody } from '@/app/types/planetaryData';
 import Image from 'next/image';
 import React from 'react';
@@ -21,7 +20,7 @@ interface ArticlePageContainerData {
 }
 
 const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerData) => {
-  const { title, description, keywords, date_created } = articleData!;
+  const { title, description, description_508, keywords, date_created } = articleData!;
 
   const RenderImageOrVideo = () => (
     <>

@@ -3,10 +3,11 @@ import Image from 'next/image';
 import React from 'react';
 import { PlanetsContentContainerData } from './PlanetsContentContainer';
 import dayjs from 'dayjs';
-import { BsChevronDoubleRight as ArrowRight } from 'react-icons/bs';
+import { PiDotsThreeOutlineBold as DotIcon, PiArrowBendUpRightBold as ArrowIcon } from 'react-icons/pi';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import placeholder from '../../img/placeholder-article.jpg';
 
 interface ArticleContainerData {
   data: PlanetsContentContainerData['data'];
@@ -21,20 +22,20 @@ const ArticleContainer = (props: ArticleContainerData) => {
     <div
       className={`${
         winSize > 768 ? 'flex-wrap ' : 'flex-nowrap overflow-x-scroll  snap-x snap-proximity'
-      } flex  justify-between xl:gap-8 lg:gap-6 gap-4  w-full h-full  mt-16 no-scrollbar`}
+      } flex  gap-8 items-center md:justify-center justify-between  w-full h-full  mt-16 no-scrollbar`}
     >
       <AnimatePresence>
         {props.data.map((item, index) => (
           <motion.div
-            className='flex justify-between flex-wrap shadow-custom-article-shadow  lg:min-w-[auto] min-w-[calc(100vw-6rem)] snap-center'
+            className='flex justify-between items-start flex-wrap shadow-custom-article-shadow bg-text-white px-2 py-2 snap-center rounded-lg min-w-[18rem] max-w-[33.6rem]'
             key={index}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div className=' md:w-72 h-48 w-full relative'>
+            <div className=' md:w-[11.625rem] h-[13.375rem] w-full relative bg-text-white'>
               <Image
-                className='object-cover transition-opacity opacity-0 duration-[2s]'
+                className='object-cover transition-opacity opacity-0 duration-1000 rounded'
                 fill
                 alt='Astronomy article image'
                 src={item?.links[0].href.toString()}
@@ -43,23 +44,40 @@ const ArticleContainer = (props: ArticleContainerData) => {
               />
             </div>
 
-            <div className='flex p-4 flex-col justify-between gap-6 items-end  bg-second-black flex-1 w-full lg:w-64'>
-              <div className='flex gap-3 md:justify-between items-end w-full py-1 px-2'>
-                <h2 className='text-base text-main-white line-clamp-1'>{item.data[0].title}</h2>
-                <p className='text-xs text-main-white italic font-light'>
-                  {dayjs(item.data[0].date_created).format('MM/DD/YYYY')}
-                </p>
+            <div className='flex px-4 py-4 md:py-0 flex-col justify-between gap-4 items-start  bg-text-white flex-1 w-full lg:w-[22rem]'>
+              <h2 className='text-xl border-b border-deep-green/10 px-4 tracking-tight leading-8 font-normal text-bg-black line-clamp-1'>
+                {item.data[0].title}
+              </h2>
+
+              <p className='text-xs leading-5 font-light text-bg-black line-clamp-3 px-4'>
+                {item.data[0].description_508}
+              </p>
+
+              <div className='flex self-stretch px-4 items-center gap-4 '>
+                <div className='relative w-[2.375rem] h-[2.375rem] shrink-0'>
+                  <Image src={placeholder} fill alt='placeholder for author' className=' rounded-full' />
+                </div>
+                <div className=''>
+                  <p className='text-xs leading-5 font-light line-clamp-1'>
+                    {item.data[0].photographer || item.data[0].secondary_creator || item.data[0].center}
+                  </p>
+
+                  <p className='text-xs leading-5 text-bg-black/50 italic font-light '>
+                    {dayjs(item.data[0].date_created).format('MM/DD/YYYY')}
+                  </p>
+                </div>
               </div>
 
-              <p className='text-xs font-light text-main-white line-clamp-3 px-4'>{item.data[0].description_508}</p>
-
-              <Link
-                href={`${pathName}/${item.data[0].nasa_id}`}
-                className='flex px-2 justify-end items-center gap-2  text-right border rounded border-dimmed-accent cursor-pointer '
-              >
-                <p className='text-main-white text-xs font-light  leading-6 itallic'>Read more</p>
-                <ArrowRight className='text-base text-dimmed-accent' />
-              </Link>
+              <div className='self-stretch flex items-center justify-end gap-4 px-4'>
+                <div className='w-6 h-6 grid items-center justify-center border border-deep-green rounded-full'>
+                  <DotIcon className={`text-base text-bg-black`} />
+                </div>
+                <div className='w-6 h-6 grid items-center justify-center border border-deep-green rounded-full'>
+                  <Link href={`${pathName}/${item.data[0].nasa_id}`}>
+                    <ArrowIcon className={`text-base text-deep-green`} />
+                  </Link>
+                </div>
+              </div>
             </div>
           </motion.div>
         ))}
