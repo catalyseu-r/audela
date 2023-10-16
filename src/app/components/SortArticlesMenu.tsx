@@ -19,7 +19,7 @@ const SortArticlesMenu = () => {
       placeholder='Newest first (default)'
       className={`py-2 px-6 bg-bg-black border outline-none focus:border-interactive-green transition-all ${
         isNotFound ? 'border-deep-green/20' : 'border-deep-green/50'
-      } text-base text-main-white  !font-sans ${isNotFound ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+      } text-base text-text-white  !font-sans ${isNotFound ? 'cursor-not-allowed' : 'cursor-pointer'}`}
       disabled={isNotFound}
       onChange={(e) => {
         setSortState(e.target.value as SortState);

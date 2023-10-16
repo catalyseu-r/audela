@@ -68,7 +68,7 @@ const PaginationArticles = () => {
           onChange={(event) =>
             setPagination({ totalItems: pagination.totalItems, currentPage: Number(event.currentTarget.value) })
           }
-          className=' px-4 h-9 rounded bg-second-black border outline-none focus:border-main-orange-accent transition-all border-dimmed-accent text-base text-main-white  !font-sans cursor-pointer'
+          className=' px-4 h-9 rounded bg-bg-black border outline-none focus:border-interactive-green transition-all border-deep-green text-base text-text-white  !font-sans cursor-pointer'
         >
           {buttonArray.map((item, index) => {
             const appendIndex = index + 1;
@@ -93,7 +93,7 @@ const PaginationArticles = () => {
         }`}
         disabled={pagination.currentPage === buttonArray.length}
       >
-        <ArrorwRight className='text-lg text-main-white' />
+        <ArrorwRight className='text-lg text-text-white' />
       </button>
     </div>
   );

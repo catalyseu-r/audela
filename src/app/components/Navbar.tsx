@@ -101,13 +101,13 @@ const Navbar = () => {
           <div
             className={` ${
               isSearchActive ? 'md:hidden' : 'md:flex'
-            } items-center justify-between gap-16 text-base font-light text-main-white hidden`}
+            } items-center justify-between gap-16 text-base font-light text-text-white hidden`}
           >
             {navLinks.map((link) =>
               link.title !== 'Explore' ? (
                 <Link
                   href={link.href || ''}
-                  replace
+                  replace={pathName !== '/'}
                   key={link.title}
                   className='cursor-pointer transition-all hover:text-interactive-green'
                 >
@@ -125,7 +125,7 @@ const Navbar = () => {
               <BurgerMenu
                 className={`${
                   isSearchActive ? 'scale-0 hidden' : ''
-                } md:hidden text-main-white text-2xl z-50 transition-all`}
+                } md:hidden text-text-white text-2xl z-50 transition-all`}
                 onClick={handleNav}
               />
             )}
@@ -234,7 +234,7 @@ const Navbar = () => {
                   replace
                   onClick={() => setisMobileNavOpen(false)}
                   href={link.href || ''}
-                  className='text-main-white text-xl font-light leading-6 text-left'
+                  className='text-text-white text-xl font-light leading-6 text-left'
                 >
                   {link.title}
                 </Link>
@@ -248,7 +248,7 @@ const Navbar = () => {
         <div className='flex w-full justify-between items-center gap-4 mt-16 px-4'>
           <SocialStack isInMenu />
 
-          <p className='text-main-white text-base leading-10 font-light max-w-[8rem]'>
+          <p className='text-text-white text-base leading-10 font-light max-w-[8rem]'>
             Have an app idea? Get in touch! 📱
           </p>
         </div>

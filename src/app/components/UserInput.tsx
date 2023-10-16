@@ -35,7 +35,7 @@ const UserInput = () => {
         onClick={handleUserActionInput}
         className={`${
           isSearchActive ? 'hidden' : 'block'
-        } text-main-white text-2xl cursor-pointer transition-all hover:text-interactive-green`}
+        } text-text-white text-2xl cursor-pointer transition-all hover:text-interactive-green`}
       />
 
       <div
@@ -48,7 +48,7 @@ const UserInput = () => {
           type='text'
           name='userQuery'
           id='userQuery'
-          className={`bg-transparent  text-main-white text-sm lg:text-base  focus:outline-none w-full`}
+          className={`bg-transparent  text-text-white text-sm lg:text-base  focus:outline-none w-full`}
           placeholder='Your search term'
           onChange={(event) => setUserQuery(event.target.value)}
           onKeyDown={(keyDown) => keyDown.key === 'Enter' && handleUserQuery(userQuery)}
@@ -58,9 +58,9 @@ const UserInput = () => {
         <div className='flex gap-6 items-center'>
           <SearchIcon
             onClick={() => handleUserQuery(userQuery)}
-            className={` text-main-white text-2xl cursor-pointer`}
+            className={` text-text-white text-2xl cursor-pointer`}
           />
-          <CloseIcon onClick={() => setIsSearchActive(false)} className={`text-main-white text-lg cursor-pointer`} />
+          <CloseIcon onClick={() => setIsSearchActive(false)} className={`text-text-white text-lg cursor-pointer`} />
         </div>
       </div>
     </div>
