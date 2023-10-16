@@ -58,20 +58,17 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
     );
   };
 
-  console.log('PROPS DATA', articleData);
-
   const formatDesc = (desc: string) =>
     desc.split('. ').map((txt, index) => {
-      console.log('TXT', txt);
       return txt.match(reg) ? (
-        <span className='text-text-white text-base xl:text-lg leading-8 flex flex-wrap items-center gap-1'>
+        <span key={txt} className='text-text-white text-base xl:text-lg leading-8 flex flex-wrap items-center gap-1'>
           <p>Read more at:</p>
           <Link className='text-deep-green hover:text-interactive-green transition-colors' href={txt}>
             {txt}
           </Link>
         </span>
       ) : (
-        <p className=' text-text-white font-light text-base xl:text-lg leading-8' key={index}>
+        <p className=' text-text-white font-light text-base xl:text-lg leading-8' key={txt}>
           {txt}
         </p>
       );

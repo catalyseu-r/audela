@@ -23,7 +23,7 @@ export default async function newsAndStudies() {
 
   const total_hits = () => (planetsData ? planetsData.collection.metadata.total_hits : 0);
 
-  const DynamicContainer = dynamic(() => import('./PlanetsContentContainer'), { ssr: false });
+  const DynamicContainer = dynamic(() => import('./NewsAndStudiesContent'), { ssr: false });
 
   return (
     <Suspense fallback={<Loading />}>

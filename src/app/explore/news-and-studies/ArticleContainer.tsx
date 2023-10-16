@@ -1,16 +1,17 @@
 'use client';
 import Image from 'next/image';
 import React from 'react';
-import { PlanetsContentContainerData } from './PlanetsContentContainer';
+
 import dayjs from 'dayjs';
 import { PiDotsThreeOutlineBold as DotIcon, PiArrowBendUpRightBold as ArrowIcon } from 'react-icons/pi';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import placeholder from '../../img/placeholder-article.jpg';
+import { NewsAndStudiesContent } from './NewsAndStudiesContent';
 
 interface ArticleContainerData {
-  data: PlanetsContentContainerData['data'];
+  data: NewsAndStudiesContent['data'];
 }
 
 const ArticleContainer = (props: ArticleContainerData) => {

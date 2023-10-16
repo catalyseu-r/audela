@@ -5,18 +5,18 @@ import { PlanetaryDataArticle } from '@/app/types/planetaryData';
 import React from 'react';
 import ArticleContainer from './ArticleContainer';
 import NotFound from '@/app/components/NotFound';
-import UserInput from '@/app/components/UserInput';
+
 import { useGlobalContext } from '@/app/contexts/store';
 import SortArticlesMenu from '@/app/components/SortArticlesMenu';
 import PaginationArticles from '@/app/components/PaginationArticles';
 import Loading from './loading';
 
-export interface PlanetsContentContainerData {
+export interface NewsAndStudiesContent {
   data: PlanetaryDataArticle[];
   total_hits: number;
 }
 
-const PlanetsContentContainer = (props: PlanetsContentContainerData) => {
+const PlanetsContentContainer = (props: NewsAndStudiesContent) => {
   const memoisedPrefetchedData = React.useMemo(() => {
     return props.data;
   }, [props.data]);
