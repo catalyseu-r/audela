@@ -1,19 +1,21 @@
 export const metadata = {
-  title: 'Explore',
+  title: 'Image of the day',
 };
 
+import Navbar from '../../components/Navbar';
+import { getImageOfTheDay } from '../../utils/API/getImageOfTheDay';
+import ContentContainer from './ContentContainer';
 import { Suspense } from 'react';
-import Navbar from '../components/Navbar';
-import Loading from '../loading';
-import Options from './Options';
-import Breadcrumbs from '../components/Breadcrumbs';
+import Loading from './loading';
 import Image from 'next/image';
-import elipseOne from '../img/Ellipse 20.png';
+import elipseOne from '../../img/Ellipse 20.png';
 
-export default function Explore() {
+export default async function pictureOfTheDay() {
+  const imageData = await getImageOfTheDay();
   return (
     <Suspense fallback={<Loading />}>
-      <main className='bg-main-black  min-h-custom-page-min overflow-hidden   relative'>
+      <main className='bg-bg-black min-h-custom-page-min relative  pb-24 '>
+        <Navbar />
         <Image
           src={elipseOne}
           alt='elipse'
@@ -42,10 +44,8 @@ export default function Explore() {
           width={140}
           height={140}
         />
-        <Navbar />
-        <div className='lg:max-w-container-lg md:w-5/6 w-full lg:mt-24 mt-16 md:px-0 px-4 mx-auto '>
-          <Breadcrumbs />
-          <Options />
+        <div className='lg:max-w-container-lg md:w-5/6 w-full md:px-0 px-4 mx-auto'>
+          {imageData && <ContentContainer data={imageData} />}
         </div>
       </main>
     </Suspense>

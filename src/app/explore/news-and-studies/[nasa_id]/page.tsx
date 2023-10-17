@@ -1,3 +1,7 @@
+export const metadata = {
+  title: 'Article',
+};
+
 import Navbar from '@/app/components/Navbar';
 import { planetarySearch } from '@/app/utils/API/planetarySearch';
 import dynamic from 'next/dynamic';
@@ -21,10 +25,10 @@ export default async function ArticleDetail({ params }: { params: { nasa_id: str
 
   return (
     <Suspense fallback={<Loading />}>
-      <main className='bg-main-black min-h-custom-page-min bg-no-repeat bg-center relative overflow-auto pb-24 '>
+      <main className='bg-bg-black  relative overflow-hidden  '>
         <Navbar />
 
-        <div className='lg:max-w-container-lg md:w-5/6 w-full md:px-0 px-4 mx-auto '>
+        <div className='lg:max-w-container-lg md:w-5/6 w-full md:px-0 px-4 z-20 mx-auto '>
           {singleArticleData && (
             <DynamicContainer
               mainImage={{
