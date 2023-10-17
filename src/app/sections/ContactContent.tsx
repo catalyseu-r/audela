@@ -12,19 +12,18 @@ import {
   FaTwitterSquare as TwitterIcon,
   FaLinkedin as LinkedinIcon,
 } from 'react-icons/fa';
-import { useGlobalContext } from '../contexts/store';
+import { useAppContext } from '../contexts/store';
+import { ActionTypes } from '../types/actionTypes';
 
 const ContactContent = (props: CommonSectionProps) => {
-  const { setIntersectionElements } = useGlobalContext();
+  const { dispatch } = useAppContext();
 
   const contactSectionRef = React.useRef(null);
 
   React.useEffect(() => {
     const contactObserver = new IntersectionObserver(
       ([entry]) =>
-        setIntersectionElements((_prev) => {
-          return { ..._prev, contact: entry.isIntersecting };
-        }),
+        entry.isIntersecting && dispatch({ type: ActionTypes.SET_INTERSECTION_ELEMENTS, payload: 'contact' }),
       {
         rootMargin: '150px',
         threshold: 0.5,
@@ -34,7 +33,7 @@ const ContactContent = (props: CommonSectionProps) => {
     contactSectionRef.current && contactObserver.observe(contactSectionRef.current);
 
     return () => contactObserver.disconnect();
-  }, [setIntersectionElements]);
+  }, [dispatch]);
 
   return (
     <section id='contact' className='relative min-h-screen bg-bg-black pt-40'>

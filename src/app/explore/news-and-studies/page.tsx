@@ -1,3 +1,7 @@
+export const metadata = {
+  title: 'News and studies',
+};
+
 import Navbar from '../../components/Navbar';
 import { planetarySearch } from '@/app/utils/API/planetarySearch';
 

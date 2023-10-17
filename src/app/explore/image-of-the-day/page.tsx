@@ -1,3 +1,7 @@
+export const metadata = {
+  title: 'Image of the day',
+};
+
 import Navbar from '../../components/Navbar';
 import { getImageOfTheDay } from '../../utils/API/getImageOfTheDay';
 import ContentContainer from './ContentContainer';

@@ -24,6 +24,6 @@ export type AppAction =
   | { type: ActionTypes.NEXT_PAGE }
   | { type: ActionTypes.PREV_PAGE }
   | { type: ActionTypes.SET_PAGE; payload: number }
-  | { type: ActionTypes.SET_INTERSECTION_ELEMENTS; payload: { [key: string]: boolean } }
+  | { type: ActionTypes.SET_INTERSECTION_ELEMENTS; payload: string }
   | { type: ActionTypes.SET_IS_SEARCH_LOADING; payload: boolean }
   | { type: ActionTypes.SET_IS_SEARCH_ACTIVE; payload: boolean };

@@ -7,8 +7,22 @@ import { GlobalContextProvider } from './contexts/store';
 import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
-  title: 'au-delà - 🚧 Under Construction 🛠️',
-  description: 'Astronomy app',
+  title: {
+    default: 'Au-Delà',
+    template: '%s | Au-Delà',
+  },
+  openGraph: {
+    type: 'website',
+    description: 'Discover the universe with the NASA API app. Explore space exploration, astronomy, and more.',
+    title: 'Au-Delà',
+  },
+  description: 'Discover the universe with the NASA API app. Explore space exploration, astronomy, and more.',
+  creator: 'Catalyseur',
+
+  colorScheme: 'dark',
+  themeColor: '#0E0E0E',
+  keywords:
+    'nextjs, reactjs, tailwind, astronomy, news, articles, images, NASA api, space exploration, astronomy, planets, space news',
 
   viewport: {
     width: 'device-width',

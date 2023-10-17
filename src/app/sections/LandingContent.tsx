@@ -9,13 +9,18 @@ import Header from '../components/Header';
 import Bubble from '../components/Lines/Bubble';
 import MissionContent from './MissionContent';
 import AboutContent from './AboutContent';
-import { useGlobalContext } from '../contexts/store';
+
 import ContactContent from './ContactContent';
+import { useAppContext } from '../contexts/store';
+import { ActionTypes } from '../types/actionTypes';
 
 const LandingContent = () => {
   const [containerWidth, setContainerWidth] = React.useState<number>(1120);
   const [scrollPosition, setScrollPosition] = React.useState<number>(0);
-  const { setIntersectionElements, intersectionElements } = useGlobalContext();
+  const {
+    dispatch,
+    state: { intersectionElements },
+  } = useAppContext();
 
   const pageSections = ['landing', 'mission', 'about', 'contact'];
   const landingSectionRef = React.useRef<HTMLDivElement | null>(null);
@@ -24,9 +29,7 @@ const LandingContent = () => {
   React.useEffect(() => {
     const landingSectionObserver = new IntersectionObserver(
       ([entry]) =>
-        setIntersectionElements((_prev) => {
-          return { ..._prev, landing: entry.isIntersecting };
-        }),
+        entry.isIntersecting && dispatch({ type: ActionTypes.SET_INTERSECTION_ELEMENTS, payload: 'landing' }),
 
       { rootMargin: '100px', threshold: 1 }
     );
@@ -42,7 +45,7 @@ const LandingContent = () => {
       landingSectionObserver.disconnect();
       window.removeEventListener('resize', updateClientContainerWidth);
     };
-  }, [setIntersectionElements]);
+  }, []);
 
   React.useEffect(() => {
     const updateClientScrollPostion = () => window.scrollY < 772 && setScrollPosition(window.scrollY);

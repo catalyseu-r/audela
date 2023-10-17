@@ -50,7 +50,16 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
       return { ...state, pagination: { ...state.pagination, currentPage: action.payload } };
 
     case ActionTypes.SET_INTERSECTION_ELEMENTS:
-      return { ...state };
+      const updatedIntersectionElements = { ...state.intersectionElements };
+
+      for (const key in updatedIntersectionElements) {
+        //@ts-ignore
+        updatedIntersectionElements[key] = key === action.payload;
+      }
+      return {
+        ...state,
+        intersectionElements: updatedIntersectionElements,
+      };
 
     case ActionTypes.SET_IS_SEARCH_LOADING:
       return { ...state, isSearchLoading: action.payload };

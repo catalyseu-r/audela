@@ -11,13 +11,18 @@ import LineFour from '../components/Lines/LineFour';
 import elipseOne from '../img/Ellipse 20.png';
 import { LuForward as ForwardIcon } from 'react-icons/lu';
 import Bubble from '../components/Lines/Bubble';
-import { useGlobalContext } from '../contexts/store';
+
 import { CommonSectionProps } from '../types/sections';
+import { useAppContext } from '../contexts/store';
+import { ActionTypes } from '../types/actionTypes';
 
 const MissionContent = (props: CommonSectionProps) => {
   const { scrollPosition } = props;
 
-  const { setIntersectionElements, intersectionElements } = useGlobalContext();
+  const {
+    dispatch,
+    state: { intersectionElements },
+  } = useAppContext();
 
   const { missionArticle } = intersectionElements;
 
@@ -27,18 +32,14 @@ const MissionContent = (props: CommonSectionProps) => {
   React.useEffect(() => {
     const missionObserver = new IntersectionObserver(
       ([entry]) =>
-        setIntersectionElements((_prev) => {
-          return { ..._prev, mission: entry.isIntersecting };
-        }),
+        entry.isIntersecting && dispatch({ type: ActionTypes.SET_INTERSECTION_ELEMENTS, payload: 'mission' }),
 
       { rootMargin: '142px', threshold: 0.5 }
     );
 
     const missionArticleObserver = new IntersectionObserver(
       ([entry]) =>
-        setIntersectionElements((_prev) => {
-          return { ..._prev, missionArticle: entry.isIntersecting };
-        }),
+        entry.isIntersecting && dispatch({ type: ActionTypes.SET_INTERSECTION_ELEMENTS, payload: 'missionArticle' }),
       { rootMargin: '-200px' }
     );
 
@@ -49,7 +50,7 @@ const MissionContent = (props: CommonSectionProps) => {
       missionObserver.disconnect();
       missionArticleObserver.disconnect();
     };
-  }, [setIntersectionElements]);
+  }, [dispatch]);
 
   return (
     <section

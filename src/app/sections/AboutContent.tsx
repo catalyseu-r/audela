@@ -3,23 +3,25 @@
 import React from 'react';
 
 import { CommonSectionProps } from '../types/sections';
-import { useGlobalContext } from '../contexts/store';
+
 import { VscFlame as FlameIcon } from 'react-icons/vsc';
 import { IoRocketOutline as RocketIcon } from 'react-icons/io5';
 import Image from 'next/image';
 import elipseOne from '../img/Ellipse 20.png';
+import { useAppContext } from '../contexts/store';
+import { ActionTypes } from '../types/actionTypes';
 
 const AboutContent = (props: CommonSectionProps) => {
-  const { setIntersectionElements, intersectionElements } = useGlobalContext();
+  const {
+    dispatch,
+    state: { intersectionElements },
+  } = useAppContext();
 
   const aboutSectionRef = React.useRef(null);
 
   React.useEffect(() => {
     const aboutObserver = new IntersectionObserver(
-      ([entry]) =>
-        setIntersectionElements((_prev) => {
-          return { ..._prev, about: entry.isIntersecting };
-        }),
+      ([entry]) => entry.isIntersecting && dispatch({ type: ActionTypes.SET_INTERSECTION_ELEMENTS, payload: 'about' }),
       {
         rootMargin: '150px',
         threshold: 0.5,
@@ -29,7 +31,7 @@ const AboutContent = (props: CommonSectionProps) => {
     aboutSectionRef.current && aboutObserver.observe(aboutSectionRef.current);
 
     return () => aboutObserver.disconnect();
-  }, [setIntersectionElements]);
+  }, [dispatch]);
 
   return (
     <section id='about' className='relative pt-40'>

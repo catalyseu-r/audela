@@ -1,3 +1,7 @@
+export const metadata = {
+  title: 'Explore',
+};
+
 import { Suspense } from 'react';
 import Navbar from '../components/Navbar';
 import Loading from '../loading';

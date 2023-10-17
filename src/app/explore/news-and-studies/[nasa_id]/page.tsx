@@ -1,3 +1,7 @@
+export const metadata = {
+  title: 'Article',
+};
+
 import Navbar from '@/app/components/Navbar';
 import { planetarySearch } from '@/app/utils/API/planetarySearch';
 import dynamic from 'next/dynamic';
