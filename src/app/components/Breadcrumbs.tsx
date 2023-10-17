@@ -17,11 +17,13 @@ const Breadcrumbs = () => {
       if (index === 0) {
         return (
           <span className='flex items-center justify-center gap-2' key={index}>
-            <HomeIcon className={`text-base ${index === array.length - 1 ? 'text-main-red' : 'text-main-white'}`} />
+            <HomeIcon
+              className={`text-base ${index === array.length - 1 ? 'text-interactive-green' : 'text-text-white'}`}
+            />
             <Link
               href={`/${formatCurrentPath[index]}`}
               passHref
-              className={`text-base ${index === array.length - 1 ? 'text-main-red' : 'text-main-white'}`}
+              className={`text-base ${index === array.length - 1 ? 'text-interactive-green' : 'text-text-white'}`}
               key={currentPath[index]}
             >
               {`${item}/`}
@@ -35,7 +37,7 @@ const Breadcrumbs = () => {
           <Link
             href={`/${formatCurrentPath[index]}`}
             passHref
-            className={`text-base ${index === array.length - 1 ? 'text-main-red' : 'text-main-white'}`}
+            className={`text-base ${index === array.length - 1 ? 'text-interactive-green' : 'text-text-white'}`}
             key={currentPath[index]}
           >
             {`${item}/`}
@@ -45,7 +47,7 @@ const Breadcrumbs = () => {
     });
   };
 
-  return <div className=' flex justify-center items-center w-max gap-1'>{formatCrumbs()}</div>;
+  return <div className='py-4 md:px-5 flex  justify-center items-center w-max gap-1'>{formatCrumbs()}</div>;
 };
 
 export default Breadcrumbs;

@@ -1,13 +1,21 @@
 import React from 'react';
-import { useGlobalContext } from '../contexts/store';
+
 import { BsArrowLeft as ArrowLeft, BsArrowRight as ArrorwRight } from 'react-icons/bs';
+import { useAppContext } from '../contexts/store';
+import { ActionTypes } from '../types/actionTypes';
 
 const PaginationArticles = () => {
-  const { pagination, maxPages, articlesPerPage, setPagination } = useGlobalContext();
+  const {
+    state: { pagination },
+    dispatch,
+  } = useAppContext();
 
   const [windowWidth, setWindowWidth] = React.useState<number | undefined>(
     window !== undefined ? window.innerWidth : undefined
   );
+
+  const maxPages = 15;
+  const articlesPerPage = 6;
 
   const buttonArray = Array.from(
     Array(
@@ -27,9 +35,13 @@ const PaginationArticles = () => {
 
   const isForwrard = (current: number, button: 'forward' | 'back') => {
     if (button === 'forward' && current < buttonArray.length) {
-      setPagination({ totalItems: pagination.totalItems, currentPage: pagination.currentPage + 1 });
+      dispatch({
+        type: ActionTypes.NEXT_PAGE,
+      });
     } else if (button === 'back' && current !== 1) {
-      setPagination({ totalItems: pagination.totalItems, currentPage: pagination.currentPage - 1 });
+      dispatch({
+        type: ActionTypes.PREV_PAGE,
+      });
     }
   };
 
@@ -39,10 +51,10 @@ const PaginationArticles = () => {
         onClick={() => isForwrard(pagination.currentPage, 'back')}
         className={`lg:w-6 lg:h-6 w-9 h-9 flex items-center justify-center border p-1 rounded ${
           pagination.currentPage === 1 ? `cursor-not-allowed` : `cursor-pointer`
-        } ${pagination.currentPage === 1 ? `border-dimmed-accent` : `border-main-orange-accent`}`}
+        } ${pagination.currentPage === 1 ? `border-deep-green/50` : `border-interactive-green`}`}
         disabled={pagination.currentPage === 1}
       >
-        <ArrowLeft className='text-lg text-main-white' />
+        <ArrowLeft className='text-lg text-text-white' />
       </button>
       {windowWidth && windowWidth > 768 ? (
         buttonArray.map((item, index) => {
@@ -50,12 +62,15 @@ const PaginationArticles = () => {
           return (
             <button
               key={appendIndex}
-              className={`text-lg ${
-                appendIndex === pagination.currentPage ? `text-main-orange-accent` : `text-main-white`
+              className={`text-lg transition-all ${
+                appendIndex === pagination.currentPage ? `text-interactive-green scale-150` : `text-text-white`
               }`}
-              onClick={(event) =>
-                setPagination({ totalItems: pagination.totalItems, currentPage: Number(event.currentTarget.value) })
-              }
+              onClick={(event) => {
+                dispatch({
+                  type: ActionTypes.SET_PAGE,
+                  payload: Number(event.currentTarget.value),
+                });
+              }}
               value={appendIndex}
             >
               {appendIndex}
@@ -65,10 +80,13 @@ const PaginationArticles = () => {
       ) : (
         <select
           value={pagination.currentPage}
-          onChange={(event) =>
-            setPagination({ totalItems: pagination.totalItems, currentPage: Number(event.currentTarget.value) })
-          }
-          className=' px-4 h-9 rounded bg-second-black border outline-none focus:border-main-orange-accent transition-all border-dimmed-accent text-base text-main-white  !font-sans cursor-pointer'
+          onChange={(event) => {
+            dispatch({
+              type: ActionTypes.SET_PAGE,
+              payload: Number(event.currentTarget.value),
+            });
+          }}
+          className=' px-4 h-9 rounded bg-bg-black border outline-none focus:border-interactive-green transition-all border-deep-green text-base text-text-white  !font-sans cursor-pointer'
         >
           {buttonArray.map((item, index) => {
             const appendIndex = index + 1;
@@ -88,10 +106,12 @@ const PaginationArticles = () => {
         onClick={() => isForwrard(pagination.currentPage, 'forward')}
         className={`lg:w-6 lg:h-6 w-9 h-9 flex items-center justify-center border p-1 rounded ${
           pagination.currentPage === buttonArray.length ? `cursor-not-allowed` : `cursor-pointer`
-        } ${pagination.currentPage === buttonArray.length ? `border-dimmed-accent` : `border-main-orange-accent`}`}
+        } ${
+          pagination.currentPage === buttonArray.length ? `border-interactive-green/50` : `border-interactive-green`
+        }`}
         disabled={pagination.currentPage === buttonArray.length}
       >
-        <ArrorwRight className='text-lg text-main-white' />
+        <ArrorwRight className='text-lg text-text-white' />
       </button>
     </div>
   );

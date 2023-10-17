@@ -1,136 +1,115 @@
 'use client';
 
-import React, { SetStateAction } from 'react';
-import { PlanetaryDataArticle } from '../types/planetaryData';
-import { planetarySearch } from '../utils/API/planetarySearch';
+import React from 'react';
+
 import { sortByDate } from '../utils/lists/sort';
-import { usePathname, useRouter } from 'next/navigation';
+import { ActionTypes } from '../types/actionTypes';
+import { AppState } from '../types/appState';
+import { AppAction } from '../types/appActions';
+import { SortState } from '../types/sortState';
 
-export enum SortState {
-  asc = 'asc',
-  desc = 'desc',
-}
-interface ContextProps {
-  userQuery: string;
-  pagination: {
-    totalItems: number;
-    currentPage: number;
-  };
-  articleState: PlanetaryDataArticle[];
-  startIndex: number;
-  endIndex: number;
-  articlesPerPage: number;
-  maxPages: number;
-  isNotFound: boolean;
-  sortState: SortState;
-  isSearchActive: boolean;
-  //
-  setUserQuery: React.Dispatch<SetStateAction<string>>;
-  setArticleState: React.Dispatch<SetStateAction<PlanetaryDataArticle[]>>;
-  setIsNotFound: React.Dispatch<SetStateAction<boolean>>;
-  setSortState: React.Dispatch<SetStateAction<SortState>>;
-  setPagination: React.Dispatch<
-    React.SetStateAction<{
-      totalItems: number;
-      currentPage: number;
-    }>
-  >;
-  setIsSearchActive: React.Dispatch<SetStateAction<boolean>>;
-  handleUserQuery: (query: string) => Promise<void>;
-}
+const appReducer = (state: AppState, action: AppAction): AppState => {
+  switch (action.type) {
+    case ActionTypes.SET_USER_QUERY:
+      return { ...state, userQuery: action.payload };
 
-const GlobalContext = React.createContext<ContextProps>({
-  userQuery: '',
-  articleState: [],
-  articlesPerPage: 6,
-  maxPages: 15,
-  startIndex: 0,
-  endIndex: 0,
-  isNotFound: false,
-  sortState: SortState.desc,
-  isSearchActive: false,
-  pagination: {
-    totalItems: 0,
-    currentPage: 1,
-  },
-  //
-  setArticleState: (): [] => [],
-  setUserQuery: (): string => '',
-  setIsNotFound: () => {},
-  setSortState: () => SortState.desc || SortState.asc,
-  setPagination: () => {},
-  handleUserQuery: (): any => Promise,
-  setIsSearchActive: () => {},
-});
+    case ActionTypes.SET_ARTICLE_STATE:
+      return {
+        ...state,
+        articleState: sortByDate(action.payload.data, action.payload.direction),
+      };
+
+    case ActionTypes.SET_RELATED_ITEMS:
+      return {
+        ...state,
+        relatedItems: action.payload,
+      };
+
+    case ActionTypes.SET_TOTAL_ITEMS:
+      return { ...state, pagination: { ...state.pagination, totalItems: action.payload } };
+
+    case ActionTypes.SET_IS_NOT_FOUND:
+      return { ...state, isNotFound: action.payload };
+
+    case ActionTypes.SET_SORT_STATE:
+      return { ...state, sortState: action.payload };
+
+    case ActionTypes.NEXT_PAGE:
+      return {
+        ...state,
+        pagination: { ...state.pagination, currentPage: state.pagination.currentPage + 1 },
+      };
+
+    case ActionTypes.PREV_PAGE:
+      return {
+        ...state,
+        pagination: { ...state.pagination, currentPage: state.pagination.currentPage - 1 },
+      };
+
+    case ActionTypes.SET_PAGE:
+      return { ...state, pagination: { ...state.pagination, currentPage: action.payload } };
+
+    case ActionTypes.SET_INTERSECTION_ELEMENTS:
+      const updatedIntersectionElements = { ...state.intersectionElements };
+
+      for (const key in updatedIntersectionElements) {
+        //@ts-ignore
+        updatedIntersectionElements[key] = key === action.payload;
+      }
+      return {
+        ...state,
+        intersectionElements: updatedIntersectionElements,
+      };
+
+    case ActionTypes.SET_IS_SEARCH_LOADING:
+      return { ...state, isSearchLoading: action.payload };
+
+    case ActionTypes.SET_IS_SEARCH_ACTIVE:
+      return { ...state, isSearchActive: action.payload };
+
+    default:
+      return state;
+  }
+};
+
+const GlobalContext = React.createContext<{ state: AppState; dispatch: React.Dispatch<AppAction> } | undefined>(
+  undefined
+);
 
 export const GlobalContextProvider = ({ children }: any) => {
-  const pathName = usePathname();
-  const router = useRouter();
+  const initial_state = {
+    userQuery: '',
+    articleState: [],
+    relatedItems: [],
+    isNotFound: false,
+    sortState: SortState.desc,
+    isSearchActive: false,
+    pagination: {
+      totalItems: 0,
+      currentPage: 1,
+    },
+    sliceIndex: {
+      start: 0,
+      end: 6,
+    },
+    intersectionElements: {
+      landing: false,
+      mission: false,
+      missionArticle: false,
+      about: false,
+      contact: false,
+    },
 
-  const [pagination, setPagination] = React.useState({
-    totalItems: 0,
-    currentPage: 1,
-  });
-
-  const [sortState, setSortState] = React.useState<SortState>(SortState.desc);
-  const [userQuery, setUserQuery] = React.useState<string>('');
-  const [articleState, setArticleState] = React.useState<PlanetaryDataArticle[]>([]);
-  const [isNotFound, setIsNotFound] = React.useState<boolean>(false);
-  const [isSearchActive, setIsSearchActive] = React.useState<boolean>(false);
-
-  const maxPages = 15;
-  const articlesPerPage = 6;
-  const startIndex = (pagination.currentPage - 1) * articlesPerPage;
-  const endIndex = startIndex + articlesPerPage;
-
-  const handleUserQuery = async (query: string) => {
-    const callApi = await planetarySearch({ query: query });
-
-    if (pathName !== '/explore/planets') {
-      router.push('/explore/planets');
-    }
-
-    if (callApi && callApi.collection.items.length > 0) {
-      const totalHitCountFromApi = callApi.collection.metadata.total_hits;
-
-      setPagination((_prev) => {
-        if (totalHitCountFromApi >= maxPages * articlesPerPage) {
-          return { ..._prev, totalItems: maxPages * articlesPerPage };
-        } else
-          return { currentPage: Math.ceil(totalHitCountFromApi / articlesPerPage), totalItems: totalHitCountFromApi };
-      });
-
-      const fullResults = callApi.collection.items;
-
-      const prepareSort = sortByDate(fullResults, sortState);
-
-      setArticleState(prepareSort);
-      setIsNotFound(false);
-    } else {
-      setIsNotFound(true);
-    }
+    isSearchLoading: false,
   };
+
+  const [state, dispatch] = React.useReducer(appReducer, initial_state);
 
   return (
     <GlobalContext.Provider
       value={{
-        userQuery,
-        articlesPerPage,
-        maxPages,
-        startIndex,
-        endIndex,
-        articleState,
-        isNotFound,
-        sortState,
-        pagination,
-        isSearchActive,
-        setIsSearchActive,
-        setUserQuery,
-        setArticleState,
-        setIsNotFound,
-        setSortState,
-        setPagination,
-        handleUserQuery,
+        state,
+        dispatch,
       }}
     >
       {children}
@@ -138,4 +117,10 @@ export const GlobalContextProvider = ({ children }: any) => {
   );
 };
 
-export const useGlobalContext = () => React.useContext(GlobalContext);
+export function useAppContext() {
+  const context = React.useContext(GlobalContext);
+  if (context === undefined) {
+    throw new Error('useAppContext must be used within an AppProvider');
+  }
+  return context;
+}
