@@ -12,6 +12,7 @@ import Loading from './loading';
 import { useAppContext } from '@/app/contexts/store';
 import { ActionTypes } from '@/app/types/actionTypes';
 import { SortState } from '@/app/types/sortState';
+import { generateRelatedItems } from '@/app/utils/lists/generateRelated';
 
 export interface NewsAndStudiesContent {
   data: PlanetaryDataArticle[];
@@ -40,6 +41,8 @@ const NewsAndStudiesContent = (props: NewsAndStudiesContent) => {
         payload: { data: memoisedPrefetchedData, direction: SortState.desc },
       });
       dispatch({ type: ActionTypes.SET_TOTAL_ITEMS, payload: props.total_hits });
+
+      dispatch({ type: ActionTypes.SET_RELATED_ITEMS, payload: generateRelatedItems(memoisedPrefetchedData) });
     }
   }, [memoisedPrefetchedData, dispatch, articleState.length, props.total_hits, sortState]);
 

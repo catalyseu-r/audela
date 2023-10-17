@@ -5,16 +5,15 @@ import { PlanetaryDataArticleBody } from '@/app/types/planetaryData';
 import Image from 'next/image';
 import React from 'react';
 import ReactPlayer from 'react-player';
-
 import { Chakra_Petch } from 'next/font/google';
-
 import { HiOutlineHashtag as HashTag } from 'react-icons/hi';
 import LikeAndShare from '@/app/components/LikeAndShare';
 import Link from 'next/link';
 const chakraP = Chakra_Petch({ weight: '400', subsets: ['latin'] });
 import placeholder from '../../../img/placeholder-article.jpg';
-// import { useGlobalContext } from '@/app/contexts/store';
-// import { generateRelatedItems } from '@/app/utils/lists/generateRelated';
+import { useAppContext } from '@/app/contexts/store';
+import { PiArrowBendUpRightBold as ArrowIcon } from 'react-icons/pi';
+import { usePathname } from 'next/navigation';
 
 interface ArticlePageContainerData {
   articleData: PlanetaryDataArticleBody | undefined;
@@ -23,11 +22,51 @@ interface ArticlePageContainerData {
     url: string | undefined;
     mediaThumb: string | undefined;
   };
-  moreLikeThis?: any[];
 }
 
 const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerData) => {
   const { title, description, description_508, keywords, photographer, secondary_creator } = articleData!;
+
+  const scrollContainerRef = React.useRef<HTMLDivElement | null>(null);
+  const [isDragging, setIsDragging] = React.useState<boolean>(false);
+  const [startX, setStartX] = React.useState<number | null>(null);
+  const [scrollLeft, setScrollLeft] = React.useState<number>(0);
+
+  const handleMouseDown = React.useCallback((e: React.MouseEvent) => {
+    setIsDragging(true);
+    setStartX(e.pageX - (scrollContainerRef.current?.offsetLeft || 0));
+
+    setScrollLeft(scrollContainerRef.current?.scrollLeft || 0);
+  }, []);
+
+  const handleMouseUp = () => setIsDragging(false);
+
+  const pathName = usePathname();
+
+  const generateLinkToNext = () => {
+    const pathArray = pathName.split('/');
+
+    const cutCurrent = pathArray.slice(0, pathArray.length - 1).join('/');
+
+    return cutCurrent;
+  };
+
+  generateLinkToNext();
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+
+    e.preventDefault();
+    const x = e.pageX - (scrollContainerRef.current?.offsetLeft || 0);
+
+    const walk = (x - (startX || 0)) * 0.75;
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollLeft = (scrollLeft || 0) - walk;
+    }
+  };
+  const {
+    state: { relatedItems },
+  } = useAppContext();
 
   const reg = /(https?:\/\/[^\s]+)/g;
 
@@ -78,7 +117,7 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
     });
 
   return (
-    <div className='py-24 flex flex-col  gap-20 w-full z-20'>
+    <div className='py-24 flex flex-col  gap-20 w-full z-20 '>
       <div className=' flex w-full justify-between items-center flex-wrap gap-8'>
         <Breadcrumbs />
       </div>
@@ -87,7 +126,7 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
         <RenderImageOrVideo />
       </div>
 
-      <div className='grid grid-cols-1 gap-9 place-items-start max-w-[58rem] mx-auto '>
+      <div className='grid grid-cols-1 gap-9 place-items-start max-w-[58rem] mx-auto'>
         <h2 className={`${chakraP.className} col-start-1   lg:text-4xl md:text-2xl text-xl text-accent-pink px-6`}>
           {title}
         </h2>
@@ -130,6 +169,44 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
                   for an enriched reading experience. In the meantime, enjoy the article!
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div className='mt-40 grid items-start grid-cols-1 gap-8'>
+          <h3 className='text-subHeading text-accent-pink font-light leading-10'>More like this</h3>
+
+          <div
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
+            ref={scrollContainerRef}
+            className='overflow-x-scroll w-full cursor-grab active:cursor-grabbing no-scrollbar'
+          >
+            <div className='flex gap-12 flex-nowrap    snap-mandatory snap-x'>
+              {relatedItems.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className='w-72 h-[24.5rem] relative overflow-hidden shrink-0 snap-start select-none group rounded aspect-square'
+                  >
+                    <Image
+                      className='select-none pointer-events-none snap-both rounded aspect-square'
+                      fill
+                      src={item.links[0].href.toString()}
+                      alt='article'
+                    />
+                    <div className='absolute bottom-0 grid grid-cols-1 place-items-end w-full translate-y-full group-hover:translate-y-0 transition-all gap-4 bg-text-white/90 py-2 px-6'>
+                      <h2 className='text-deep-green text-xl leading-6 font-normal w-full'>{item.data[0].title}</h2>
+                      <div className='w-6 h-6 grid items-center justify-center border border-deep-green rounded-full'>
+                        <Link href={`${generateLinkToNext()}/${item.data[0].nasa_id}`}>
+                          <ArrowIcon className={`text-base text-deep-green`} />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

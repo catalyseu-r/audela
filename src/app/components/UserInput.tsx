@@ -8,6 +8,7 @@ import { planetarySearch } from '../utils/API/planetarySearch';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAppContext } from '../contexts/store';
 import { ActionTypes } from '../types/actionTypes';
+import { generateRelatedItems } from '../utils/lists/generateRelated';
 
 const maxPages = 15;
 const articlesPerPage = 6;
@@ -56,6 +57,7 @@ const UserInput = () => {
       dispatch({ type: ActionTypes.SET_IS_NOT_FOUND, payload: false });
       dispatch({ type: ActionTypes.SET_IS_SEARCH_LOADING, payload: false });
       dispatch({ type: ActionTypes.SET_TOTAL_ITEMS, payload: totalHitCountFromApi });
+      dispatch({ type: ActionTypes.SET_RELATED_ITEMS, payload: generateRelatedItems(fullResults) });
 
       if (
         totalHitCountFromApi <= articlesPerPage * maxPages &&

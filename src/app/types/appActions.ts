@@ -11,6 +11,10 @@ export type AppAction =
         direction: SortState;
       };
     }
+  | {
+      type: ActionTypes.SET_RELATED_ITEMS;
+      payload: PlanetaryDataArticle[];
+    }
   | { type: ActionTypes.SET_IS_NOT_FOUND; payload: boolean }
   | { type: ActionTypes.SET_SORT_STATE; payload: SortState }
   | {

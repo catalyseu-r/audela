@@ -17,6 +17,7 @@ export interface AppState {
     contact: boolean;
   };
   articleState: PlanetaryDataArticle[];
+  relatedItems: PlanetaryDataArticle[];
   isNotFound: boolean;
   sortState: SortState;
   isSearchActive: boolean;

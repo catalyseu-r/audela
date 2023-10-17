@@ -14,7 +14,16 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
       return { ...state, userQuery: action.payload };
 
     case ActionTypes.SET_ARTICLE_STATE:
-      return { ...state, articleState: sortByDate(action.payload.data, action.payload.direction) };
+      return {
+        ...state,
+        articleState: sortByDate(action.payload.data, action.payload.direction),
+      };
+
+    case ActionTypes.SET_RELATED_ITEMS:
+      return {
+        ...state,
+        relatedItems: action.payload,
+      };
 
     case ActionTypes.SET_TOTAL_ITEMS:
       return { ...state, pagination: { ...state.pagination, totalItems: action.payload } };
@@ -62,6 +71,7 @@ export const GlobalContextProvider = ({ children }: any) => {
   const initial_state = {
     userQuery: '',
     articleState: [],
+    relatedItems: [],
     isNotFound: false,
     sortState: SortState.desc,
     isSearchActive: false,
