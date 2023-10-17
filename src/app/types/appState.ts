@@ -1,0 +1,24 @@
+import { PlanetaryDataArticle } from './planetaryData';
+import { SortState } from './sortState';
+
+export interface AppState {
+  userQuery: string;
+
+  pagination: {
+    totalItems: number;
+    currentPage: number;
+  };
+
+  intersectionElements: {
+    landing: boolean;
+    mission: boolean;
+    missionArticle: boolean;
+    about: boolean;
+    contact: boolean;
+  };
+  articleState: PlanetaryDataArticle[];
+  isNotFound: boolean;
+  sortState: SortState;
+  isSearchActive: boolean;
+  isSearchLoading: boolean;
+}

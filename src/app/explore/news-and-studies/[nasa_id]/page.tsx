@@ -3,8 +3,6 @@ import { planetarySearch } from '@/app/utils/API/planetarySearch';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 import Loading from '../loading';
-import Image from 'next/image';
-import elipseOne from '../../../img/Ellipse 20.png';
 
 export default async function ArticleDetail({ params }: { params: { nasa_id: string } }) {
   const singleArticleData = await planetarySearch({ nasa_id: params.nasa_id });

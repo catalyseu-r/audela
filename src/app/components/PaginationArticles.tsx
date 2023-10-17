@@ -1,13 +1,21 @@
 import React from 'react';
-import { useGlobalContext } from '../contexts/store';
+
 import { BsArrowLeft as ArrowLeft, BsArrowRight as ArrorwRight } from 'react-icons/bs';
+import { useAppContext } from '../contexts/store';
+import { ActionTypes } from '../types/actionTypes';
 
 const PaginationArticles = () => {
-  const { pagination, maxPages, articlesPerPage, setPagination } = useGlobalContext();
+  const {
+    state: { pagination },
+    dispatch,
+  } = useAppContext();
 
   const [windowWidth, setWindowWidth] = React.useState<number | undefined>(
     window !== undefined ? window.innerWidth : undefined
   );
+
+  const maxPages = 15;
+  const articlesPerPage = 6;
 
   const buttonArray = Array.from(
     Array(
@@ -27,9 +35,13 @@ const PaginationArticles = () => {
 
   const isForwrard = (current: number, button: 'forward' | 'back') => {
     if (button === 'forward' && current < buttonArray.length) {
-      setPagination({ totalItems: pagination.totalItems, currentPage: pagination.currentPage + 1 });
+      dispatch({
+        type: ActionTypes.NEXT_PAGE,
+      });
     } else if (button === 'back' && current !== 1) {
-      setPagination({ totalItems: pagination.totalItems, currentPage: pagination.currentPage - 1 });
+      dispatch({
+        type: ActionTypes.PREV_PAGE,
+      });
     }
   };
 
@@ -53,9 +65,12 @@ const PaginationArticles = () => {
               className={`text-lg transition-all ${
                 appendIndex === pagination.currentPage ? `text-interactive-green scale-150` : `text-text-white`
               }`}
-              onClick={(event) =>
-                setPagination({ totalItems: pagination.totalItems, currentPage: Number(event.currentTarget.value) })
-              }
+              onClick={(event) => {
+                dispatch({
+                  type: ActionTypes.SET_PAGE,
+                  payload: Number(event.currentTarget.value),
+                });
+              }}
               value={appendIndex}
             >
               {appendIndex}
@@ -65,9 +80,12 @@ const PaginationArticles = () => {
       ) : (
         <select
           value={pagination.currentPage}
-          onChange={(event) =>
-            setPagination({ totalItems: pagination.totalItems, currentPage: Number(event.currentTarget.value) })
-          }
+          onChange={(event) => {
+            dispatch({
+              type: ActionTypes.SET_PAGE,
+              payload: Number(event.currentTarget.value),
+            });
+          }}
           className=' px-4 h-9 rounded bg-bg-black border outline-none focus:border-interactive-green transition-all border-deep-green text-base text-text-white  !font-sans cursor-pointer'
         >
           {buttonArray.map((item, index) => {

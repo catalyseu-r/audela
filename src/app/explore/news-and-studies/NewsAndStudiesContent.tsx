@@ -6,30 +6,42 @@ import React from 'react';
 import ArticleContainer from './ArticleContainer';
 import NotFound from '@/app/components/NotFound';
 
-import { useGlobalContext } from '@/app/contexts/store';
 import SortArticlesMenu from '@/app/components/SortArticlesMenu';
 import PaginationArticles from '@/app/components/PaginationArticles';
 import Loading from './loading';
+import { useAppContext } from '@/app/contexts/store';
+import { ActionTypes } from '@/app/types/actionTypes';
+import { SortState } from '@/app/types/sortState';
 
 export interface NewsAndStudiesContent {
   data: PlanetaryDataArticle[];
   total_hits: number;
 }
 
-const PlanetsContentContainer = (props: NewsAndStudiesContent) => {
+const articlesPerPage = 6;
+
+const NewsAndStudiesContent = (props: NewsAndStudiesContent) => {
   const memoisedPrefetchedData = React.useMemo(() => {
     return props.data;
   }, [props.data]);
 
-  const { setArticleState, articleState, isNotFound, setPagination, startIndex, endIndex, isSearchLoading } =
-    useGlobalContext();
+  const {
+    state: { articleState, isNotFound, isSearchLoading, pagination, sortState },
+    dispatch,
+  } = useAppContext();
+
+  const startIndex = React.useMemo(() => (pagination.currentPage - 1) * articlesPerPage, [pagination.currentPage]);
+  const endIndex = React.useMemo(() => startIndex + articlesPerPage, [startIndex]);
 
   React.useEffect(() => {
     if (articleState.length === 0) {
-      setArticleState(memoisedPrefetchedData);
-      setPagination({ currentPage: 1, totalItems: memoisedPrefetchedData.length });
+      dispatch({
+        type: ActionTypes.SET_ARTICLE_STATE,
+        payload: { data: memoisedPrefetchedData, direction: SortState.desc },
+      });
+      dispatch({ type: ActionTypes.SET_TOTAL_ITEMS, payload: props.total_hits });
     }
-  }, [setArticleState, props, memoisedPrefetchedData, articleState, setPagination]);
+  }, [memoisedPrefetchedData, dispatch, articleState.length, props.total_hits, sortState]);
 
   return (
     <div className='pt-24 flex flex-col gap-8 w-full h-full'>
@@ -45,7 +57,7 @@ const PlanetsContentContainer = (props: NewsAndStudiesContent) => {
         <Loading />
       ) : (
         <>
-          <ArticleContainer data={...articleState.slice(startIndex, endIndex)} />
+          <ArticleContainer data={articleState.slice(startIndex, endIndex)} />
           <PaginationArticles />
         </>
       )}
@@ -53,4 +65,4 @@ const PlanetsContentContainer = (props: NewsAndStudiesContent) => {
   );
 };
 
-export default PlanetsContentContainer;
+export default NewsAndStudiesContent;

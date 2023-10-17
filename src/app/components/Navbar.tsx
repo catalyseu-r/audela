@@ -14,7 +14,7 @@ import SocialStack from './SocialStack';
 import { navLinks } from '../staticData/navLinks';
 import { usePathname } from 'next/navigation';
 import UserInput from './UserInput';
-import { useGlobalContext } from '../contexts/store';
+import { useAppContext } from '../contexts/store';
 import Image from 'next/image';
 import elipseOne from '../img/Ellipse 20.png';
 import toast from 'react-hot-toast';
@@ -28,7 +28,10 @@ const Navbar = () => {
   const handleNav = () => setisMobileNavOpen(!isMobileNavOpen);
   const pathName = usePathname();
 
-  const { isSearchActive } = useGlobalContext();
+  const {
+    state: { isSearchActive },
+    dispatch,
+  } = useAppContext();
 
   React.useEffect(() => {
     containerControls.start({ opacity: 0, transform: 'translateY(-200%)' });

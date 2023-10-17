@@ -12,6 +12,9 @@ import { HiOutlineHashtag as HashTag } from 'react-icons/hi';
 import LikeAndShare from '@/app/components/LikeAndShare';
 import Link from 'next/link';
 const chakraP = Chakra_Petch({ weight: '400', subsets: ['latin'] });
+import placeholder from '../../../img/placeholder-article.jpg';
+// import { useGlobalContext } from '@/app/contexts/store';
+// import { generateRelatedItems } from '@/app/utils/lists/generateRelated';
 
 interface ArticlePageContainerData {
   articleData: PlanetaryDataArticleBody | undefined;
@@ -105,6 +108,29 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
 
           <div className='place-self-end'>
             <LikeAndShare />
+          </div>
+
+          <div className='w-full py-4 px-6 grid content-center bg-text-white/5 rounded'>
+            <div className='w-full flex max-md:flex-wrap  gap-4 md:gap-[4.5rem] items-start '>
+              <div className='md:w-[13.5rem] md:h-[13.5rem] w-32 h-32 relative shrink-0'>
+                <Image
+                  src={placeholder}
+                  className='rounded-full lg:shadow-custom-img-shadow  '
+                  fill
+                  alt='placeholder for author'
+                />
+              </div>
+              <div className='grid columns-1 place-items-start gap-4 md:gap-9 md:px-6 '>
+                <h3 className='text-interactive-green lg:text-2xl md:text-xl text-lg leading-10 font-normal'>
+                  {photographer ?? secondary_creator}
+                </h3>
+                <p className='text-text-white lg:text-xl md:text-lg text-base leading-10 font-light'>
+                  The author&apos;s details are currently unavailable. We&apos;re working diligently to provide you with
+                  comprehensive author information, including their name, biography, and more. Please check back soon
+                  for an enriched reading experience. In the meantime, enjoy the article!
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

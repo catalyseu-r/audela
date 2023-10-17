@@ -1,20 +1,33 @@
 'use client';
 
 import React from 'react';
-import { useGlobalContext } from '../contexts/store';
 import { SlMagnifier as SearchIcon } from 'react-icons/sl';
 import { TfiClose as CloseIcon } from 'react-icons/tfi';
+import { planetarySearch } from '../utils/API/planetarySearch';
+
+import { usePathname, useRouter } from 'next/navigation';
+import { useAppContext } from '../contexts/store';
+import { ActionTypes } from '../types/actionTypes';
+
+const maxPages = 15;
+const articlesPerPage = 6;
 
 const UserInput = () => {
-  const { userQuery, setUserQuery, handleUserQuery, isSearchActive, setIsSearchActive } = useGlobalContext();
+  const {
+    state: { isSearchActive, userQuery, sortState, pagination },
+    dispatch,
+  } = useAppContext();
 
   const inputRef = React.useRef<HTMLInputElement | null>(null);
 
+  const router = useRouter();
+  const pathName = usePathname();
+
   const handleUserActionInput = React.useCallback(() => {
     if (isSearchActive) {
-      handleUserQuery(userQuery);
+      dispatch({ type: ActionTypes.SET_USER_QUERY, payload: userQuery });
     } else {
-      setIsSearchActive(true);
+      dispatch({ type: ActionTypes.SET_IS_SEARCH_ACTIVE, payload: true });
 
       if ('virtualKeyboard' in navigator && navigator.virtualKeyboard) {
         //@ts-ignore
@@ -23,7 +36,37 @@ const UserInput = () => {
 
       inputRef.current && inputRef.current.focus();
     }
-  }, [handleUserQuery, isSearchActive, setIsSearchActive, userQuery]);
+  }, [isSearchActive, userQuery, dispatch]);
+
+  const handleUserQuery = async (query: string) => {
+    dispatch({ type: ActionTypes.SET_IS_SEARCH_LOADING, payload: true });
+    dispatch({ type: ActionTypes.SET_IS_NOT_FOUND, payload: false });
+    const callApi = await planetarySearch({ query: query });
+
+    if (pathName !== '/explore/news-and-studies') {
+      router.push('/explore/news-and-studies');
+    }
+
+    if (callApi && callApi.collection.items.length > 0) {
+      const totalHitCountFromApi = callApi.collection.metadata.total_hits;
+
+      const fullResults = callApi.collection.items;
+
+      dispatch({ type: ActionTypes.SET_ARTICLE_STATE, payload: { data: fullResults, direction: sortState } });
+      dispatch({ type: ActionTypes.SET_IS_NOT_FOUND, payload: false });
+      dispatch({ type: ActionTypes.SET_IS_SEARCH_LOADING, payload: false });
+      dispatch({ type: ActionTypes.SET_TOTAL_ITEMS, payload: totalHitCountFromApi });
+
+      if (
+        totalHitCountFromApi <= articlesPerPage * maxPages &&
+        pagination.currentPage >= totalHitCountFromApi / articlesPerPage
+      ) {
+        dispatch({ type: ActionTypes.SET_PAGE, payload: Math.ceil(totalHitCountFromApi / articlesPerPage) });
+      }
+    } else {
+      dispatch({ type: ActionTypes.SET_IS_NOT_FOUND, payload: true });
+    }
+  };
 
   return (
     <div
@@ -50,7 +93,7 @@ const UserInput = () => {
           id='userQuery'
           className={`bg-transparent  text-text-white text-sm lg:text-base  focus:outline-none w-full`}
           placeholder='Your search term'
-          onChange={(event) => setUserQuery(event.target.value)}
+          onChange={(event) => dispatch({ type: ActionTypes.SET_USER_QUERY, payload: event.target.value })}
           onKeyDown={(keyDown) => keyDown.key === 'Enter' && handleUserQuery(userQuery)}
           defaultValue={userQuery}
         />
@@ -60,7 +103,10 @@ const UserInput = () => {
             onClick={() => handleUserQuery(userQuery)}
             className={` text-text-white text-2xl cursor-pointer`}
           />
-          <CloseIcon onClick={() => setIsSearchActive(false)} className={`text-text-white text-lg cursor-pointer`} />
+          <CloseIcon
+            onClick={() => dispatch({ type: ActionTypes.SET_IS_SEARCH_ACTIVE, payload: false })}
+            className={`text-text-white text-lg cursor-pointer`}
+          />
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import placeholder from '../../img/placeholder-article.jpg';
 import { NewsAndStudiesContent } from './NewsAndStudiesContent';
+import { useAppContext } from '@/app/contexts/store';
 
 interface ArticleContainerData {
   data: NewsAndStudiesContent['data'];
@@ -18,6 +19,8 @@ const ArticleContainer = (props: ArticleContainerData) => {
   const winSize = window.innerWidth;
 
   const pathName = usePathname();
+
+  const { state } = useAppContext();
 
   return (
     <div
