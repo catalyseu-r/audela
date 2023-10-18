@@ -34,13 +34,12 @@ const MissionContent = (props: CommonSectionProps) => {
       ([entry]) =>
         entry.isIntersecting && dispatch({ type: ActionTypes.SET_INTERSECTION_ELEMENTS, payload: 'mission' }),
 
-      { rootMargin: '142px', threshold: 0.5 }
+      { threshold: 0.5 }
     );
 
     const missionArticleObserver = new IntersectionObserver(
       ([entry]) =>
-        entry.isIntersecting && dispatch({ type: ActionTypes.SET_INTERSECTION_ELEMENTS, payload: 'missionArticle' }),
-      { rootMargin: '-200px' }
+        entry.isIntersecting && dispatch({ type: ActionTypes.SET_INTERSECTION_ELEMENTS, payload: 'missionArticle' })
     );
 
     missionSectionRef.current && missionObserver.observe(missionSectionRef.current);
@@ -115,21 +114,17 @@ const MissionContent = (props: CommonSectionProps) => {
               exploration, and inspire a new generation of space enthusiasts.
             </p>
 
-            <p className='text-text-white leading-10 font-light lg:text-xl md:text-lg text-base'>
+            <p
+              ref={missionArticleRef}
+              className='text-text-white leading-10 font-light lg:text-xl md:text-lg text-base'
+            >
               Together, we&apos;re reaching for the stars.
             </p>
           </div>
 
           <div className='flex relative flex-col w-full md:w-8/12 lg:w-5/12'>
             <div className='relative  h-80 lg:max-w-[416px]  aspect-square lg:shadow-custom-img-shadow lg:hover:shadow-none lg:transition-shadow duration-500 cursor-pointer'>
-              <Image
-                ref={missionArticleRef}
-                className='object-cover'
-                src={roverImg}
-                fill
-                loading='lazy'
-                alt='Mars rover in action'
-              />
+              <Image className='object-cover' src={roverImg} fill loading='lazy' alt='Mars rover in action' />
             </div>
 
             <div className='absolute bottom-0 z-10 w-full will-change-contents '>
