@@ -99,7 +99,7 @@ const MissionContent = (props: CommonSectionProps) => {
         <div className='flex gap-16 flex-wrap items-start justify-start w-full'>
           <div className='flex flex-col gap-10 items-start justify-center lg:max-w-xl w-full'>
             <p className='text-text-white leading-10 font-light lg:text-xl md:text-lg text-base'>
-              At Au-delà my unwavering commitment is to broaden the horizons of space exploration, knowledge, and news,
+              At Au-delà my unwavering commitment is to broaden the horizons of space exploration, knowledge, and news
               ensuring their accessibility to a global audience.
             </p>
 

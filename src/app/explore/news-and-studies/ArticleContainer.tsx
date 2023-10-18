@@ -59,7 +59,7 @@ const ArticleContainer = (props: ArticleContainerData) => {
                   <Image src={placeholder} fill alt='placeholder for author' className=' rounded-full' />
                 </div>
                 <div className=''>
-                  <p className='text-xs leading-5 font-light line-clamp-1'>
+                  <p className='text-xs leading-5 font-light line-clamp-1 text-bg-black'>
                     {item.data[0].photographer || item.data[0].secondary_creator || item.data[0].center}
                   </p>
 

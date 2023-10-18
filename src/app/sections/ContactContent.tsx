@@ -4,16 +4,10 @@ import Image from 'next/image';
 import elipseOne from '../img/Ellipse 20.png';
 import { FaRegEnvelope as MailIcon } from 'react-icons/fa';
 
-import {
-  FaDribbbleSquare as DribbleIcon,
-  FaTumblrSquare as TumblrIcon,
-  FaGithubSquare as GithubIcon,
-  FaInstagramSquare as InstagramIcon,
-  FaTwitterSquare as TwitterIcon,
-  FaLinkedin as LinkedinIcon,
-} from 'react-icons/fa';
 import { useAppContext } from '../contexts/store';
 import { ActionTypes } from '../types/actionTypes';
+import { socialLinks } from '../staticData/socialLinks';
+import Link from 'next/link';
 
 const ContactContent = (props: CommonSectionProps) => {
   const { dispatch } = useAppContext();
@@ -99,43 +93,27 @@ const ContactContent = (props: CommonSectionProps) => {
 
           <div className='grid items-start gap-4 grid-cols-1'>
             <p className='text-text-white lg:text-2xl md:text-xl text-base leading-10 font-normal'>👋🏻 Say hi</p>
-            <div className='grid md:grid-cols-3 grid-cols-2 max-w-3xl gap-6 '>
-              <div className='py-4 px-6 flex items-center justify-center gap-4 rounded border border-deep-green hover:border-interactive-green transition-all ease-in-out cursor-pointer group'>
-                <LinkedinIcon
-                  className={`text-deep-green  lg:text-2xl md:text-xl text-base cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
-                />
-                <p className='text-text-white lg:text-2xl md:text-xl text-base leading-6 font-light'>@rudvl</p>
-              </div>
-              <div className='py-4 px-6 flex items-center justify-center gap-4 rounded border border-deep-green hover:border-interactive-green transition-all ease-in-out cursor-pointer group'>
-                <GithubIcon
-                  className={`text-deep-green  lg:text-2xl md:text-xl text-base cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
-                />
-                <p className='text-text-white lg:text-2xl md:text-xl text-base leading-6 font-light'>@rudvl</p>
-              </div>
-              <div className='py-4 px-6 flex items-center justify-center gap-4 rounded border border-deep-green hover:border-interactive-green transition-all ease-in-out cursor-pointer group'>
-                <DribbleIcon
-                  className={`text-deep-green  lg:text-2xl md:text-xl text-base cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
-                />
-                <p className='text-text-white lg:text-2xl md:text-xl text-base leading-6 font-light'>@rudvl</p>
-              </div>
-              <div className='py-4 px-6 flex items-center justify-center gap-4 rounded border border-deep-green hover:border-interactive-green transition-all ease-in-out cursor-pointer group'>
-                <InstagramIcon
-                  className={`text-deep-green  lg:text-2xl md:text-xl text-base cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
-                />
-                <p className='text-text-white lg:text-2xl md:text-xl text-base leading-6 font-light'>@rudvl</p>
-              </div>
-              <div className='py-4 px-6 flex items-center justify-center gap-4 rounded border border-deep-green hover:border-interactive-green transition-all ease-in-out cursor-pointer group'>
-                <TwitterIcon
-                  className={`text-deep-green  lg:text-2xl md:text-xl text-base cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
-                />
-                <p className='text-text-white lg:text-2xl md:text-xl text-base leading-6 font-light'>@rudvl</p>
-              </div>
-              <div className='py-4 px-6 flex items-center justify-center gap-4 rounded border border-deep-green hover:border-interactive-green transition-all ease-in-out cursor-pointer group'>
-                <TumblrIcon
-                  className={`text-deep-green  lg:text-2xl md:text-xl text-base cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
-                />
-                <p className='text-text-white lg:text-2xl md:text-xl text-base leading-6 font-light'>@rudvl</p>
-              </div>
+            <div className='grid md:grid-cols-3 grid-cols-2 max-w-3xl  gap-6 '>
+              {socialLinks.map((link, index, orig) => {
+                const Icon = orig[index].icon;
+                return (
+                  <Link
+                    href={link.href}
+                    key={link.href}
+                    rel='noopener noreferrer'
+                    target='_blank'
+                    className='py-4 px-6 flex items-center justify-center gap-4 rounded border border-deep-green hover:border-interactive-green transition-all ease-in-out cursor-pointer group '
+                  >
+                    <Icon
+                      icon={link.icon}
+                      className={`text-deep-green shrink-0 lg:text-2xl md:text-xl text-base cursor-pointer group-hover:text-interactive-green transform duration-500 group-hover:scale-125 transition-all `}
+                    />
+                    <p className={`text-text-white lg:text-2xl md:text-xl text-base leading-6 font-light `}>
+                      {link.title}
+                    </p>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>
