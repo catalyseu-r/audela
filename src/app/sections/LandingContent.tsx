@@ -13,6 +13,7 @@ import AboutContent from './AboutContent';
 import ContactContent from './ContactContent';
 import { useAppContext } from '../contexts/store';
 import { ActionTypes } from '../types/actionTypes';
+import { pageSections } from '../staticData/sections';
 
 const LandingContent = () => {
   const [containerWidth, setContainerWidth] = React.useState<number>(1120);
@@ -22,7 +23,6 @@ const LandingContent = () => {
     state: { intersectionElements },
   } = useAppContext();
 
-  const pageSections = ['landing', 'mission', 'about', 'contact'];
   const landingSectionRef = React.useRef<HTMLDivElement | null>(null);
   const containerRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -45,7 +45,7 @@ const LandingContent = () => {
       landingSectionObserver.disconnect();
       window.removeEventListener('resize', updateClientContainerWidth);
     };
-  }, []);
+  }, [dispatch]);
 
   React.useEffect(() => {
     const updateClientScrollPostion = () => window.scrollY < 772 && setScrollPosition(window.scrollY);

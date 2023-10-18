@@ -88,6 +88,7 @@ const ContentContainer = (props: ContentInterface) => {
             selected={currentDate}
             onChange={(date) => setCurrentDate(date)}
             maxDate={new Date()}
+            minDate={new Date('1995/06/16')}
             className='!italic w-full bg-transparent font-light text-text-white text-base cursor-pointer  focus:outline-none '
             calendarClassName='!bg-main-white  !text-bg-black'
             disabledKeyboardNavigation
