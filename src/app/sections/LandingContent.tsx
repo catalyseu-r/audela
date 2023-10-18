@@ -45,7 +45,7 @@ const LandingContent = () => {
       landingSectionObserver.disconnect();
       window.removeEventListener('resize', updateClientContainerWidth);
     };
-  }, []);
+  }, [dispatch]);
 
   React.useEffect(() => {
     const updateClientScrollPostion = () => window.scrollY < 772 && setScrollPosition(window.scrollY);
