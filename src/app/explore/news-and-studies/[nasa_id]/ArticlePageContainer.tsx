@@ -186,25 +186,22 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
             <div className='flex gap-12 flex-nowrap    snap-mandatory snap-x'>
               {relatedItems.map((item, index) => {
                 return (
-                  <div
-                    key={index}
-                    className='w-72 h-[24.5rem] relative overflow-hidden shrink-0 snap-start select-none group rounded aspect-square'
-                  >
-                    <Image
-                      className='select-none pointer-events-none snap-both rounded aspect-square'
-                      fill
-                      src={item.links[0].href.toString()}
-                      alt='article'
-                    />
-                    <div className='absolute bottom-0 grid grid-cols-1 place-items-end w-full translate-y-full group-hover:translate-y-0 transition-all gap-4 bg-text-white/90 py-2 px-6'>
-                      <h2 className='text-deep-green text-xl leading-6 font-normal w-full'>{item.data[0].title}</h2>
-                      <div className='w-6 h-6 grid items-center justify-center border border-deep-green rounded-full'>
-                        <Link href={`${generateLinkToNext()}/${item.data[0].nasa_id}`}>
+                  <Link key={index} href={`${generateLinkToNext()}/${item.data[0].nasa_id}`}>
+                    <div className='w-72 h-[24.5rem] relative overflow-hidden shrink-0 snap-start select-none group rounded aspect-square'>
+                      <Image
+                        className='select-none pointer-events-none snap-both rounded aspect-square'
+                        fill
+                        src={item.links[0].href.toString()}
+                        alt='article'
+                      />
+                      <div className='absolute bottom-0 grid grid-cols-1 place-items-end w-full translate-y-full group-hover:translate-y-0 transition-all gap-4 bg-text-white/90 py-2 px-6'>
+                        <h2 className='text-deep-green text-xl leading-6 font-normal w-full'>{item.data[0].title}</h2>
+                        <div className='w-6 h-6 grid items-center justify-center border border-deep-green rounded-full'>
                           <ArrowIcon className={`text-base text-deep-green`} />
-                        </Link>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>
