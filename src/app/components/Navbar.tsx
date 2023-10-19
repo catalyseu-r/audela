@@ -31,7 +31,6 @@ const Navbar = () => {
 
   const {
     state: { isSearchActive },
-    dispatch,
   } = useAppContext();
 
   React.useEffect(() => {

@@ -44,6 +44,12 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
     setScrollLeft(scrollContainerRef.current?.scrollLeft || 0);
   }, []);
 
+  const {
+    state: { relatedItems },
+  } = useAppContext();
+
+  console.log('RELATED', relatedItems);
+
   const handleMouseUp = () => setIsDragging(false);
 
   const pathName = usePathname();
@@ -56,8 +62,6 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
     return cutCurrent;
   };
 
-  generateLinkToNext();
-
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging) return;
 
@@ -69,9 +73,6 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
       scrollContainerRef.current.scrollLeft = (scrollLeft || 0) - walk;
     }
   };
-  const {
-    state: { relatedItems },
-  } = useAppContext();
 
   const reg = /(https?:\/\/[^\s]+)/g;
 

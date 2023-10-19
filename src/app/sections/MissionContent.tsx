@@ -16,6 +16,8 @@ import { CommonSectionProps } from '../types/sections';
 import { useAppContext } from '../contexts/store';
 import { ActionTypes } from '../types/actionTypes';
 import { imageClassNames } from '../staticData/imageClassNames';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const MissionContent = (props: CommonSectionProps) => {
   const { scrollPosition } = props;
@@ -26,6 +28,8 @@ const MissionContent = (props: CommonSectionProps) => {
 
   const missionSectionRef = React.useRef(null);
   const missionArticleRef = React.useRef(null);
+
+  const pathName = usePathname();
 
   React.useEffect(() => {
     const missionObserver = new IntersectionObserver(
@@ -110,10 +114,11 @@ const MissionContent = (props: CommonSectionProps) => {
               <LineThree isIntersecting={isArticleInView} />
               <LineFour isIntersecting={isArticleInView} />
 
-              <div
+              <Link
                 className={` transition-opacity duration-700 ${
                   isArticleInView ? 'opacity-100' : 'opacity-0'
                 } flex  flex-col items-end w-10/12 md:w-8/12 absolute top-full translate-x-6 rounded translate-y-48 lg:w-[22rem] bg-text-white p-4 lg:gap-6 md:gap-4 gap-2 `}
+                href={`${pathName}explore/news-and-studies/PIA07081`}
               >
                 <h3 className='text-bg-black font-normal leading-6 text-xl self-stretch px-4'>Photographing Mars</h3>
                 <p className='text-bg-black font-light leading-6 text-base self-stretch px-6 '>
@@ -123,7 +128,7 @@ const MissionContent = (props: CommonSectionProps) => {
                 <div className='w-6 h-6 rounded-full flex items-center justify-center bg-transparent border border-deep-green'>
                   <ForwardIcon className={`text-base text-deep-green`} />
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
