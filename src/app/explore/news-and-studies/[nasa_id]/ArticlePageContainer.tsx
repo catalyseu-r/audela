@@ -48,13 +48,13 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
   }, []);
 
   const {
-    state: { relatedItems, userQuery },
+    state: { relatedItems, fullQuery },
     dispatch,
   } = useAppContext();
 
   React.useEffect(() => {
     const fetchRelatedContent = async () => {
-      const data = await planetarySearch({ query: userQuery ?? '' });
+      const data = await planetarySearch({ query: fullQuery ?? '' });
 
       if (data) {
         const generatedRelated = data.collection.items;
@@ -63,7 +63,7 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
     };
 
     fetchRelatedContent();
-  }, [userQuery, dispatch]);
+  }, [dispatch, fullQuery]);
 
   const handleMouseUp = () => setIsDragging(false);
 
