@@ -18,6 +18,7 @@ import { useAppContext } from '../contexts/store';
 import Image from 'next/image';
 import elipseOne from '../img/Ellipse 20.png';
 import toast from 'react-hot-toast';
+import { imageClassNames } from '../staticData/imageClassNames';
 
 const Navbar = () => {
   const [isMobileNavOpen, setisMobileNavOpen] = React.useState<boolean>(false);
@@ -82,9 +83,9 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`w-full pt-4 inline-block py-2  z-40 fixed top-0 ${isSearchActive ? 'px-4' : ''} ${
-        pathName === '/' ? 'bg-transparent' : 'bg-bg-black/50'
-      } ${scrollPosition > 150 ? 'backdrop-blur-sm' : ''} transition-all`}
+      className={`w-full pt-4 inline-block py-2  z-40 fixed top-0 ${isSearchActive ? 'px-4' : ''}  ${
+        scrollPosition > 200 ? 'backdrop-blur-sm bg-bg-black/50' : 'bg-transparent'
+      } transition-all`}
     >
       <div className='flex  gap-4 justify-between relative  items-center  lg:max-w-container-lg md:w-5/6 mx-auto md:px-0 px-4 '>
         <button onClick={handleProfileClick} className={`flex gap-2 items-center ${!isMobileNavOpen && 'hidden'} z-40`}>
@@ -93,7 +94,7 @@ const Navbar = () => {
         </button>
         <Link
           href={'/'}
-          className={` ${chakraP.className}  lg:text-3xl text-2xl uppercase z-40  ${
+          className={` ${chakraP.className}  lg:text-3xl whitespace-nowrap text-2xl uppercase z-40  ${
             isMobileNavOpen ? 'hidden ' : 'text-accent-pink'
           }  ${isSearchActive ? 'hidden' : 'inline-block'} w-fit`}
         >
@@ -142,34 +143,9 @@ const Navbar = () => {
         transition={{ duration: 0.25 }}
         className={`w-full  h-screen bg-bg-black  px-4 z-30 fixed top-0 lg:hidden`}
       >
-        <Image
-          src={elipseOne}
-          alt='elipse'
-          className='object-cover animate-animate-elipse absolute top-0 left-0'
-          width={240}
-          height={240}
-        />
-        <Image
-          src={elipseOne}
-          alt='elipse'
-          className='object-cover animate-animate-elipse-short absolute top-1/2 left-1/2 delay-300'
-          width={240}
-          height={240}
-        />
-        <Image
-          src={elipseOne}
-          alt='elipse'
-          className='object-cover animate-animate-reverse absolute top-2/3 left-2/3 delay-500'
-          width={240}
-          height={240}
-        />
-        <Image
-          src={elipseOne}
-          alt='elipse'
-          className='object-cover animate-animate-reverse absolute bottom-2/3 left-4/4 delay-700'
-          width={140}
-          height={140}
-        />
+        {imageClassNames.map((className, index) => (
+          <Image key={index} src={elipseOne} alt={`elipse-${index}`} width={240} height={240} className={className} />
+        ))}
         <div className='flex flex-col mt-32 mx-auto gap-14 max-w-[12.815rem] '>
           {navLinks.map((link, index) => {
             const Icon = navLinks[index].icon;

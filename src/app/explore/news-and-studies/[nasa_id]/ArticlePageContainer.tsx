@@ -1,19 +1,24 @@
 'use client';
 
-import Breadcrumbs from '@/app/components/Breadcrumbs';
 import { PlanetaryDataArticleBody } from '@/app/types/planetaryData';
+
 import Image from 'next/image';
 import React from 'react';
 import ReactPlayer from 'react-player';
-import { Chakra_Petch } from 'next/font/google';
-import { HiOutlineHashtag as HashTag } from 'react-icons/hi';
-import LikeAndShare from '@/app/components/LikeAndShare';
 import Link from 'next/link';
-const chakraP = Chakra_Petch({ weight: '400', subsets: ['latin'] });
-import placeholder from '../../../img/placeholder-article.jpg';
+
 import { useAppContext } from '@/app/contexts/store';
 import { PiArrowBendUpRightBold as ArrowIcon } from 'react-icons/pi';
 import { usePathname } from 'next/navigation';
+import { Chakra_Petch } from 'next/font/google';
+import { HiOutlineHashtag as HashTag } from 'react-icons/hi';
+
+import Breadcrumbs from '@/app/components/Breadcrumbs';
+import LikeAndShare from '@/app/components/LikeAndShare';
+
+const chakraP = Chakra_Petch({ weight: '400', subsets: ['latin'] });
+
+import placeholder from '../../../img/placeholder-article.jpg';
 
 interface ArticlePageContainerData {
   articleData: PlanetaryDataArticleBody | undefined;

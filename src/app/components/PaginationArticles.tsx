@@ -3,6 +3,7 @@ import React from 'react';
 import { BsArrowLeft as ArrowLeft, BsArrowRight as ArrorwRight } from 'react-icons/bs';
 import { useAppContext } from '../contexts/store';
 import { ActionTypes } from '../types/actionTypes';
+import { articlesPerPage, maxPages } from '../staticData/variables';
 
 const PaginationArticles = () => {
   const {
@@ -13,9 +14,6 @@ const PaginationArticles = () => {
   const [windowWidth, setWindowWidth] = React.useState<number | undefined>(
     window !== undefined ? window.innerWidth : undefined
   );
-
-  const maxPages = 15;
-  const articlesPerPage = 6;
 
   const buttonArray = Array.from(
     Array(
