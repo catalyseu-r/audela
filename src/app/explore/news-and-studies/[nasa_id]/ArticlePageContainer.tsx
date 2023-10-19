@@ -19,6 +19,9 @@ import LikeAndShare from '@/app/components/LikeAndShare';
 const chakraP = Chakra_Petch({ weight: '400', subsets: ['latin'] });
 
 import placeholder from '../../../img/placeholder-article.jpg';
+import { planetarySearch } from '@/app/utils/API/planetarySearch';
+import { ActionTypes } from '@/app/types/actionTypes';
+import { generateRelatedItems } from '@/app/utils/lists/generateRelated';
 
 interface ArticlePageContainerData {
   articleData: PlanetaryDataArticleBody | undefined;
@@ -45,10 +48,22 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
   }, []);
 
   const {
-    state: { relatedItems },
+    state: { relatedItems, userQuery },
+    dispatch,
   } = useAppContext();
 
-  console.log('RELATED', relatedItems);
+  React.useEffect(() => {
+    const fetchRelatedContent = async () => {
+      const data = await planetarySearch({ query: userQuery ?? '' });
+
+      if (data) {
+        const generatedRelated = data.collection.items;
+        dispatch({ type: ActionTypes.SET_RELATED_ITEMS, payload: generateRelatedItems(generatedRelated) });
+      }
+    };
+
+    fetchRelatedContent();
+  }, [userQuery, dispatch]);
 
   const handleMouseUp = () => setIsDragging(false);
 
