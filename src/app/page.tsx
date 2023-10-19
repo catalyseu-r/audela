@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+
 import Loading from './loading';
 import LandingContent from './sections/LandingContent';
 

@@ -1,8 +1,10 @@
 import './globals.css';
+import 'react-datepicker/dist/react-datepicker.css';
+
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 const roboto = Roboto({ weight: ['300', '400', '500', '700'], subsets: ['latin'] });
-import 'react-datepicker/dist/react-datepicker.css';
+
 import { GlobalContextProvider } from './contexts/store';
 import { Toaster } from 'react-hot-toast';
 

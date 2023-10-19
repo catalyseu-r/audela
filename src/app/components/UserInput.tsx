@@ -9,9 +9,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useAppContext } from '../contexts/store';
 import { ActionTypes } from '../types/actionTypes';
 import { generateRelatedItems } from '../utils/lists/generateRelated';
-
-const maxPages = 15;
-const articlesPerPage = 6;
+import { articlesPerPage, maxPages } from '../staticData/variables';
 
 const UserInput = () => {
   const {

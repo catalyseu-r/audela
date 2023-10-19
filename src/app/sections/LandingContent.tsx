@@ -1,19 +1,19 @@
 'use client';
 
 import React from 'react';
+
+import { useAppContext } from '../contexts/store';
+import { ActionTypes } from '../types/actionTypes';
+import { pageSections } from '../staticData/sections';
+
 import ButtonCTA from '../components/ButtonCTA';
 import Navbar from '../components/Navbar';
 import SocialStack from '../components/SocialStack';
 import Header from '../components/Header';
-
 import Bubble from '../components/Lines/Bubble';
 import MissionContent from './MissionContent';
 import AboutContent from './AboutContent';
-
 import ContactContent from './ContactContent';
-import { useAppContext } from '../contexts/store';
-import { ActionTypes } from '../types/actionTypes';
-import { pageSections } from '../staticData/sections';
 
 const LandingContent = () => {
   const [containerWidth, setContainerWidth] = React.useState<number>(1120);
