@@ -9,6 +9,8 @@ import { Suspense } from 'react';
 import Loading from '../loading';
 import Image from 'next/image';
 import elipseOne from '../../../img/Ellipse 20.png';
+import { imageClassNames } from '@/app/staticData/imageClassNames';
+
 export default async function ArticleDetail({ params }: { params: { nasa_id: string } }) {
   const singleArticleData = await planetarySearch({ nasa_id: params.nasa_id });
 
@@ -27,51 +29,9 @@ export default async function ArticleDetail({ params }: { params: { nasa_id: str
   return (
     <Suspense fallback={<Loading />}>
       <main className='bg-transparent  relative overflow-hidden  '>
-        <Image
-          src={elipseOne}
-          alt='elipse'
-          className='object-cover animate-animate-elipse absolute bottom-0 left-0 -z-10'
-          width={240}
-          height={240}
-        />
-        <Image
-          src={elipseOne}
-          alt='elipse'
-          className='object-cover animate-animate-elipse-short absolute bottom-0 right-0 delay-300 -z-10'
-          width={240}
-          height={240}
-        />
-        <Image
-          src={elipseOne}
-          alt='elipse'
-          className='object-cover animate-animate-reverse absolute bottom-1/3 right-1/3 delay-500 -z-10'
-          width={240}
-          height={240}
-        />
-
-        <Image
-          src={elipseOne}
-          alt='elipse'
-          className='object-cover animate-animate-reverse absolute top-1/3 left-1/3 delay-500 -z-10'
-          width={240}
-          height={240}
-        />
-
-        <Image
-          src={elipseOne}
-          alt='elipse'
-          className='object-cover animate-animate-reverse absolute top-0 right-1/3 delay-500 -z-10'
-          width={240}
-          height={240}
-        />
-
-        <Image
-          src={elipseOne}
-          alt='elipse'
-          className='object-cover animate-animate-reverse absolute top-0 left-1/4 delay-700 -z-10'
-          width={140}
-          height={140}
-        />
+        {imageClassNames.map((className, index) => (
+          <Image key={index} src={elipseOne} alt={`elipse-${index}`} width={240} height={240} className={className} />
+        ))}
 
         <Navbar />
 

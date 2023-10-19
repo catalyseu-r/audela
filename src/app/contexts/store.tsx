@@ -3,6 +3,7 @@
 import React from 'react';
 
 import { sortByDate } from '../utils/lists/sort';
+
 import { ActionTypes } from '../types/actionTypes';
 import { AppState } from '../types/appState';
 import { AppAction } from '../types/appActions';
@@ -95,7 +96,6 @@ export const GlobalContextProvider = ({ children }: any) => {
     intersectionElements: {
       landing: false,
       mission: false,
-      missionArticle: false,
       about: false,
       contact: false,
     },

@@ -12,7 +12,6 @@ export interface AppState {
   intersectionElements: {
     landing: boolean;
     mission: boolean;
-    missionArticle: boolean;
     about: boolean;
     contact: boolean;
   };

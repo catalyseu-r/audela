@@ -15,19 +15,21 @@ import Bubble from '../components/Lines/Bubble';
 import { CommonSectionProps } from '../types/sections';
 import { useAppContext } from '../contexts/store';
 import { ActionTypes } from '../types/actionTypes';
+import { imageClassNames } from '../staticData/imageClassNames';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const MissionContent = (props: CommonSectionProps) => {
   const { scrollPosition } = props;
 
-  const {
-    dispatch,
-    state: { intersectionElements },
-  } = useAppContext();
+  const [isArticleInView, setIsArticleInView] = React.useState<boolean>(false);
 
-  const { missionArticle } = intersectionElements;
+  const { dispatch } = useAppContext();
 
   const missionSectionRef = React.useRef(null);
   const missionArticleRef = React.useRef(null);
+
+  const pathName = usePathname();
 
   React.useEffect(() => {
     const missionObserver = new IntersectionObserver(
@@ -37,9 +39,8 @@ const MissionContent = (props: CommonSectionProps) => {
       { threshold: 0.5 }
     );
 
-    const missionArticleObserver = new IntersectionObserver(
-      ([entry]) =>
-        entry.isIntersecting && dispatch({ type: ActionTypes.SET_INTERSECTION_ELEMENTS, payload: 'missionArticle' })
+    const missionArticleObserver = new IntersectionObserver(([entry]) =>
+      entry.isIntersecting ? setIsArticleInView(true) : setIsArticleInView(false)
     );
 
     missionSectionRef.current && missionObserver.observe(missionSectionRef.current);
@@ -61,34 +62,9 @@ const MissionContent = (props: CommonSectionProps) => {
         transitionDuration: '250ms',
       }}
     >
-      <Image
-        src={elipseOne}
-        alt='elipse'
-        className=' object-cover animate-animate-elipse transition-transform absolute top-0 left-0'
-        width={240}
-        height={240}
-      />
-      <Image
-        src={elipseOne}
-        alt='elipse'
-        className=' object-cover animate-animate-elipse-short transition-transform  absolute top-1/2 left-1/2 delay-300'
-        width={240}
-        height={240}
-      />
-      <Image
-        src={elipseOne}
-        alt='elipse'
-        className='object-cover animate-animate-reverse absolute transition-transform  top-1/3 left-1/3 delay-500'
-        width={240}
-        height={240}
-      />
-      <Image
-        src={elipseOne}
-        alt='elipse'
-        className=' object-cover animate-animate-reverse absolute transition-transform  top-1/3 right-1/3 delay-700'
-        width={240}
-        height={240}
-      />
+      {imageClassNames.map((className, index) => (
+        <Image key={index} src={elipseOne} alt={`elipse-${index}`} width={240} height={240} className={className} />
+      ))}
       {/* start section wrap */}
 
       <div
@@ -114,30 +90,35 @@ const MissionContent = (props: CommonSectionProps) => {
               exploration, and inspire a new generation of space enthusiasts.
             </p>
 
-            <p
-              ref={missionArticleRef}
-              className='text-text-white leading-10 font-light lg:text-xl md:text-lg text-base'
-            >
+            <p className='text-text-white leading-10 font-light lg:text-xl md:text-lg text-base'>
               Together, we&apos;re reaching for the stars.
             </p>
           </div>
 
-          <div className='flex relative flex-col w-full md:w-8/12 lg:w-5/12'>
+          <div className='flex relative flex-col w-full md:w-8/12 lg:w-5/12 '>
             <div className='relative  h-80 lg:max-w-[416px]  aspect-square lg:shadow-custom-img-shadow lg:hover:shadow-none lg:transition-shadow duration-500 cursor-pointer'>
-              <Image className='object-cover' src={roverImg} fill loading='lazy' alt='Mars rover in action' />
+              <Image
+                ref={missionArticleRef}
+                className='object-cover'
+                src={roverImg}
+                fill
+                loading='lazy'
+                alt='Mars rover in action'
+              />
             </div>
 
             <div className='absolute bottom-0 z-10 w-full will-change-contents '>
               <Bubble linkTo={null} currentInView={'mission'} />
-              <LineOne isIntersecting={missionArticle} />
-              <LineTwo isIntersecting={missionArticle} />
-              <LineThree isIntersecting={missionArticle} />
-              <LineFour isIntersecting={missionArticle} />
+              <LineOne isIntersecting={isArticleInView} />
+              <LineTwo isIntersecting={isArticleInView} />
+              <LineThree isIntersecting={isArticleInView} />
+              <LineFour isIntersecting={isArticleInView} />
 
-              <div
+              <Link
                 className={` transition-opacity duration-700 ${
-                  missionArticle ? 'opacity-100' : 'opacity-0'
+                  isArticleInView ? 'opacity-100' : 'opacity-0'
                 } flex  flex-col items-end w-10/12 md:w-8/12 absolute top-full translate-x-6 rounded translate-y-48 lg:w-[22rem] bg-text-white p-4 lg:gap-6 md:gap-4 gap-2 `}
+                href={`${pathName}explore/news-and-studies/PIA07081`}
               >
                 <h3 className='text-bg-black font-normal leading-6 text-xl self-stretch px-4'>Photographing Mars</h3>
                 <p className='text-bg-black font-light leading-6 text-base self-stretch px-6 '>
@@ -147,7 +128,7 @@ const MissionContent = (props: CommonSectionProps) => {
                 <div className='w-6 h-6 rounded-full flex items-center justify-center bg-transparent border border-deep-green'>
                   <ForwardIcon className={`text-base text-deep-green`} />
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
         </div>

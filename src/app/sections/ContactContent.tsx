@@ -8,6 +8,7 @@ import { useAppContext } from '../contexts/store';
 import { ActionTypes } from '../types/actionTypes';
 import { socialLinks } from '../staticData/socialLinks';
 import Link from 'next/link';
+import { imageClassNames } from '../staticData/imageClassNames';
 
 const ContactContent = (props: CommonSectionProps) => {
   const { dispatch } = useAppContext();
@@ -31,34 +32,9 @@ const ContactContent = (props: CommonSectionProps) => {
 
   return (
     <section id='contact' className='relative min-h-screen bg-bg-black pt-40'>
-      <Image
-        src={elipseOne}
-        alt='elipse'
-        className='object-cover animate-animate-elipse absolute top-0 left-0'
-        width={240}
-        height={240}
-      />
-      <Image
-        src={elipseOne}
-        alt='elipse'
-        className='object-cover animate-animate-elipse-short absolute top-1/2 left-1/2 delay-300'
-        width={240}
-        height={240}
-      />
-      <Image
-        src={elipseOne}
-        alt='elipse'
-        className='object-cover animate-animate-reverse absolute top-1/3 left-1/3 delay-500'
-        width={240}
-        height={240}
-      />
-      <Image
-        src={elipseOne}
-        alt='elipse'
-        className='object-cover animate-animate-reverse absolute bottom-1/3 left-3/4 delay-700'
-        width={140}
-        height={140}
-      />
+      {imageClassNames.map((className, index) => (
+        <Image key={index} src={elipseOne} alt={`elipse-${index}`} width={240} height={240} className={className} />
+      ))}
 
       {/* start section wrap */}
       <div
