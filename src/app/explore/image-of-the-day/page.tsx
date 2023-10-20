@@ -15,7 +15,7 @@ export default async function pictureOfTheDay() {
   const imageData = await getImageOfTheDay();
   return (
     <Suspense fallback={<Loading />}>
-      <main className='bg-bg-black min-h-custom-page-min relative  pb-24 '>
+      <main className='min-h-custom-page-min overflow-hidden relative  pb-24 '>
         <Navbar />
         {imageClassNames.map((className, index) => (
           <Image key={index} src={elipseOne} alt={`elipse-${index}`} width={240} height={240} className={className} />
