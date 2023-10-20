@@ -104,7 +104,7 @@ const ContentContainer = (props: ContentInterface) => {
 
   return (
     <div className='lg:mt-24 mt-16 w-full flex flex-col gap-8'>
-      <div className=' flex w-full justify-between items-center flex-wrap gap-8 '>
+      <div className=' flex w-full justify-between items-start flex-wrap gap-8 '>
         <Breadcrumbs />
         <CalendarLabel />
       </div>

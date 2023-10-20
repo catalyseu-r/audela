@@ -4,8 +4,8 @@ const LineFour = (props: any) => (
     xmlns='http://www.w3.org/2000/svg'
     style={{
       transitionTimingFunction: 'cubic-bezier(0,.79,.65,.99)',
-      transitionDuration: '750ms',
-      transitionDelay: '750ms',
+      transitionDuration: '250ms',
+      transitionDelay: '250ms',
       transformOrigin: 'right',
       transition: 'ease-in-out',
       transitionProperty: 'all',

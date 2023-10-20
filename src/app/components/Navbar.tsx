@@ -106,17 +106,20 @@ const Navbar = () => {
               isSearchActive ? 'md:hidden' : 'md:flex'
             } items-center justify-between gap-16 text-base font-light text-text-white hidden`}
           >
-            {navLinks.map((link) =>
-              link.title !== 'Explore' ? (
-                <Link
-                  href={link.href || ''}
-                  replace={pathName !== '/'}
-                  key={link.title}
-                  className='cursor-pointer transition-all hover:text-interactive-green'
-                >
-                  {link.title}
-                </Link>
-              ) : null
+            {navLinks.map(
+              (link) =>
+                link.title !== 'Explore' && (
+                  <Link
+                    href={link.href || ''}
+                    replace={pathName !== '/'}
+                    key={link.title}
+                    className={`cursor-pointer transition-all hover:text-interactive-green ${
+                      isSearchActive ? 'scale-0' : 'scale-100'
+                    } origin-top-right `}
+                  >
+                    {link.title}
+                  </Link>
+                )
             )}
           </div>
 

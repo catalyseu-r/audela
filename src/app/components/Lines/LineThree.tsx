@@ -4,9 +4,9 @@ const LineThree = (props: any) => (
     xmlns='http://www.w3.org/2000/svg'
     style={{
       transitionTimingFunction: 'cubic-bezier(0,.79,.65,.99)',
-      transitionDuration: '500ms',
-      transitionDelay: '500ms',
-      transformOrigin: 'right',
+      transitionDuration: '250ms',
+      transitionDelay: '250ms',
+      transformOrigin: 'center bottom',
       transition: 'ease-in-out',
       transitionProperty: 'all',
       width: '2px',

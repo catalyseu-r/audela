@@ -37,7 +37,9 @@ const Breadcrumbs = () => {
           <Link
             href={`/${formatCurrentPath[index]}`}
             passHref
-            className={`text-base ${index === array.length - 1 ? 'text-interactive-green' : 'text-text-white'}`}
+            className={`text-base ${
+              index === array.length - 1 ? 'text-interactive-green' : 'text-text-white'
+            } line-clamp-1`}
             key={currentPath[index]}
           >
             {`${item}/`}
@@ -47,7 +49,7 @@ const Breadcrumbs = () => {
     });
   };
 
-  return <div className='py-4 md:px-5 flex  justify-center items-center w-max gap-1'>{formatCrumbs()}</div>;
+  return <div className='py-4  flex  justify-center items-center w-max gap-1 max-w-prose'>{formatCrumbs()}</div>;
 };
 
 export default Breadcrumbs;
