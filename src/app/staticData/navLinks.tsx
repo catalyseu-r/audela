@@ -15,7 +15,7 @@ export const navLinks = [
       },
       { title: 'News and studies', href: '/explore/news-and-studies', icon: NewsIcon },
 
-      { title: 'Weather on Mars', href: '/weather-on-mars', icon: LockIcon },
+      { title: 'Weather on Mars', href: 'blank', icon: LockIcon },
     ],
   },
   { title: 'Our mission', delay: 0.8, icon: PlanetIcon, href: '/#mission' },
