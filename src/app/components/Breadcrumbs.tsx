@@ -16,14 +16,14 @@ const Breadcrumbs = () => {
     return currentPath.map((item, index, array) => {
       if (index === 0) {
         return (
-          <span className='flex items-center justify-center gap-2' key={index}>
+          <span className='flex items-center  justify-center gap-2' key={index}>
             <HomeIcon
-              className={`text-base ${index === array.length - 1 ? 'text-interactive-green' : 'text-text-white'}`}
+              className={`text-xs ${index === array.length - 1 ? 'text-interactive-green' : 'text-text-white'}`}
             />
             <Link
               href={`/${formatCurrentPath[index]}`}
               passHref
-              className={`text-base ${index === array.length - 1 ? 'text-interactive-green' : 'text-text-white'}`}
+              className={`text-xs ${index === array.length - 1 ? 'text-interactive-green' : 'text-text-white'} `}
               key={currentPath[index]}
             >
               {`${item}/`}
@@ -33,23 +33,21 @@ const Breadcrumbs = () => {
       }
 
       return (
-        <span key={index}>
-          <Link
-            href={`/${formatCurrentPath[index]}`}
-            passHref
-            className={`text-base ${
-              index === array.length - 1 ? 'text-interactive-green' : 'text-text-white'
-            } line-clamp-1`}
-            key={currentPath[index]}
-          >
-            {`${item}/`}
-          </Link>
-        </span>
+        <Link
+          href={`/${formatCurrentPath[index]}`}
+          passHref
+          className={`text-xs ${
+            index === array.length - 1 ? 'text-interactive-green max-w-[15ch] truncate' : 'text-text-white'
+          } `}
+          key={currentPath[index]}
+        >
+          {`${item}/`}
+        </Link>
       );
     });
   };
 
-  return <div className=' flex  justify-center items-center w-max gap-1 max-w-prose'>{formatCrumbs()}</div>;
+  return <div className=' flex  justify-center  items-center w-max gap-1 max-w-prose '>{formatCrumbs()}</div>;
 };
 
 export default Breadcrumbs;

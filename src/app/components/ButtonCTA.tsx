@@ -47,7 +47,7 @@ const ButtonCTA = ({ title: buttonText, linkTo }: ButtonPropsCTA) => {
        hover:before:top-0  
        hover:before:bg-gradient-to-br 
        hover:before:to-interactive-green 
-       hover:before:via-sha-blue 
+       hover:before:via-interactive-green/50
        hover:before:from-bg-black/50 
        before:content-["Let's_explore!"]`}
     >

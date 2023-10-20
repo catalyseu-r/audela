@@ -97,6 +97,7 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
         url={mainImage.url}
         width='100%'
         className='rounded'
+        light
         height='100%'
         controls={true}
         config={{
