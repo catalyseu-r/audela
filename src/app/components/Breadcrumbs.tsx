@@ -49,7 +49,7 @@ const Breadcrumbs = () => {
     });
   };
 
-  return <div className='py-4  flex  justify-center items-center w-max gap-1 max-w-prose'>{formatCrumbs()}</div>;
+  return <div className=' flex  justify-center items-center w-max gap-1 max-w-prose'>{formatCrumbs()}</div>;
 };
 
 export default Breadcrumbs;

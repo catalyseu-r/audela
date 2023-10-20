@@ -83,7 +83,7 @@ const Navbar = () => {
   return (
     <nav
       className={`w-full pt-4 inline-block py-2  z-40 fixed top-0 ${isSearchActive ? 'px-4' : ''}  ${
-        scrollPosition > 200 ? 'backdrop-blur-sm bg-bg-black/50' : 'bg-transparent'
+        scrollPosition > 150 ? 'backdrop-blur-sm bg-bg-black/50' : 'bg-transparent'
       } transition-all`}
     >
       <div className='flex  gap-4 justify-between relative  items-center  lg:max-w-container-lg md:w-5/6 mx-auto md:px-0 px-4 '>

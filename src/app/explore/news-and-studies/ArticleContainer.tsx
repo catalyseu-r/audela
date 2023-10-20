@@ -35,14 +35,16 @@ const ArticleContainer = (props: ArticleContainerData) => {
             exit={{ opacity: 0 }}
           >
             <div className=' md:w-[11.625rem] h-[13.375rem] w-full relative bg-text-white'>
-              <Image
-                className='object-cover transition-opacity opacity-0 duration-1000 rounded'
-                fill
-                alt='Astronomy article image'
-                src={item?.links[0].href.toString()}
-                loading='lazy'
-                onLoadingComplete={(image) => image.classList.remove('opacity-0')}
-              />
+              <Link href={`${pathName}/${item.data[0].nasa_id}`}>
+                <Image
+                  className='object-cover transition-opacity opacity-0 duration-1000 rounded'
+                  fill
+                  alt='Astronomy article image'
+                  src={item?.links[0].href.toString()}
+                  loading='lazy'
+                  onLoadingComplete={(image) => image.classList.remove('opacity-0')}
+                />
+              </Link>
             </div>
 
             <div className='flex px-4 py-4 md:py-0 flex-col justify-between gap-4 items-start  bg-text-white flex-1 w-full lg:w-[22rem]'>
