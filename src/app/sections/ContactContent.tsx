@@ -31,7 +31,7 @@ const ContactContent = (props: CommonSectionProps) => {
   }, [dispatch]);
 
   return (
-    <section id='contact' className='relative min-h-screen bg-bg-black pt-40'>
+    <section id='contact' className='relative  py-40 overflow-hidden'>
       {imageClassNames.map((className, index) => (
         <Image key={index} src={elipseOne} alt={`elipse-${index}`} width={240} height={240} className={className} />
       ))}

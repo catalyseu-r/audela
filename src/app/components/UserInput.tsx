@@ -56,7 +56,7 @@ const UserInput = () => {
       dispatch({ type: ActionTypes.SET_IS_SEARCH_LOADING, payload: false });
       dispatch({ type: ActionTypes.SET_TOTAL_ITEMS, payload: totalHitCountFromApi });
       dispatch({ type: ActionTypes.SET_RELATED_ITEMS, payload: generateRelatedItems(fullResults) });
-
+      dispatch({ type: ActionTypes.SET_FULL_QUERY, payload: query });
       if (
         totalHitCountFromApi <= articlesPerPage * maxPages &&
         pagination.currentPage >= totalHitCountFromApi / articlesPerPage

@@ -181,7 +181,8 @@ const Navbar = () => {
                     >
                       {link.subOptions?.map((sub, index) => {
                         const Icon = link.subOptions[index].icon;
-                        return (
+
+                        return sub.href !== 'blank' ? (
                           <Link
                             className={`
                           text-base leading-6 text-text-white font-light flex justify-start items-center content-start  gap-4`}
@@ -192,6 +193,15 @@ const Navbar = () => {
                             <Icon className={`text-xl text-deep-green`} />
                             <p onClick={() => setisMobileNavOpen(false)}>{sub.title}</p>
                           </Link>
+                        ) : (
+                          <button
+                            className='text-base leading-6 text-text-white/50 font-light flex justify-start items-center content-start  gap-4'
+                            key={sub.title}
+                            disabled
+                          >
+                            <Icon className={'text-xl'} />
+                            {sub.title}
+                          </button>
                         );
                       })}
                     </div>

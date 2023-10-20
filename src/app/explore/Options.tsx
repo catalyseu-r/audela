@@ -39,13 +39,11 @@ const Options = () => {
               </Link>
             ) : (
               <button
-                className='z-10 group lg:py-6 py-4 lg:px-8 px-4 flex items-center justify-between self-stretch border border-interactive-green/10 lg:text-2xl md:text-lg text-base  text-text-white rounded hover:border-interactive-green transition-all duration-300'
+                className='z-10 group lg:py-6 py-4 lg:px-8 px-4 flex items-center justify-between self-stretch border border-interactive-green/10 lg:text-2xl md:text-lg text-base  text-text-white rounded cursor-not-allowed'
                 key={option.title}
                 disabled
               >
-                <Icon
-                  className={'group-hover:text-interactive-green group-hover:scale-125 transition-all duration-300'}
-                />
+                <Icon className={''} />
                 {option.title}
               </button>
             );

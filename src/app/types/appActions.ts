@@ -4,6 +4,7 @@ import { SortState } from './sortState';
 
 export type AppAction =
   | { type: ActionTypes.SET_USER_QUERY; payload: string }
+  | { type: ActionTypes.SET_FULL_QUERY; payload: string }
   | {
       type: ActionTypes.SET_ARTICLE_STATE;
       payload: {
