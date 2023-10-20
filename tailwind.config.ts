@@ -83,11 +83,11 @@ const config: Config = {
         },
 
         elipseTransform: {
-          '0%': { transform: 'translate(80px,100px) scale(1.1)' },
-          '25%': { transform: 'translate(20px, 150px) scale(1.2)' },
-          '50%': { transform: 'translate(40px, 120px) scale(1)' },
-          '75%': { transform: 'translate(20px, 100px) scale(1.2)' },
-          '100%': { transform: 'translate(-10px, -20px)scale(1.3)' },
+          '0%': { transform: 'translate(55%, 5%) scale(1.4)', opacity: '.8' },
+          '25%': { transform: 'translate(45%, -10%) scale(1) ', opacity: '.7' },
+          '50%': { transform: 'translate(-55%, 20%) scale(.9) ', opacity: '.5' },
+          '75%': { transform: 'translate(-45%, 10%) scale(1.5) ', opacity: '.9' },
+          '100%': { transform: 'translate(100%, 30%) scale(1) ', opacity: '1' },
         },
         heartTransform: {
           '0%, 100%': {
@@ -110,9 +110,9 @@ const config: Config = {
       animation: {
         enter: 'baseFadeIn 1s ease',
         leave: 'baseFadeOut 1s ease-in ',
-        'animate-elipse': 'elipseTransform 15s infinite alternate ease-in-out',
-        'animate-elipse-short': 'elipseTransform 10s infinite alternate ease-in-out',
-        'animate-reverse': 'elipseTransform 15s infinite alternate-reverse ease-in-out',
+        'animate-elipse': 'elipseTransform 35s infinite alternate ease-in-out',
+        'animate-elipse-short': 'elipseTransform 25s infinite alternate ease-in-out',
+        'animate-reverse': 'elipseTransform 35s infinite alternate-reverse ease-in-out',
         'animate-heart': 'heartTransform .5s ease-in-out .25s',
         'animate-hand': 'handTransform .5s ease-in-out',
       },

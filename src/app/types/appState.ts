@@ -3,7 +3,7 @@ import { SortState } from './sortState';
 
 export interface AppState {
   userQuery: string;
-
+  fullQuery: string;
   pagination: {
     totalItems: number;
     currentPage: number;

@@ -1,13 +1,6 @@
 import React from 'react';
-
-import {
-  FaDribbbleSquare as DribbleIcon,
-  FaTumblrSquare as TumblrIcon,
-  FaGithubSquare as GithubIcon,
-  FaInstagramSquare as InstagramIcon,
-  FaTwitterSquare as TwitterIcon,
-  FaLinkedin as LinkedinIcon,
-} from 'react-icons/fa';
+import { socialLinks } from '../staticData/socialLinks';
+import Link from 'next/link';
 
 interface SocialStackProps {
   isInMenu?: boolean;
@@ -16,24 +9,16 @@ interface SocialStackProps {
 const SocialStack = (props: SocialStackProps) => {
   return (
     <div className={`${props.isInMenu ? 'w-32 flex-wrap ' : 'w-full'} flex items-center content-center gap-8 `}>
-      <LinkedinIcon
-        className={`text-deep-green  text-xl cursor-pointer hover:text-interactive-green transform duration-500 hover:scale-125 transition-all `}
-      />
-      <GithubIcon
-        className={`text-deep-green  text-xl cursor-pointer hover:text-interactive-green transform duration-500 hover:scale-125 transition-all `}
-      />
-      <DribbleIcon
-        className={`text-deep-green  text-xl cursor-pointer hover:text-interactive-green transform duration-500 hover:scale-125 transition-all `}
-      />
-      <InstagramIcon
-        className={`text-deep-green  text-xl cursor-pointer hover:text-interactive-green transform duration-500 hover:scale-125 transition-all `}
-      />
-      <TwitterIcon
-        className={`text-deep-green  text-xl cursor-pointer hover:text-interactive-green transform duration-500 hover:scale-125 transition-all `}
-      />
-      <TumblrIcon
-        className={`text-deep-green  text-xl cursor-pointer hover:text-interactive-green transform duration-500 hover:scale-125 transition-all `}
-      />
+      {socialLinks.map((link, index, orig) => {
+        const Icon = orig[index].icon;
+        return (
+          <Link key={link.href} href={link.href} target='_blank' rel='noopener noreferrer'>
+            <Icon
+              className={`text-deep-green  text-base cursor-pointer hover:text-interactive-green hover:scale-150 transition-all`}
+            />
+          </Link>
+        );
+      })}
     </div>
   );
 };

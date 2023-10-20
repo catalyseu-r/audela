@@ -14,6 +14,9 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
     case ActionTypes.SET_USER_QUERY:
       return { ...state, userQuery: action.payload };
 
+    case ActionTypes.SET_FULL_QUERY:
+      return { ...state, fullQuery: action.payload };
+
     case ActionTypes.SET_ARTICLE_STATE:
       return {
         ...state,
@@ -80,6 +83,7 @@ const GlobalContext = React.createContext<{ state: AppState; dispatch: React.Dis
 export const GlobalContextProvider = ({ children }: any) => {
   const initial_state = {
     userQuery: '',
+    fullQuery: '',
     articleState: [],
     relatedItems: [],
     isNotFound: false,
