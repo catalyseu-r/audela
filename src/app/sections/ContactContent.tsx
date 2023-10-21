@@ -11,7 +11,10 @@ import Link from 'next/link';
 import { imageClassNames } from '../staticData/imageClassNames';
 
 const ContactContent = (props: CommonSectionProps) => {
-  const { dispatch } = useAppContext();
+  const {
+    dispatch,
+    state: { intersectionElements },
+  } = useAppContext();
 
   const contactSectionRef = React.useRef(null);
 
@@ -39,7 +42,10 @@ const ContactContent = (props: CommonSectionProps) => {
       {/* start section wrap */}
       <div
         ref={contactSectionRef}
-        className='transition-opacity min-h-custom-page-min lg:max-w-container-lg md:w-5/6  w-full md:px-0 px-4 mx-auto  grid grid-cols-1 relative '
+        style={{
+          opacity: intersectionElements.contact ? '1' : '0',
+        }}
+        className={`transition-opacity duration-500 min-h-custom-page-min lg:max-w-container-lg md:w-5/6  w-full md:px-0 px-4 mx-auto  grid grid-cols-1 relative `}
       >
         <div className='max-w-3xl grid grid-cols-1 gap-14 items-start py-2 px-4'>
           <h2 className='text-text-white lg:text-subHeading md:text-2xl text-xl leading-10 font-normal'>
