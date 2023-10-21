@@ -134,8 +134,8 @@ const ContentContainer = (props: ContentInterface) => {
 
         <div className='flex group items-center justify-between border-b max-w-[11.5rem]  border-b-interactive-green/50 focus-within:border-b-interactive-green transition-colors duration-300 px-4 py-2 '>
           <ReactDatePicker
-            selected={currentDate ?? new Date()}
-            onChange={handleDatePick}
+            selected={currentDate}
+            onChange={(date) => handleDatePick(date!)}
             maxDate={new Date()}
             minDate={new Date('1995/06/16')}
             className='!italic w-full bg-transparent font-light text-text-white text-base cursor-pointer  focus:outline-none '
