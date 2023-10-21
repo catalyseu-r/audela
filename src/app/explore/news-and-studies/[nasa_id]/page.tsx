@@ -24,8 +24,6 @@ export default async function ArticleDetail({ params }: { params: { nasa_id: str
   const getVideoUrl = prepareMediaForClient.find((item) => item.endsWith('orig.mp4'));
   const getMediaThumb = prepareMediaForClient.find((item) => item.endsWith('thumb.jpg'));
 
-  console.log('PROP', prepareDataForClient);
-
   const DynamicContainer = dynamic(() => import('./ArticlePageContainer'), { ssr: false });
 
   return (
