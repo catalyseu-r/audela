@@ -63,12 +63,12 @@ const ContentContainer = (props: ContentInterface) => {
       try {
         setIsLoading(true);
 
-        if (!getLocalStorageItem('@au-dela_date') && searchParams.get('date')) {
+        if (!getLocalStorageItem('@au-dela_date') && searchParams.get('date') && !currentDate) {
           setCurrentDate(new Date(String(searchParams.get('date'))));
-        } else if (getLocalStorageItem('@au-dela_date') && searchParams.get('date')) {
+        } else if (getLocalStorageItem('@au-dela_date') && searchParams.get('date') && !currentDate) {
           const currentDateFromClient = new Date(String(searchParams.get('date')));
           setCurrentDate(currentDateFromClient);
-        } else {
+        } else if (!currentDate) {
           setCurrentDate(new Date());
         }
       } catch (error) {
@@ -80,7 +80,7 @@ const ContentContainer = (props: ContentInterface) => {
     };
 
     getStoredDateFromClient();
-  }, [searchParams]);
+  }, [searchParams, currentDate]);
 
   const handleDatePick = React.useCallback((date: Date) => {
     setCurrentDate(date);
