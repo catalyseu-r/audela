@@ -12,7 +12,7 @@ export const planetarySearch = async ({ query = '', nasa_id = '' }: PlanetarySea
         nasa_id ? `&nasa_id=${nasa_id}` : ''
       }`,
       {
-        cache: 'no-cache',
+        cache: 'default',
         keepalive: true,
       }
     );

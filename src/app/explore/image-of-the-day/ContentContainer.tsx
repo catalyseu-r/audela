@@ -63,13 +63,13 @@ const ContentContainer = (props: ContentInterface) => {
       try {
         setIsLoading(true);
 
-        if (getLocalStorageItem('@au-dela_date')) {
-          const currentDateFromClient = getLocalStorageItem('@au-dela_date');
-          setCurrentDate(new Date(currentDateFromClient!));
-        }
-        if (searchParams.get('date')) {
+        if (!getLocalStorageItem('@au-dela_date') && searchParams.get('date')) {
           setCurrentDate(new Date(String(searchParams.get('date'))));
-          return;
+        } else if (getLocalStorageItem('@au-dela_date') && searchParams.get('date')) {
+          const currentDateFromClient = new Date(String(searchParams.get('date')));
+          setCurrentDate(currentDateFromClient);
+        } else {
+          setCurrentDate(new Date());
         }
       } catch (error) {
         console.log(error);
