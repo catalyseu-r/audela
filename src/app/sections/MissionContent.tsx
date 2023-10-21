@@ -95,11 +95,17 @@ const MissionContent = (props: CommonSectionProps) => {
             </p>
           </div>
 
-          <div className='flex relative flex-col w-full md:w-8/12 lg:w-5/12 '>
-            <div className='relative  h-80 lg:max-w-[416px]  aspect-square lg:shadow-custom-img-shadow lg:hover:shadow-none lg:transition-shadow duration-500 cursor-pointer'>
+          <div className='flex relative flex-col w-full md:w-8/12 lg:w-5/12 group'>
+            <div
+              className={`relative  h-80 lg:max-w-[416px]  aspect-square ${
+                isArticleInView ? 'lg:shadow-custom-img-shadow delay-1000 ' : 'shadow-none'
+              } transition-all duration-500 ease-linear cursor-pointer overflow-hidden`}
+            >
               <Image
                 ref={missionArticleRef}
-                className='object-cover'
+                className={`${
+                  isArticleInView ? 'scale-100 opacity-100 delay-300' : 'scale-20 opacity-10'
+                } object-cover transition-all duration-300 ease-linear group-hover:scale-125`}
                 src={roverImg}
                 fill
                 loading='lazy'
@@ -107,7 +113,7 @@ const MissionContent = (props: CommonSectionProps) => {
               />
             </div>
 
-            <div className='absolute bottom-0 z-10 w-full will-change-contents '>
+            <div className='absolute bottom-0 cursor-pointer w-full h-full will-change-contents '>
               <Bubble linkTo={null} currentInView={'mission'} />
               <LineOne isIntersecting={isArticleInView} />
               <LineTwo isIntersecting={isArticleInView} />

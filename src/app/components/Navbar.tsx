@@ -83,7 +83,7 @@ const Navbar = () => {
   return (
     <nav
       className={`w-full pt-4 inline-block py-2  z-40 fixed top-0 ${isSearchActive ? 'px-4' : ''}  ${
-        scrollPosition > 200 ? 'backdrop-blur-sm bg-bg-black/50' : 'bg-transparent'
+        scrollPosition > 150 ? 'backdrop-blur-sm bg-bg-black/50' : 'bg-transparent'
       } transition-all`}
     >
       <div className='flex  gap-4 justify-between relative  items-center  lg:max-w-container-lg md:w-5/6 mx-auto md:px-0 px-4 '>
@@ -106,17 +106,20 @@ const Navbar = () => {
               isSearchActive ? 'md:hidden' : 'md:flex'
             } items-center justify-between gap-16 text-base font-light text-text-white hidden`}
           >
-            {navLinks.map((link) =>
-              link.title !== 'Explore' ? (
-                <Link
-                  href={link.href || ''}
-                  replace={pathName !== '/'}
-                  key={link.title}
-                  className='cursor-pointer transition-all hover:text-interactive-green'
-                >
-                  {link.title}
-                </Link>
-              ) : null
+            {navLinks.map(
+              (link) =>
+                link.title !== 'Explore' && (
+                  <Link
+                    href={link.href || ''}
+                    replace={pathName !== '/'}
+                    key={link.title}
+                    className={`cursor-pointer transition-all hover:text-interactive-green ${
+                      isSearchActive ? 'scale-0' : 'scale-100'
+                    } origin-top-right `}
+                  >
+                    {link.title}
+                  </Link>
+                )
             )}
           </div>
 
