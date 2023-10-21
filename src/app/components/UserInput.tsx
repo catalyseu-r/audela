@@ -113,4 +113,4 @@ const UserInput = () => {
   );
 };
 
-export default UserInput;
+export default React.memo(UserInput);

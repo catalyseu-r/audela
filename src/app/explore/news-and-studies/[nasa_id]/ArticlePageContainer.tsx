@@ -91,40 +91,6 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
 
   const reg = /(https?:\/\/[^\s]+)/g;
 
-  const RenderImageOrVideo = () => {
-    return mainImage.isVideo ? (
-      <ReactPlayer
-        url={mainImage.url}
-        width='100%'
-        className='rounded'
-        light
-        height='100%'
-        controls={true}
-        config={{
-          file: {
-            attributes: {
-              poster: mainImage.mediaThumb,
-            },
-          },
-        }}
-      />
-    ) : (
-      <Image
-        src={mainImage.url ?? ''}
-        fill
-        alt='NASA article image'
-        className={` transition-all duration-500 opacity-0 rounded`}
-        style={{
-          objectFit: 'cover',
-        }}
-        onLoadingComplete={(image) => image.classList.remove('opacity-0')}
-        placeholder={'blur'}
-        blurDataURL={mainImage.mediaThumb}
-        loading='eager'
-      />
-    );
-  };
-
   const formatDesc = (desc: string) =>
     desc.split('. ').map((txt, index) => {
       return txt.match(reg) ? (
@@ -148,7 +114,37 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
       </div>
 
       <div className=' w-full lg:min-h-iframes-images-lg md:min-h-iframes-images-md min-h-iframes-images-sm aspect-video relative md:shadow-custom-article-shadow rounded'>
-        <RenderImageOrVideo />
+        {mainImage.isVideo ? (
+          <ReactPlayer
+            url={mainImage.url}
+            width='100%'
+            className='rounded'
+            light
+            height='100%'
+            controls={true}
+            config={{
+              file: {
+                attributes: {
+                  poster: mainImage.mediaThumb,
+                },
+              },
+            }}
+          />
+        ) : (
+          <Image
+            src={mainImage.url ?? ''}
+            fill
+            alt='NASA article image'
+            className={` transition-all duration-500 opacity-0 rounded placeholder:text-bg-black`}
+            style={{
+              objectFit: 'cover',
+            }}
+            onLoadingComplete={(image) => image.classList.remove('opacity-0')}
+            placeholder={'blur'}
+            blurDataURL={mainImage.mediaThumb}
+            loading='eager'
+          />
+        )}
       </div>
 
       <div className='grid grid-cols-1 gap-9 place-items-start max-w-[58rem] mx-auto'>
@@ -179,7 +175,7 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
               <div className='md:w-[13.5rem] md:h-[13.5rem] w-32 h-32 relative shrink-0'>
                 <Image
                   src={placeholder}
-                  className='rounded-full lg:shadow-custom-img-shadow  '
+                  className='rounded-full lg:shadow-custom-img-shadow placeholder:text-bg-black '
                   fill
                   alt='placeholder for author'
                 />
@@ -214,7 +210,7 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
                   <Link key={index} href={`${generateLinkToNext()}/${item.data[0].nasa_id}`}>
                     <div className='w-72 h-[24.5rem] relative overflow-hidden shrink-0 snap-start select-none group rounded aspect-square'>
                       <Image
-                        className='select-none pointer-events-none snap-both rounded aspect-square'
+                        className='select-none pointer-events-none snap-both rounded aspect-square placeholder:text-bg-black'
                         fill
                         src={item.links[0].href.toString()}
                         alt='article'
@@ -237,4 +233,4 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
   );
 };
 
-export default ArticlePageContainer;
+export default React.memo(ArticlePageContainer);

@@ -37,7 +37,7 @@ const ArticleContainer = (props: ArticleContainerData) => {
             <div className=' md:w-[11.625rem] h-[13.375rem] w-full relative bg-text-white'>
               <Link href={`${pathName}/${item.data[0].nasa_id}`}>
                 <Image
-                  className='object-cover transition-opacity opacity-0 duration-1000 rounded'
+                  className='object-cover transition-opacity opacity-0 duration-1000 rounded placeholder:text-bg-black'
                   fill
                   style={{
                     objectFit: 'cover',
@@ -61,7 +61,12 @@ const ArticleContainer = (props: ArticleContainerData) => {
 
               <div className='flex self-stretch px-4 items-center gap-4 '>
                 <div className='relative w-[2.375rem] h-[2.375rem] shrink-0'>
-                  <Image src={placeholder} fill alt='placeholder for author' className=' rounded-full' />
+                  <Image
+                    src={placeholder}
+                    fill
+                    alt='placeholder for author'
+                    className=' rounded-full placeholder:text-bg-black'
+                  />
                 </div>
                 <div className=''>
                   <p className='text-xs leading-5 font-light line-clamp-1 text-bg-black'>
