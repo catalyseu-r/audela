@@ -77,7 +77,6 @@ const LikeAndShare = (props: LinkeAndShareProps) => {
         <ShareIcon
           onClick={async () => {
             if (props.articleData) {
-              console.log('PROPS', props.articleData);
               const { title, description, url, ogImage } = props.articleData;
               await handleShare(title, description, url, ogImage);
             }
