@@ -28,8 +28,6 @@ const ContentContainer = (props: ContentInterface) => {
   const pathname = usePathname();
   const searchParams = useSearchParams()!;
 
-  console.log('PARAMZ', searchParams.get('date'));
-
   const createQueryString = React.useCallback(
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams);
@@ -64,11 +62,14 @@ const ContentContainer = (props: ContentInterface) => {
     const getStoredDateFromClient = () => {
       try {
         setIsLoading(true);
-        if (localStorage && getLocalStorageItem('@au-dela_date')) {
+
+        if (getLocalStorageItem('@au-dela_date')) {
           const currentDateFromClient = getLocalStorageItem('@au-dela_date');
           setCurrentDate(new Date(currentDateFromClient!));
-        } else if (searchParams.get('date')) {
+        }
+        if (searchParams.get('date')) {
           setCurrentDate(new Date(String(searchParams.get('date'))));
+          return;
         }
       } catch (error) {
         console.log(error);
@@ -81,15 +82,14 @@ const ContentContainer = (props: ContentInterface) => {
     getStoredDateFromClient();
   }, [searchParams]);
 
-  const handleDatePick = (date: Date) => {
+  const handleDatePick = React.useCallback((date: Date) => {
     setCurrentDate(date);
     setIsLoading(true);
-  };
+  }, []);
 
   React.useEffect(() => {
     const handleUserCalendar = async () => {
       try {
-        console.log('RENDERING');
         const callApi = await getImageOfTheDay({ date: dayjs(currentDate).format('YYYY-MM-DD') });
         if (callApi) {
           const { url, hdurl, explanation, date, title } = callApi;
