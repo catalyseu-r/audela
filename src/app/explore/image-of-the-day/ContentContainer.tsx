@@ -14,6 +14,7 @@ import { Variants, motion } from 'framer-motion';
 import Loading from './loading';
 import toast from 'react-hot-toast';
 import LikeAndShare from '@/app/components/LikeAndShare';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 interface ContentInterface {
   data: ImageOfTheDay;
@@ -21,6 +22,20 @@ interface ContentInterface {
 
 const ContentContainer = (props: ContentInterface) => {
   const [currentDate, setCurrentDate] = React.useState<Date | any>(new Date());
+
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams()!;
+
+  const createQueryString = React.useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams);
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
 
   const [contentState, setContentState] = React.useState({
     image: props.data.url,
@@ -43,8 +58,33 @@ const ContentContainer = (props: ContentInterface) => {
   };
 
   React.useEffect(() => {
+    const getStoredDateFromClient = () => {
+      try {
+        setIsLoading(true);
+        if (localStorage && localStorage.getItem('@au-dela_date')) {
+          const currentDateFromClient = localStorage.getItem('@au-dela_date');
+          setCurrentDate(new Date(currentDateFromClient!));
+        }
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getStoredDateFromClient();
+  }, []);
+
+  const handleDatePick = (date: Date) => {
+    setCurrentDate(date);
+    setIsLoading(true);
+    localStorage.setItem('@au-dela_date', dayjs(currentDate).format('YYYY-MM-DD'));
+    router.replace(`${pathname}?${createQueryString('date', dayjs(currentDate).format('YYYY-MM-DD'))}`);
+  };
+
+  React.useEffect(() => {
     const handleUserCalendar = async () => {
-      setIsLoading(true);
       try {
         const callApi = await getImageOfTheDay({ date: dayjs(currentDate).format('YYYY-MM-DD') });
         if (callApi) {
@@ -59,24 +99,30 @@ const ContentContainer = (props: ContentInterface) => {
               error: false,
             };
           });
-          setIsLoading(false);
+
+          localStorage.setItem('@au-dela_date', dayjs(currentDate).format('YYYY-MM-DD'));
+          router.replace(`${pathname}?${createQueryString('date', dayjs(currentDate).format('YYYY-MM-DD'))}`);
         } else {
           setIsLoading(false);
-          setContentState((_prev) => {
-            return { ..._prev, error: true };
-          });
-          toast.error(
-            "There was a problem with your request (if current time is 00-05am it's very possible that the image has not been updated for today)"
-          );
+
+          if (localStorage.getItem('@au-dela_date')) {
+            toast.error('There was a problem with your request 😓 try picking diffirent date!');
+          } else {
+            toast.error(
+              "There was a problem with your request 😓 if current time is 00-05am it's very possible that the image has not been updated for today"
+            );
+          }
         }
       } catch (error) {
         setIsLoading(false);
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     handleUserCalendar();
-  }, [currentDate]);
+  }, [currentDate, pathname, router, createQueryString]);
 
   const CalendarLabel = () => {
     return (
@@ -86,7 +132,7 @@ const ContentContainer = (props: ContentInterface) => {
         <div className='flex group items-center justify-between border-b max-w-[11.5rem]  border-b-interactive-green/50 focus-within:border-b-interactive-green transition-colors duration-300 px-4 py-2 '>
           <ReactDatePicker
             selected={currentDate}
-            onChange={(date) => setCurrentDate(date)}
+            onChange={handleDatePick}
             maxDate={new Date()}
             minDate={new Date('1995/06/16')}
             className='!italic w-full bg-transparent font-light text-text-white text-base cursor-pointer  focus:outline-none '

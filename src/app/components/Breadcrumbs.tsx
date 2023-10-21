@@ -23,7 +23,7 @@ const Breadcrumbs = () => {
             <Link
               href={`/${formatCurrentPath[index]}`}
               passHref
-              className={`text-xs ${index === array.length - 1 ? 'text-interactive-green' : 'text-text-white'} `}
+              className={`text-sm ${index === array.length - 1 ? 'text-interactive-green' : 'text-text-white'} `}
               key={currentPath[index]}
             >
               {`${item}/`}
@@ -36,7 +36,7 @@ const Breadcrumbs = () => {
         <Link
           href={`/${formatCurrentPath[index]}`}
           passHref
-          className={`text-xs ${
+          className={`text-sm ${
             index === array.length - 1 ? 'text-interactive-green max-w-[15ch] truncate' : 'text-text-white'
           } `}
           key={currentPath[index]}
