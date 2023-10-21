@@ -15,17 +15,20 @@ import Loading from './loading';
 import toast from 'react-hot-toast';
 import LikeAndShare from '@/app/components/LikeAndShare';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { getLocalStorageItem, setLocalStorageItem } from '@/app/utils/localStorage/handleLocalStorage';
 
 interface ContentInterface {
   data: ImageOfTheDay;
 }
 
 const ContentContainer = (props: ContentInterface) => {
-  const [currentDate, setCurrentDate] = React.useState<Date | any>(new Date());
+  const [currentDate, setCurrentDate] = React.useState<Date | null | undefined>();
 
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams()!;
+
+  console.log('PARAMZ', searchParams.get('date'));
 
   const createQueryString = React.useCallback(
     (name: string, value: string) => {
@@ -38,10 +41,10 @@ const ContentContainer = (props: ContentInterface) => {
   );
 
   const [contentState, setContentState] = React.useState({
-    image: props.data.url,
-    desc: props.data.explanation,
-    date: props.data.date,
-    title: props.data.title,
+    image: '',
+    desc: '',
+    date: '',
+    title: '',
     error: false,
   });
 
@@ -61,9 +64,11 @@ const ContentContainer = (props: ContentInterface) => {
     const getStoredDateFromClient = () => {
       try {
         setIsLoading(true);
-        if (localStorage && localStorage.getItem('@au-dela_date')) {
-          const currentDateFromClient = localStorage.getItem('@au-dela_date');
+        if (localStorage && getLocalStorageItem('@au-dela_date')) {
+          const currentDateFromClient = getLocalStorageItem('@au-dela_date');
           setCurrentDate(new Date(currentDateFromClient!));
+        } else if (searchParams.get('date')) {
+          setCurrentDate(new Date(String(searchParams.get('date'))));
         }
       } catch (error) {
         console.log(error);
@@ -74,21 +79,20 @@ const ContentContainer = (props: ContentInterface) => {
     };
 
     getStoredDateFromClient();
-  }, []);
+  }, [searchParams]);
 
   const handleDatePick = (date: Date) => {
     setCurrentDate(date);
     setIsLoading(true);
-    localStorage.setItem('@au-dela_date', dayjs(currentDate).format('YYYY-MM-DD'));
-    router.replace(`${pathname}?${createQueryString('date', dayjs(currentDate).format('YYYY-MM-DD'))}`);
   };
 
   React.useEffect(() => {
     const handleUserCalendar = async () => {
       try {
+        console.log('RENDERING');
         const callApi = await getImageOfTheDay({ date: dayjs(currentDate).format('YYYY-MM-DD') });
         if (callApi) {
-          const { url, explanation, date, title } = callApi;
+          const { url, hdurl, explanation, date, title } = callApi;
           setContentState((_prev) => {
             return {
               ..._prev,
@@ -99,13 +103,10 @@ const ContentContainer = (props: ContentInterface) => {
               error: false,
             };
           });
-
-          localStorage.setItem('@au-dela_date', dayjs(currentDate).format('YYYY-MM-DD'));
-          router.replace(`${pathname}?${createQueryString('date', dayjs(currentDate).format('YYYY-MM-DD'))}`);
         } else {
           setIsLoading(false);
 
-          if (localStorage.getItem('@au-dela_date')) {
+          if (getLocalStorageItem('@au-dela_date')) {
             toast.error('There was a problem with your request 😓 try picking diffirent date!');
           } else {
             toast.error(
@@ -118,6 +119,8 @@ const ContentContainer = (props: ContentInterface) => {
         console.log(error);
       } finally {
         setIsLoading(false);
+        setLocalStorageItem('@au-dela_date', dayjs(currentDate).format('YYYY-MM-DD'));
+        router.replace(`${pathname}?${createQueryString('date', dayjs(currentDate).format('YYYY-MM-DD'))}`);
       }
     };
 
@@ -131,7 +134,7 @@ const ContentContainer = (props: ContentInterface) => {
 
         <div className='flex group items-center justify-between border-b max-w-[11.5rem]  border-b-interactive-green/50 focus-within:border-b-interactive-green transition-colors duration-300 px-4 py-2 '>
           <ReactDatePicker
-            selected={currentDate}
+            selected={currentDate ?? new Date()}
             onChange={handleDatePick}
             maxDate={new Date()}
             minDate={new Date('1995/06/16')}
@@ -161,33 +164,42 @@ const ContentContainer = (props: ContentInterface) => {
         ) : contentState.error ? (
           <></>
         ) : (
-          <>
-            <motion.div
-              variants={variantsArticle}
-              initial='exit'
-              animate='enter'
-              transition={{ duration: 0.5 }}
-              className='lg:order-1 order-2'
-            >
-              <DescriptionContainer
-                date={dayjs(contentState.date).format('MM/DD/YYYY')}
-                title={contentState.title}
-                desc={contentState.desc}
-              />
-            </motion.div>
-            <motion.div
-              variants={variantsImage}
-              initial='exit'
-              animate='enter'
-              transition={{ duration: 0.5, delay: 1 }}
-              className='order-1 lg:order-2 w-auto md:w-full'
-            >
-              <div className='relative md:h-[40rem] h-[35rem] flex flex-col  gap-6 lg:gap-20 items-start justify-start '>
-                <ImageContainer image={contentState.image} />
-                <LikeAndShare />
-              </div>
-            </motion.div>
-          </>
+          contentState.title && (
+            <>
+              <motion.div
+                variants={variantsArticle}
+                initial='exit'
+                animate='enter'
+                transition={{ duration: 0.5 }}
+                className='lg:order-1 order-2'
+              >
+                <DescriptionContainer
+                  date={dayjs(contentState.date).format('MM/DD/YYYY')}
+                  title={contentState.title}
+                  desc={contentState.desc}
+                />
+              </motion.div>
+              <motion.div
+                variants={variantsImage}
+                initial='exit'
+                animate='enter'
+                transition={{ duration: 0.5, delay: 1 }}
+                className='order-1 lg:order-2 w-auto md:w-full'
+              >
+                <div className='relative md:h-[40rem] h-[35rem] flex flex-col  gap-6 lg:gap-20 items-start justify-start '>
+                  <ImageContainer image={contentState.image} />
+                  <LikeAndShare
+                    articleData={{
+                      title: contentState.title,
+                      url: pathname,
+                      description: contentState.desc,
+                      ogImage: contentState.image,
+                    }}
+                  />
+                </div>
+              </motion.div>
+            </>
+          )
         )}
       </div>
     </div>

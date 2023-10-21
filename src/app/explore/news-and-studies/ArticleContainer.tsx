@@ -39,6 +39,9 @@ const ArticleContainer = (props: ArticleContainerData) => {
                 <Image
                   className='object-cover transition-opacity opacity-0 duration-1000 rounded'
                   fill
+                  style={{
+                    objectFit: 'cover',
+                  }}
                   alt='Astronomy article image'
                   src={item?.links[0].href.toString()}
                   loading='lazy'

@@ -114,6 +114,9 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
         fill
         alt='NASA article image'
         className={` transition-all duration-500 opacity-0 rounded`}
+        style={{
+          objectFit: 'cover',
+        }}
         onLoadingComplete={(image) => image.classList.remove('opacity-0')}
         placeholder={'blur'}
         blurDataURL={mainImage.mediaThumb}
