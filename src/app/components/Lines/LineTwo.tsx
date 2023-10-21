@@ -10,7 +10,7 @@ const LineTwo = (props: any) => (
       width: props.isIntersecting ? '71px' : '0px',
       height: '2px',
       transitionDelay: '250ms',
-      transformOrigin: 'top right',
+      transformOrigin: 'top left',
     }}
     fill='none'
     transform='translate(10, 258)'

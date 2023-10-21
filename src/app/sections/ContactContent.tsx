@@ -68,7 +68,9 @@ const ContactContent = (props: CommonSectionProps) => {
           </div>
 
           <div className='grid items-start gap-4 grid-cols-1'>
-            <p className='text-text-white lg:text-2xl md:text-xl text-base leading-10 font-normal'>👋🏻 Say hi</p>
+            <p className='text-text-white lg:text-2xl md:text-xl text-base leading-10 font-normal'>
+              <span className='animate-waving-hand inline-block origin-bottom-right'>👋🏻</span> Say hi
+            </p>
             <div className='grid md:grid-cols-3 grid-cols-2 max-w-3xl  gap-6 '>
               {socialLinks.map((link, index, orig) => {
                 const Icon = orig[index].icon;

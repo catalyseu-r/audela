@@ -4,8 +4,18 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import { FaHandHolding as HandIcon, FaRegHeart as HeartIcon } from 'react-icons/fa';
 import { GoShareAndroid as ShareIcon } from 'react-icons/go';
+import { handleShare } from '../utils/sharing/handleShare';
 
-const LikeAndShare = () => {
+interface LinkeAndShareProps {
+  articleData?: {
+    title: string;
+    description: string;
+    url: string;
+    ogImage: string;
+  };
+}
+
+const LikeAndShare = (props: LinkeAndShareProps) => {
   const [isLikeAnimation, setIsLikeAnimation] = React.useState<boolean>(false);
 
   const handleLikeAnimation = React.useCallback(() => {
@@ -64,7 +74,16 @@ const LikeAndShare = () => {
       </div>
 
       <div className='w-12 h-12 rounded-full border border-interactive-green/50 grid place-items-center'>
-        <ShareIcon className={`text-3xl text-interactive-green/50`} />
+        <ShareIcon
+          onClick={async () => {
+            if (props.articleData) {
+              console.log('PROPS', props.articleData);
+              const { title, description, url, ogImage } = props.articleData;
+              await handleShare(title, description, url, ogImage);
+            }
+          }}
+          className={`text-3xl text-interactive-green/50`}
+        />
       </div>
     </div>
   );

@@ -13,6 +13,7 @@ export const planetarySearch = async ({ query = '', nasa_id = '' }: PlanetarySea
       }`,
       {
         cache: 'no-cache',
+        keepalive: true,
       }
     );
 

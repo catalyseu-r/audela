@@ -64,7 +64,14 @@ const config: Config = {
         'custom-article-shadow': '0px 4px 10px 1px rgba(106, 137, 204, 0.80)',
       },
       keyframes: {
-        glitch: {},
+        wave: {
+          '0%, 60%, 100%': { transform: 'rotate(0.0deg)' },
+          '10%': { transform: 'rotate(14deg)' },
+          '20%': { transform: 'rotate(-8deg)' },
+          '30%': { transform: 'rotate(14deg)' },
+          '40%': { transform: 'rotate(-4deg)' },
+          '50%': { transform: 'rotate(10.0deg)' },
+        },
 
         baseFadeIn: {
           from: {
@@ -115,6 +122,7 @@ const config: Config = {
         'animate-reverse': 'elipseTransform 35s infinite alternate-reverse ease-in-out',
         'animate-heart': 'heartTransform .5s ease-in-out .25s',
         'animate-hand': 'handTransform .5s ease-in-out',
+        'waving-hand': 'wave 3s linear infinite',
       },
       transitionTimingFunction: {
         'custom-anim': 'cubic-bezier(.31,.05,0,1.03)',

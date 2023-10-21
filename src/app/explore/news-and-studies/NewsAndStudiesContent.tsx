@@ -48,8 +48,8 @@ const NewsAndStudiesContent = (props: NewsAndStudiesContent) => {
   }, [memoisedPrefetchedData, dispatch, articleState.length, props.total_hits, sortState]);
 
   return (
-    <div className='pt-24 flex flex-col gap-8 w-full h-full'>
-      <div className=' flex w-full justify-between items-center flex-wrap gap-8'>
+    <div className='lg:mt-24 mt-20 flex flex-col gap-8 w-full h-full'>
+      <div className=' flex w-full justify-between items-start flex-wrap gap-8'>
         <Breadcrumbs />
         <div className='flex lg:justify-end md:justify-start justify-center lg:gap-10 items-center  flex-wrap-reverse lg:w-auto w-full gap-5'>
           <SortArticlesMenu />

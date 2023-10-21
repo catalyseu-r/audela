@@ -82,8 +82,8 @@ const UserInput = () => {
       />
 
       <div
-        className={` transition-all  origin-right ${
-          isSearchActive ? 'w-full' : 'w-0'
+        className={` transition-all  origin-bottom-right ${
+          isSearchActive ? 'w-full translate-x-0' : 'w-0 translate-x-full'
         } flex gap-6 justify-between items-center`}
       >
         <input
