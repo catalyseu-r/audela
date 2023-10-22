@@ -43,9 +43,9 @@ const ContactContent = (props: CommonSectionProps) => {
       <div
         ref={contactSectionRef}
         style={{
-          opacity: intersectionElements.contact ? '1' : '0',
+          opacity: intersectionElements.contact ? '1' : '0.25',
         }}
-        className={`transition-opacity duration-500 min-h-custom-page-min lg:max-w-container-lg md:w-5/6  w-full md:px-0 px-4 mx-auto  grid grid-cols-1 relative `}
+        className={`transition-opacity  min-h-custom-page-min lg:max-w-container-lg md:w-5/6  w-full md:px-0 px-4 mx-auto  grid grid-cols-1 relative `}
       >
         <div className='max-w-3xl grid grid-cols-1 gap-14 items-start py-2 px-4'>
           <h2 className='text-text-white lg:text-subHeading md:text-2xl text-xl leading-10 font-normal'>
