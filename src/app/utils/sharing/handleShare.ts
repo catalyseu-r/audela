@@ -11,7 +11,7 @@ export const handleShare = async (title: string, description: string, url: strin
       keepalive: true,
       mode: 'no-cors',
     }).then((response) => response.blob());
-    const ogImageFile = new File([blob], 'og_image.jpg', { type: 'image/webp' });
+    const ogImageFile = new File([blob], 'og_image.jpg', { type: 'image/jpg' });
 
     await navigator.share({
       title,
