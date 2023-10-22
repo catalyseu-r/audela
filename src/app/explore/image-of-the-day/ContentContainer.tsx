@@ -108,15 +108,8 @@ const ContentContainer = (props: ContentInterface) => {
             };
           });
         } else {
+          toast.error('There was a problem with your request 😓 try picking diffirent date!');
           setIsLoading(false);
-
-          if (getLocalStorageItem('@au-dela_date')) {
-            toast.error('There was a problem with your request 😓 try picking diffirent date!');
-          } else {
-            toast.error(
-              "There was a problem with your request 😓 if current time is 00-05am it's very possible that the image has not been updated for today"
-            );
-          }
         }
       } catch (error) {
         setIsLoading(false);

@@ -5,7 +5,12 @@ export const handleShare = async (title: string, description: string, url: strin
   }
 
   try {
-    const blob = await fetch(ogImage).then((response) => response.blob());
+    const blob = await fetch(ogImage, {
+      headers: {},
+      cache: 'default',
+      keepalive: true,
+      mode: 'no-cors',
+    }).then((response) => response.blob());
     const ogImageFile = new File([blob], 'og_image.jpg');
 
     await navigator.share({
