@@ -188,8 +188,8 @@ const ContentContainer = (props: ContentInterface) => {
                   <LikeAndShare
                     articleData={{
                       title: contentState.title,
-                      url: pathname,
-                      description: contentState.desc,
+                      url: `${pathname}?${createQueryString('date', dayjs(currentDate).format('YYYY-MM-DD'))}`,
+                      description: `${contentState.desc.slice(0, 35)}...`,
                       ogImage: contentState.image,
                     }}
                   />
