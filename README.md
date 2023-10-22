@@ -1,3 +1,5 @@
+![Screenshot](./public/screenshots/screenshot.png)
+
 # Project In Progress - Learning and Building
 
 This project is a work in progress, a reflection of my dedication to continuous learning and skill-building in the realm of frontend development.
