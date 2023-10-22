@@ -1,34 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![Screenshot](./public/screenshots/screenshot.png)
 
-## Getting Started
+# **Au-Delà (Beyond) Project** 🌟
 
-First, run the development server:
+## **About Me** 👋
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+Hello, I'm Rudi, the one-person show behind the "Au-Delà" project. This app has been my side project while I'm in between jobs, helping me keep my frontend skills sharp.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+I'm currently on the lookout for a new gig, and this project showcases my passion for frontend development. I've done it all myself, from the design to the coding. It's a labor of love and a reflection of my dedication to constant self-improvement.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## **Project Highlights** 🚀
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Seamless Sharing:** Easily share content from the app.
+- **Immersive Micro-Interactions:** Packed with cool micro-interactions to enhance user experience.
+- **Robust Search Functionality:** Find what you're looking for effortlessly.
+- **Diverse Content Repository:** From articles to images, "Au-Delà" has it all.
+- **Optimized Animations:** Smooth animations that keep things running fast.
 
-## Learn More
+## **Development Excellence** 🌈
 
-To learn more about Next.js, take a look at the following resources:
+- **Neat and Consistent Design:** The app looks good and is easy to use.
+- **Minimal Dependencies:** I've kept things simple with just five essential components.
+- **Optimized Performance:** It's been optimized for top-notch performance.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## **Upcoming Enhancements** 🛠️
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+What's next? Big plans:
 
-## Deploy on Vercel
+- **Tag-Based Search:** Making it even easier to find content.
+- **Additional Filters:** More ways to refine your search.
+- **Vast API Scope:** I'm expanding thanks to an API with a half million entries – images, articles, and more.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## **Get in Touch** 📬
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+I'm on the hunt for new opportunities. Let's connect on [LinkedIn](https://www.linkedin.com/in/rudvl/) or check out my design work on [Dribbble](https://dribbble.com/catalysteu-r). Whether it's about job prospects or just chatting about frontend, I'm all ears!
