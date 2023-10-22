@@ -22,7 +22,9 @@ interface ContentInterface {
 }
 
 const ContentContainer = (props: ContentInterface) => {
-  const [currentDate, setCurrentDate] = React.useState<Date | null | undefined>();
+  const [currentDate, setCurrentDate] = React.useState<Date | null | undefined>(
+    getLocalStorageItem('@au-dela_date') ?? null
+  );
 
   const router = useRouter();
   const pathname = usePathname();
@@ -63,11 +65,13 @@ const ContentContainer = (props: ContentInterface) => {
       try {
         setIsLoading(true);
 
-        if (!getLocalStorageItem('@au-dela_date') && searchParams.get('date') && !currentDate) {
-          setCurrentDate(new Date(String(searchParams.get('date'))));
-        } else if (getLocalStorageItem('@au-dela_date') && searchParams.get('date') && !currentDate) {
-          const currentDateFromClient = new Date(String(searchParams.get('date')));
+        if (getLocalStorageItem('@au-dela_date') && !searchParams.get('date') && !currentDate) {
+          const currentDateFromClient = getLocalStorageItem('@au-dela_date');
           setCurrentDate(currentDateFromClient);
+          //
+        } else if (!getLocalStorageItem('@au-dela_date') && searchParams.get('date') && !currentDate) {
+          setCurrentDate(new Date(String(searchParams.get('date'))));
+          //
         } else if (!currentDate) {
           setCurrentDate(new Date());
         }
@@ -124,7 +128,7 @@ const ContentContainer = (props: ContentInterface) => {
       }
     };
 
-    handleUserCalendar();
+    currentDate && handleUserCalendar();
   }, [currentDate, pathname, router, createQueryString]);
 
   const CalendarLabel = () => {
