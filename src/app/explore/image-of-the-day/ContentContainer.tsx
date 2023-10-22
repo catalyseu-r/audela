@@ -189,7 +189,7 @@ const ContentContainer = (props: ContentInterface) => {
                     articleData={{
                       title: contentState.title,
                       url: `${pathname}?${createQueryString('date', dayjs(currentDate).format('YYYY-MM-DD'))}`,
-                      description: `${contentState.desc.slice(0, 35)}...`,
+                      description: `${contentState.desc.slice(0, 60)}...`,
                       ogImage: contentState.image,
                     }}
                   />
