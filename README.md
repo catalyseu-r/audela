@@ -1,6 +1,6 @@
 ![Screenshot](./public/screenshots/screenshot.png)
 
-# **Au-Delà (Beyond) Project** 🌟
+# **Au-Delà (Beyond)** 🌟
 
 ## **About Me** 👋
 
