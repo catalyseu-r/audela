@@ -98,7 +98,7 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
       return txt.match(reg) ? (
         <span key={txt} className='text-text-white text-base xl:text-lg leading-8 flex flex-wrap items-center gap-1'>
           <p>Read more at:</p>
-          <Link className='text-deep-green hover:text-interactive-green transition-colors' href={txt}>
+          <Link className='text-deep-green hover:text-interactive-green transition-colors truncate' href={txt}>
             {txt}
           </Link>
         </span>
