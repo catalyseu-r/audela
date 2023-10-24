@@ -94,7 +94,7 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
   const reg = /(https?:\/\/[^\s]+)/g;
 
   const formatDesc = (desc: string) =>
-    desc.split('. ').map((txt, index) => {
+    desc.split('. ').map((txt) => {
       return txt.match(reg) ? (
         <span key={txt} className='text-text-white text-base xl:text-lg leading-8 flex flex-wrap items-center gap-1'>
           <p>Read more at:</p>

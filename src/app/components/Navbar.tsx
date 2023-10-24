@@ -180,8 +180,8 @@ const Navbar = () => {
                         isDropdown ? 'flex top-12 border border-deep-green' : 'invisible top-0'
                       }`}
                     >
-                      {link.subOptions?.map((sub, index) => {
-                        const Icon = link.subOptions[index].icon;
+                      {link.subOptions?.map((sub, index, orig) => {
+                        const Icon = orig[index].icon;
 
                         return sub.href !== 'blank' ? (
                           <Link
