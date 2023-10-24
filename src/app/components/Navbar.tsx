@@ -94,7 +94,7 @@ const Navbar = () => {
         scrollPosition > 150 ? 'backdrop-blur-sm bg-bg-black/50' : 'bg-transparent'
       } transition-all`}
     >
-      <div className='flex  gap-4 justify-between relative  items-center  lg:max-w-container-lg md:w-5/6 mx-auto md:px-0 px-4 '>
+      <div className='flex  gap-4 justify-between relative flex-nowrap items-center  lg:max-w-container-lg md:w-5/6 mx-auto md:px-0 px-4 '>
         <button onClick={handleProfileClick} className={`flex gap-2 items-center ${!isMobileNavOpen && 'hidden'} z-40`}>
           <UserIcon className={`text-text-white/50 text-xl`} />
           <p className='text-text-white leading-6 text-xl font-light italic'>Visitor</p>
@@ -103,7 +103,7 @@ const Navbar = () => {
           href={'/'}
           className={` ${chakraP.className}  lg:text-3xl whitespace-nowrap text-2xl uppercase z-40  ${
             isMobileNavOpen ? 'hidden ' : 'text-accent-pink'
-          }  ${isSearchActive ? 'hidden' : 'inline-block'} w-fit`}
+          }  ${isSearchActive ? 'hidden' : 'inline-block'} w-fit shrink-0`}
         >
           au-delà
         </Link>
@@ -129,7 +129,11 @@ const Navbar = () => {
             )}
           </div>
 
-          <div className={`flex items-center gap-6 ${isSearchActive && 'w-full h-[42px]'}  `}>
+          <div
+            className={`flex items-center gap-6 ${
+              isSearchActive ? 'w-full h-[42px]' : ''
+            } transition-all origin-right `}
+          >
             <UserInput />
             {isMobileNavOpen ? (
               <CloseIcon className='md:hidden text-deep-green text-2xl z-50' onClick={handleNav} />
@@ -137,7 +141,7 @@ const Navbar = () => {
               <BurgerMenu
                 className={`${
                   isSearchActive ? 'scale-0 hidden' : ''
-                } md:hidden text-text-white text-2xl z-50 transition-all`}
+                } md:hidden text-text-white text-2xl z-50 transition-all shrink-0`}
                 onClick={handleNav}
               />
             )}
@@ -182,7 +186,7 @@ const Navbar = () => {
                       />
                     </div>
                     <div
-                      className={` transition-[top]  duration-250 ease-in-out flex-col left-0 gap-14 absolute  bg-bg-black px-4 py-12 items-start justify-start rounded ${
+                      className={` transition-[top]  duration-300 ease-in-out flex-col left-0 gap-14 absolute  bg-bg-black px-4 py-12 items-start justify-start rounded ${
                         isDropdown ? 'flex top-12 border border-deep-green' : 'invisible top-0'
                       }`}
                     >
