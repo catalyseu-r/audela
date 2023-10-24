@@ -6,11 +6,11 @@ import { CommonSectionProps } from '../types/sections';
 
 import { VscFlame as FlameIcon } from 'react-icons/vsc';
 import { IoRocketOutline as RocketIcon } from 'react-icons/io5';
-import Image from 'next/image';
-import elipseOne from '../img/Ellipse 20.png';
+
 import { useAppContext } from '../contexts/store';
 import { ActionTypes } from '../types/actionTypes';
-import { imageClassNames } from '../staticData/imageClassNames';
+
+import ElipseEffect from '../components/ElipseEffect';
 
 const AboutContent = (props: CommonSectionProps) => {
   const {
@@ -36,9 +36,7 @@ const AboutContent = (props: CommonSectionProps) => {
 
   return (
     <section id='about' className='relative pt-40'>
-      {imageClassNames.map((className, index) => (
-        <Image key={index} src={elipseOne} alt={`elipse-${index}`} width={240} height={240} className={className} />
-      ))}
+      <ElipseEffect />
       <div
         ref={aboutSectionRef}
         className={` min-h-custom-page-min lg:max-w-container-lg md:w-5/6  w-full md:px-0 px-4 mx-auto  grid grid-cols-1 relative `}

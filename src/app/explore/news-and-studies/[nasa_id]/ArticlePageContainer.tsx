@@ -40,6 +40,8 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
   const [startX, setStartX] = React.useState<number | null>(null);
   const [scrollLeft, setScrollLeft] = React.useState<number>(0);
 
+  const currentPath = usePathname();
+
   const handleMouseDown = React.useCallback((e: React.MouseEvent) => {
     setIsDragging(true);
     setStartX(e.pageX - (scrollContainerRef.current?.offsetLeft || 0));
@@ -92,11 +94,11 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
   const reg = /(https?:\/\/[^\s]+)/g;
 
   const formatDesc = (desc: string) =>
-    desc.split('. ').map((txt, index) => {
+    desc.split('. ').map((txt) => {
       return txt.match(reg) ? (
         <span key={txt} className='text-text-white text-base xl:text-lg leading-8 flex flex-wrap items-center gap-1'>
           <p>Read more at:</p>
-          <Link className='text-deep-green hover:text-interactive-green transition-colors' href={txt}>
+          <Link className='text-deep-green hover:text-interactive-green transition-colors truncate' href={txt}>
             {txt}
           </Link>
         </span>
@@ -167,7 +169,14 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
           </div>
 
           <div className='place-self-end'>
-            <LikeAndShare />
+            <LikeAndShare
+              articleData={{
+                title: title,
+                description: description ?? description_508,
+                ogImage: mainImage.url ?? '',
+                url: currentPath,
+              }}
+            />
           </div>
 
           <div className='w-full py-4 px-6 grid content-center bg-text-white/5 rounded'>

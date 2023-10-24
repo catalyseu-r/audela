@@ -7,18 +7,18 @@ const chakraP = Chakra_Petch({ weight: '400', subsets: ['latin'] });
 import { RxHamburgerMenu as BurgerMenu } from 'react-icons/rx';
 import { TfiClose as CloseIcon } from 'react-icons/tfi';
 import { motion, useAnimation } from 'framer-motion';
-import { BiPlanet as PlanetIcon, BiUserCircle as UserIcon } from 'react-icons/bi';
-import { BsChevronDown as DownIcon, BsImage as ImageIcon } from 'react-icons/bs';
-import { AiOutlineLock as LockIcon } from 'react-icons/ai';
+import { BiUserCircle as UserIcon } from 'react-icons/bi';
+import { BsChevronDown as DownIcon } from 'react-icons/bs';
+
 import SocialStack from './SocialStack';
 import { navLinks } from '../staticData/navLinks';
 import { usePathname } from 'next/navigation';
 import UserInput from './UserInput';
 import { useAppContext } from '../contexts/store';
-import Image from 'next/image';
-import elipseOne from '../img/Ellipse 20.png';
+
 import toast from 'react-hot-toast';
-import { imageClassNames } from '../staticData/imageClassNames';
+
+import ElipseEffect from './ElipseEffect';
 
 const Navbar = () => {
   const [isMobileNavOpen, setisMobileNavOpen] = React.useState<boolean>(false);
@@ -34,7 +34,7 @@ const Navbar = () => {
   } = useAppContext();
 
   React.useEffect(() => {
-    containerControls.start({ opacity: 0, transform: 'translateY(-200%)' });
+    containerControls.start({ opacity: 0, transform: 'translateY(-100%)' });
     linkControls.start({ opacity: 0, transform: 'translateX(-25%)', transition: { delay: 0 } });
     if (isMobileNavOpen) {
       containerControls.start({ opacity: 1, transform: 'translateY(0)' });
@@ -50,6 +50,14 @@ const Navbar = () => {
       document.removeEventListener('scroll', () => updatePosition);
     };
   }, [containerControls, isMobileNavOpen, linkControls]);
+
+  React.useEffect(() => {
+    isMobileNavOpen
+      ? document.documentElement.classList.add('overflow-hidden')
+      : document.documentElement.classList.remove('overflow-hidden');
+
+    return () => document.documentElement.classList.remove('overflow-hidden');
+  }, [isMobileNavOpen]);
 
   const handleProfileClick = () =>
     toast.custom(
@@ -86,7 +94,7 @@ const Navbar = () => {
         scrollPosition > 150 ? 'backdrop-blur-sm bg-bg-black/50' : 'bg-transparent'
       } transition-all`}
     >
-      <div className='flex  gap-4 justify-between relative  items-center  lg:max-w-container-lg md:w-5/6 mx-auto md:px-0 px-4 '>
+      <div className='flex  gap-4 justify-between relative flex-nowrap items-center  lg:max-w-container-lg md:w-5/6 mx-auto md:px-0 px-4 '>
         <button onClick={handleProfileClick} className={`flex gap-2 items-center ${!isMobileNavOpen && 'hidden'} z-40`}>
           <UserIcon className={`text-text-white/50 text-xl`} />
           <p className='text-text-white leading-6 text-xl font-light italic'>Visitor</p>
@@ -95,7 +103,7 @@ const Navbar = () => {
           href={'/'}
           className={` ${chakraP.className}  lg:text-3xl whitespace-nowrap text-2xl uppercase z-40  ${
             isMobileNavOpen ? 'hidden ' : 'text-accent-pink'
-          }  ${isSearchActive ? 'hidden' : 'inline-block'} w-fit`}
+          }  ${isSearchActive ? 'hidden' : 'inline-block'} w-fit shrink-0`}
         >
           au-delà
         </Link>
@@ -113,9 +121,7 @@ const Navbar = () => {
                     href={link.href || ''}
                     replace={pathName !== '/'}
                     key={link.title}
-                    className={`cursor-pointer transition-all hover:text-interactive-green ${
-                      isSearchActive ? 'scale-0' : 'scale-100'
-                    } origin-top-right `}
+                    className={`cursor-pointer transition-all hover:text-interactive-green`}
                   >
                     {link.title}
                   </Link>
@@ -123,7 +129,11 @@ const Navbar = () => {
             )}
           </div>
 
-          <div className={`flex items-center gap-6 ${isSearchActive && 'w-full h-[42px]'}  `}>
+          <div
+            className={`flex items-center gap-6 ${
+              isSearchActive ? 'w-full h-[42px]' : ''
+            } transition-all origin-right `}
+          >
             <UserInput />
             {isMobileNavOpen ? (
               <CloseIcon className='md:hidden text-deep-green text-2xl z-50' onClick={handleNav} />
@@ -131,7 +141,7 @@ const Navbar = () => {
               <BurgerMenu
                 className={`${
                   isSearchActive ? 'scale-0 hidden' : ''
-                } md:hidden text-text-white text-2xl z-50 transition-all`}
+                } md:hidden text-text-white text-2xl z-50 transition-all shrink-0`}
                 onClick={handleNav}
               />
             )}
@@ -141,13 +151,11 @@ const Navbar = () => {
 
       <motion.div
         animate={containerControls}
-        initial={{ opacity: 0, transform: 'translateY(-200%)' }}
-        transition={{ duration: 0.25 }}
-        className={`w-full  h-screen bg-bg-black  px-4 z-30 fixed top-0 lg:hidden`}
+        initial={{ opacity: 0, transform: 'translateY(-100%)' }}
+        transition={{ duration: 0.35 }}
+        className={`w-full min-h-custom-page-min bg-bg-black  px-4 z-30 fixed top-0 lg:hidden overflow-y-scroll`}
       >
-        {imageClassNames.map((className, index) => (
-          <Image key={index} src={elipseOne} alt={`elipse-${index}`} width={240} height={240} className={className} />
-        ))}
+        <ElipseEffect />
         <div className='flex flex-col mt-32 mx-auto gap-14 max-w-[12.815rem] '>
           {navLinks.map((link, index) => {
             const Icon = navLinks[index].icon;
@@ -178,12 +186,12 @@ const Navbar = () => {
                       />
                     </div>
                     <div
-                      className={` transition-[top]  duration-250 ease-in-out flex-col left-0 gap-14 absolute  bg-bg-black px-4 py-12 items-start justify-start rounded ${
+                      className={` transition-[top]  duration-300 ease-in-out flex-col left-0 gap-14 absolute  bg-bg-black px-4 py-12 items-start justify-start rounded ${
                         isDropdown ? 'flex top-12 border border-deep-green' : 'invisible top-0'
                       }`}
                     >
-                      {link.subOptions?.map((sub, index) => {
-                        const Icon = link.subOptions[index].icon;
+                      {link.subOptions?.map((sub, index, orig) => {
+                        const Icon = orig[index].icon;
 
                         return sub.href !== 'blank' ? (
                           <Link

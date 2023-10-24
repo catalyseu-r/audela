@@ -18,6 +18,13 @@ interface LinkeAndShareProps {
 const LikeAndShare = (props: LinkeAndShareProps) => {
   const [isLikeAnimation, setIsLikeAnimation] = React.useState<boolean>(false);
 
+  const handleClientShare = async () => {
+    if (props.articleData) {
+      const { title, description, url, ogImage } = props.articleData;
+      await handleShare(title, description, url, ogImage);
+    }
+  };
+
   const handleLikeAnimation = React.useCallback(() => {
     setIsLikeAnimation(true);
 
@@ -74,15 +81,7 @@ const LikeAndShare = (props: LinkeAndShareProps) => {
       </div>
 
       <div className='w-12 h-12 rounded-full border border-interactive-green/50 grid place-items-center'>
-        <ShareIcon
-          onClick={async () => {
-            if (props.articleData) {
-              const { title, description, url, ogImage } = props.articleData;
-              await handleShare(title, description, url, ogImage);
-            }
-          }}
-          className={`text-3xl text-interactive-green/50`}
-        />
+        <ShareIcon onClick={handleClientShare} className={`text-3xl text-interactive-green/50`} />
       </div>
     </div>
   );

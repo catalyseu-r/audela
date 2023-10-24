@@ -24,8 +24,8 @@ const Options = () => {
           </h3>
         </div>
         <div className='w-full  grid grid-cols-1 items-center gap-12'>
-          {featureOptions.map((option, index) => {
-            const Icon = featureOptions[index].icon;
+          {featureOptions.map((option, index, orig) => {
+            const Icon = orig[index].icon;
             return index !== featureOptions.length - 1 ? (
               <Link
                 className='z-10 group lg:py-6 py-4 lg:px-8 px-4 flex items-center justify-between self-stretch border border-interactive-green/50 lg:text-2xl md:text-lg text-base  text-text-white rounded hover:border-interactive-green transition-all duration-300'
