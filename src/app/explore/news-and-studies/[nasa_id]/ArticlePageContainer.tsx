@@ -40,6 +40,8 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
   const [startX, setStartX] = React.useState<number | null>(null);
   const [scrollLeft, setScrollLeft] = React.useState<number>(0);
 
+  const currentPath = usePathname();
+
   const handleMouseDown = React.useCallback((e: React.MouseEvent) => {
     setIsDragging(true);
     setStartX(e.pageX - (scrollContainerRef.current?.offsetLeft || 0));
@@ -167,7 +169,14 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
           </div>
 
           <div className='place-self-end'>
-            <LikeAndShare />
+            <LikeAndShare
+              articleData={{
+                title: title,
+                description: description ?? description_508,
+                ogImage: mainImage.url ?? '',
+                url: currentPath,
+              }}
+            />
           </div>
 
           <div className='w-full py-4 px-6 grid content-center bg-text-white/5 rounded'>
