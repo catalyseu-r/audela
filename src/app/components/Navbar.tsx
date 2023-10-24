@@ -7,18 +7,18 @@ const chakraP = Chakra_Petch({ weight: '400', subsets: ['latin'] });
 import { RxHamburgerMenu as BurgerMenu } from 'react-icons/rx';
 import { TfiClose as CloseIcon } from 'react-icons/tfi';
 import { motion, useAnimation } from 'framer-motion';
-import { BiPlanet as PlanetIcon, BiUserCircle as UserIcon } from 'react-icons/bi';
-import { BsChevronDown as DownIcon, BsImage as ImageIcon } from 'react-icons/bs';
-import { AiOutlineLock as LockIcon } from 'react-icons/ai';
+import { BiUserCircle as UserIcon } from 'react-icons/bi';
+import { BsChevronDown as DownIcon } from 'react-icons/bs';
+
 import SocialStack from './SocialStack';
 import { navLinks } from '../staticData/navLinks';
 import { usePathname } from 'next/navigation';
 import UserInput from './UserInput';
 import { useAppContext } from '../contexts/store';
-import Image from 'next/image';
-import elipseOne from '../img/Ellipse 20.png';
+
 import toast from 'react-hot-toast';
-import { imageClassNames } from '../staticData/imageClassNames';
+
+import ElipseEffect from './ElipseEffect';
 
 const Navbar = () => {
   const [isMobileNavOpen, setisMobileNavOpen] = React.useState<boolean>(false);
@@ -145,9 +145,7 @@ const Navbar = () => {
         transition={{ duration: 0.25 }}
         className={`w-full  h-screen bg-bg-black  px-4 z-30 fixed top-0 lg:hidden`}
       >
-        {imageClassNames.map((className, index) => (
-          <Image key={index} src={elipseOne} alt={`elipse-${index}`} width={240} height={240} className={className} />
-        ))}
+        <ElipseEffect />
         <div className='flex flex-col mt-32 mx-auto gap-14 max-w-[12.815rem] '>
           {navLinks.map((link, index) => {
             const Icon = navLinks[index].icon;

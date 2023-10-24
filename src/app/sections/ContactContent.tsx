@@ -1,14 +1,14 @@
 import React from 'react';
 import { CommonSectionProps } from '../types/sections';
-import Image from 'next/image';
-import elipseOne from '../img/Ellipse 20.png';
+
 import { FaRegEnvelope as MailIcon } from 'react-icons/fa';
 
 import { useAppContext } from '../contexts/store';
 import { ActionTypes } from '../types/actionTypes';
 import { socialLinks } from '../staticData/socialLinks';
 import Link from 'next/link';
-import { imageClassNames } from '../staticData/imageClassNames';
+
+import ElipseEffect from '../components/ElipseEffect';
 
 const ContactContent = (props: CommonSectionProps) => {
   const {
@@ -35,9 +35,7 @@ const ContactContent = (props: CommonSectionProps) => {
 
   return (
     <section id='contact' className='relative  py-40 overflow-hidden'>
-      {imageClassNames.map((className, index) => (
-        <Image key={index} src={elipseOne} alt={`elipse-${index}`} width={240} height={240} className={className} />
-      ))}
+      <ElipseEffect />
 
       {/* start section wrap */}
       <div
