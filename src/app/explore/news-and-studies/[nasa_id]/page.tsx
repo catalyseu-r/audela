@@ -7,9 +7,7 @@ import { planetarySearch } from '@/app/utils/API/planetarySearch';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 import Loading from '../loading';
-import Image from 'next/image';
-import elipseOne from '../../../img/Ellipse 20.png';
-import { imageClassNames } from '@/app/staticData/imageClassNames';
+import ElipseEffect from '@/app/components/ElipseEffect';
 
 export default async function ArticleDetail({ params }: { params: { nasa_id: string } }) {
   const singleArticleData = await planetarySearch({ nasa_id: params.nasa_id });
@@ -29,9 +27,7 @@ export default async function ArticleDetail({ params }: { params: { nasa_id: str
   return (
     <Suspense fallback={<Loading />}>
       <main className='bg-transparent  relative overflow-hidden  '>
-        {imageClassNames.map((className, index) => (
-          <Image key={index} src={elipseOne} alt={`elipse-${index}`} width={240} height={240} className={className} />
-        ))}
+        <ElipseEffect />
 
         <Navbar />
 

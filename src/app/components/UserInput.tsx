@@ -71,8 +71,10 @@ const UserInput = () => {
   return (
     <div
       className={` ${
-        isSearchActive ? 'bg-bg-black w-full absolute top-1/2 left-1/2  -translate-x-1/2 -translate-y-1/2 ' : ''
-      } overflow-hidden  border rounded border-transparent flex justify-end items-center  lg:px-6 px-2 py-2 focus-within:border-interactive-green transition-all`}
+        isSearchActive
+          ? 'bg-bg-black w-full absolute top-1/2 left-1/2  -translate-x-1/2 -translate-y-1/2 '
+          : 'top-0 left-0'
+      } overflow-hidden  border rounded border-transparent flex justify-end items-center  lg:px-6 px-2 py-2 focus-within:border-interactive-green transition-all duration-300 ease-in-out origin-right`}
     >
       <SearchIcon
         onClick={handleUserActionInput}
@@ -82,8 +84,8 @@ const UserInput = () => {
       />
 
       <div
-        className={` transition-all  origin-bottom-right ${
-          isSearchActive ? 'w-full translate-x-0' : 'w-0 translate-x-full'
+        className={` transition-all duration-300 ease-in-out origin-right ${
+          isSearchActive ? 'w-full' : 'w-0'
         } flex gap-6 justify-between items-center`}
       >
         <input

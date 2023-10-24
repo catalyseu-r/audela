@@ -8,16 +8,17 @@ import LineOne from '../components/Lines/LineOne';
 import LineTwo from '../components/Lines/LineTwo';
 import LineThree from '../components/Lines/LineThree';
 import LineFour from '../components/Lines/LineFour';
-import elipseOne from '../img/Ellipse 20.png';
+
 import { LuForward as ForwardIcon } from 'react-icons/lu';
 import Bubble from '../components/Lines/Bubble';
 
 import { CommonSectionProps } from '../types/sections';
 import { useAppContext } from '../contexts/store';
 import { ActionTypes } from '../types/actionTypes';
-import { imageClassNames } from '../staticData/imageClassNames';
+
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import ElipseEffect from '../components/ElipseEffect';
 
 const MissionContent = (props: CommonSectionProps) => {
   const { scrollPosition } = props;
@@ -62,9 +63,7 @@ const MissionContent = (props: CommonSectionProps) => {
         transitionDuration: '250ms',
       }}
     >
-      {imageClassNames.map((className, index) => (
-        <Image key={index} src={elipseOne} alt={`elipse-${index}`} width={240} height={240} className={className} />
-      ))}
+      <ElipseEffect />
       {/* start section wrap */}
 
       <div
