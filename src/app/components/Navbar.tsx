@@ -51,6 +51,14 @@ const Navbar = () => {
     };
   }, [containerControls, isMobileNavOpen, linkControls]);
 
+  React.useEffect(() => {
+    isMobileNavOpen
+      ? document.documentElement.classList.add('overflow-hidden')
+      : document.documentElement.classList.remove('overflow-hidden');
+
+    return () => document.documentElement.classList.remove('overflow-hidden');
+  }, [isMobileNavOpen]);
+
   const handleProfileClick = () =>
     toast.custom(
       (t) => (
