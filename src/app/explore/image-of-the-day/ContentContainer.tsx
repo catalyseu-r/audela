@@ -61,10 +61,10 @@ const ContentContainer = (props: ContentInterface) => {
   };
 
   React.useEffect(() => {
+    setIsLoading(true);
+
     const getStoredDateFromClient = () => {
       try {
-        setIsLoading(true);
-
         if (getLocalStorageItem('@au-dela_date') && !searchParams.get('date') && !currentDate) {
           const currentDateFromClient = getLocalStorageItem('@au-dela_date');
           setCurrentDate(currentDateFromClient);
@@ -77,7 +77,6 @@ const ContentContainer = (props: ContentInterface) => {
         }
       } catch (error) {
         console.log(error);
-        setIsLoading(false);
       } finally {
         setIsLoading(false);
       }
@@ -86,12 +85,10 @@ const ContentContainer = (props: ContentInterface) => {
     getStoredDateFromClient();
   }, [searchParams, currentDate]);
 
-  const handleDatePick = React.useCallback((date: Date) => {
-    setCurrentDate(date);
-    setIsLoading(true);
-  }, []);
+  const handleDatePick = React.useCallback((date: Date) => setCurrentDate(date), []);
 
   React.useEffect(() => {
+    setIsLoading(true);
     const handleUserCalendar = async () => {
       try {
         const callApi = await getImageOfTheDay({ date: dayjs(currentDate).format('YYYY-MM-DD') });
@@ -109,10 +106,8 @@ const ContentContainer = (props: ContentInterface) => {
           });
         } else {
           toast.error('There was a problem with your request 😓 try picking diffirent date!');
-          setIsLoading(false);
         }
       } catch (error) {
-        setIsLoading(false);
         console.log(error);
       } finally {
         setIsLoading(false);
@@ -167,7 +162,7 @@ const ContentContainer = (props: ContentInterface) => {
                 variants={variantsArticle}
                 initial='exit'
                 animate='enter'
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
                 className='lg:order-1 order-2'
               >
                 <DescriptionContainer
