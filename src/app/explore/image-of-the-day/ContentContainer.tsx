@@ -144,17 +144,15 @@ const ContentContainer = (props: ContentInterface) => {
   };
 
   return (
-    <div className='lg:mt-24 mt-20 w-full flex flex-col gap-8'>
+    <div className='lg:mt-24 mt-20 w-full flex flex-col gap-8 '>
       <div className=' flex w-full justify-between items-start flex-wrap gap-8 '>
         <Breadcrumbs />
         <CalendarLabel />
       </div>
 
-      <div className='grid w-full  md:mt-24 lg:grid-cols-2 grid-cols-1 lg:gap-6 gap-24 md:place-items-start items-center'>
+      <div className='grid w-full  md:mt-24 lg:grid-cols-2 grid-cols-1 lg:gap-6 gap-24 md:place-items-start items-center '>
         {isLoading ? (
           <Loading />
-        ) : contentState.error ? (
-          <></>
         ) : (
           contentState.title && (
             <>
