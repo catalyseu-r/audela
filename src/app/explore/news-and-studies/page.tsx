@@ -30,10 +30,10 @@ export default async function newsAndStudies() {
 
   return (
     <Suspense fallback={<Loading />}>
-      <main className='bg-transparent lg:min-h-custom-page-min bg-no-repeat bg-center relative overflow-hidden pb-24 '>
+      <main className='bg-transparent min-h-custom-page-min bg-no-repeat bg-center relative overflow-hidden pb-24 '>
         <ElipseEffect />
         <Navbar />
-        <div className='lg:max-w-container-lg md:w-5/6 w-full md:px-0 px-4 mx-auto  '>
+        <div className='lg:max-w-container-lg md:w-5/6 w-full md:px-0 px-4 mx-auto '>
           {planetsData && <DynamicContainer data={cutResults()} total_hits={total_hits()} />}
         </div>
       </main>
