@@ -1,7 +1,3 @@
-export const metadata = {
-  title: 'Article',
-};
-
 import Navbar from '@/app/components/Navbar';
 import { planetarySearch } from '@/app/utils/API/planetarySearch';
 import dynamic from 'next/dynamic';
@@ -21,6 +17,7 @@ export const generateMetadata = async ({ params }: { params: { nasa_id: string }
   const getMediaThumb = prepareMediaForClient.find((item) => item.endsWith('thumb.jpg'));
   return {
     openGraph: { images: [(getImageUrl as any) ?? (getMediaThumb as any)] },
+    title: 'Article',
   };
 };
 
