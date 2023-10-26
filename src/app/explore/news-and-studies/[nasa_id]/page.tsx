@@ -8,6 +8,21 @@ import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 import Loading from '../loading';
 import ElipseEffect from '@/app/components/ElipseEffect';
+import { Metadata } from 'next';
+
+export const generateMetadata = async ({ params }: { params: { nasa_id: string } }): Promise<Metadata> => {
+  const singleArticleData = await planetarySearch({ nasa_id: params.nasa_id });
+
+  const getLargeMedia = await fetch(singleArticleData?.collection.items[0].href as string);
+
+  const prepareMediaForClient: string[] = await getLargeMedia.json();
+
+  const getImageUrl = prepareMediaForClient.find((item) => item.endsWith('orig.jpg'));
+  const getMediaThumb = prepareMediaForClient.find((item) => item.endsWith('thumb.jpg'));
+  return {
+    openGraph: { images: [(getImageUrl as any) ?? (getMediaThumb as any)] },
+  };
+};
 
 export default async function ArticleDetail({ params }: { params: { nasa_id: string } }) {
   const singleArticleData = await planetarySearch({ nasa_id: params.nasa_id });
