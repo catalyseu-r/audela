@@ -41,7 +41,7 @@ const Navbar = () => {
       linkControls.start({ opacity: 1, transform: 'translateX(0)' });
     }
 
-    const updatePosition = () => setScrollPosition(window.scrollY);
+    const updatePosition = () => window && setScrollPosition(window.scrollY);
 
     document.addEventListener('scroll', updatePosition);
 

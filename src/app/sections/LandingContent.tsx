@@ -14,6 +14,7 @@ import Bubble from '../components/Lines/Bubble';
 import MissionContent from './MissionContent';
 import AboutContent from './AboutContent';
 import ContactContent from './ContactContent';
+import { useObserver } from '../utils/hooks/useObserver';
 
 const LandingContent = () => {
   const [containerWidth, setContainerWidth] = React.useState<number>(1120);
@@ -26,26 +27,20 @@ const LandingContent = () => {
   const landingSectionRef = React.useRef<HTMLDivElement | null>(null);
   const containerRef = React.useRef<HTMLDivElement | null>(null);
 
+  const isLandingSectionIntersecting = useObserver(landingSectionRef, { rootMargin: '100px', threshold: 1 });
+
   React.useEffect(() => {
-    const landingSectionObserver = new IntersectionObserver(
-      ([entry]) =>
-        entry.isIntersecting && dispatch({ type: ActionTypes.SET_INTERSECTION_ELEMENTS, payload: 'landing' }),
-
-      { rootMargin: '100px', threshold: 1 }
-    );
-
-    landingSectionRef.current && landingSectionObserver.observe(landingSectionRef.current);
+    if (isLandingSectionIntersecting) {
+      dispatch({ type: ActionTypes.SET_INTERSECTION_ELEMENTS, payload: 'landing' });
+    }
 
     const updateClientContainerWidth = () =>
       setContainerWidth(containerRef.current ? containerRef.current.clientWidth : 0);
 
     window && window.addEventListener('resize', updateClientContainerWidth);
 
-    return () => {
-      landingSectionObserver.disconnect();
-      window.removeEventListener('resize', updateClientContainerWidth);
-    };
-  }, [dispatch]);
+    return () => window.removeEventListener('resize', updateClientContainerWidth);
+  }, [dispatch, isLandingSectionIntersecting]);
 
   React.useEffect(() => {
     const updateClientScrollPostion = () => window.scrollY < 772 && setScrollPosition(window.scrollY);
@@ -77,7 +72,7 @@ const LandingContent = () => {
           {/* custom-scrollbar */}
           <div
             style={{ transform: `translate3d(${containerWidth}px,-50%,0)` }}
-            className={`h-[38.75rem] fixed top-2/4  w-px m-0 p-0  z-50 bg-text-white/10 lg:flex sm:hidden flex-col items-center justify-between overflow-visible`}
+            className={`h-[calc(80vh/1.3)] fixed top-2/4  w-px m-0 p-0  z-50 bg-text-white/10 lg:flex sm:hidden flex-col items-center justify-between overflow-visible`}
           >
             {pageSections.map((section) => (
               <Bubble key={section} linkTo={section} currentInView={getTrueKey(intersectionElements)} />

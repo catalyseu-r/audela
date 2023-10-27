@@ -9,6 +9,7 @@ import { socialLinks } from '../staticData/socialLinks';
 import Link from 'next/link';
 
 import ElipseEffect from '../components/ElipseEffect';
+import { useObserver } from '../utils/hooks/useObserver';
 
 const ContactContent = (props: CommonSectionProps) => {
   const {
@@ -18,20 +19,11 @@ const ContactContent = (props: CommonSectionProps) => {
 
   const contactSectionRef = React.useRef(null);
 
+  const isContactIntersecting = useObserver(contactSectionRef, { rootMargin: '150px', threshold: 0.5 });
+
   React.useEffect(() => {
-    const contactObserver = new IntersectionObserver(
-      ([entry]) =>
-        entry.isIntersecting && dispatch({ type: ActionTypes.SET_INTERSECTION_ELEMENTS, payload: 'contact' }),
-      {
-        rootMargin: '150px',
-        threshold: 0.5,
-      }
-    );
-
-    contactSectionRef.current && contactObserver.observe(contactSectionRef.current);
-
-    return () => contactObserver.disconnect();
-  }, [dispatch]);
+    isContactIntersecting && dispatch({ type: ActionTypes.SET_INTERSECTION_ELEMENTS, payload: 'contact' });
+  }, [dispatch, isContactIntersecting]);
 
   return (
     <section id='contact' className='relative  py-40 overflow-hidden'>

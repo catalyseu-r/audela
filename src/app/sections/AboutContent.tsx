@@ -11,6 +11,7 @@ import { useAppContext } from '../contexts/store';
 import { ActionTypes } from '../types/actionTypes';
 
 import ElipseEffect from '../components/ElipseEffect';
+import { useObserver } from '../utils/hooks/useObserver';
 
 const AboutContent = (props: CommonSectionProps) => {
   const {
@@ -20,19 +21,11 @@ const AboutContent = (props: CommonSectionProps) => {
 
   const aboutSectionRef = React.useRef(null);
 
+  const isAboutSectionIntersecting = useObserver(aboutSectionRef, { rootMargin: '150px', threshold: 0.5 });
+
   React.useEffect(() => {
-    const aboutObserver = new IntersectionObserver(
-      ([entry]) => entry.isIntersecting && dispatch({ type: ActionTypes.SET_INTERSECTION_ELEMENTS, payload: 'about' }),
-      {
-        rootMargin: '150px',
-        threshold: 0.5,
-      }
-    );
-
-    aboutSectionRef.current && aboutObserver.observe(aboutSectionRef.current);
-
-    return () => aboutObserver.disconnect();
-  }, [dispatch]);
+    isAboutSectionIntersecting && dispatch({ type: ActionTypes.SET_INTERSECTION_ELEMENTS, payload: 'about' });
+  }, [dispatch, isAboutSectionIntersecting]);
 
   return (
     <section id='about' className='relative pt-40'>
