@@ -22,7 +22,7 @@ interface ContentInterface {
 }
 
 const ContentContainer = (props: ContentInterface) => {
-  const [currentDate, setCurrentDate] = React.useState<Date | null | undefined>();
+  const [currentDate, setCurrentDate] = React.useState<Date | null | undefined>(null);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -62,12 +62,15 @@ const ContentContainer = (props: ContentInterface) => {
     setIsLoading(true);
 
     const getStoredDateFromClient = () => {
+      const savedClientDate = getLocalStorageItem('@au-dela_date');
       try {
-        if (getLocalStorageItem('@au-dela_date') && !searchParams.get('date') && !currentDate) {
-          const currentDateFromClient = getLocalStorageItem('@au-dela_date');
-          setCurrentDate(currentDateFromClient);
+        if (savedClientDate && !searchParams.get('date') && !currentDate) {
+          setCurrentDate(savedClientDate);
           //
-        } else if (!getLocalStorageItem('@au-dela_date') && searchParams.get('date') && !currentDate) {
+        } else if (savedClientDate && searchParams.get('date') && !currentDate) {
+          setCurrentDate(new Date(String(searchParams.get('date'))));
+          //
+        } else if (savedClientDate && searchParams.get('date') && !currentDate) {
           setCurrentDate(new Date(String(searchParams.get('date'))));
           //
         } else if (!currentDate) {
@@ -103,7 +106,11 @@ const ContentContainer = (props: ContentInterface) => {
             };
           });
         } else {
-          toast.error('There was a problem with your request 😓 try picking diffirent date!');
+          toast.error(
+            'There was a problem with your request 😓 try picking diffirent date! In the meantime we will revert the calendar to previous day.'
+          );
+
+          setCurrentDate(new Date(dayjs(currentDate).subtract(1, 'day').toDate()));
         }
       } catch (error) {
         console.log(error);
