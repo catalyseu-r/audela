@@ -15,14 +15,20 @@ interface ArticleContainerData {
 }
 
 const ArticleContainer = (props: ArticleContainerData) => {
-  const winSize = window.innerWidth;
+  const [windowSize, setWindowSize] = React.useState<number | null>();
+
+  React.useEffect(() => {
+    if (window && typeof window !== 'undefined') {
+      setWindowSize(window.innerWidth);
+    }
+  }, []);
 
   const pathName = usePathname();
 
   return (
     <div
       className={`${
-        winSize > 768 ? 'flex-wrap ' : 'flex-nowrap overflow-x-scroll  snap-x snap-proximity'
+        windowSize && windowSize > 768 ? 'flex-wrap ' : 'flex-nowrap overflow-x-scroll  snap-x snap-proximity'
       } flex  gap-8 items-center md:justify-center justify-between  w-full h-full  mt-16 no-scrollbar`}
     >
       <AnimatePresence>

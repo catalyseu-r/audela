@@ -77,7 +77,7 @@ const LandingContent = () => {
           {/* custom-scrollbar */}
           <div
             style={{ transform: `translate3d(${containerWidth}px,-50%,0)` }}
-            className={`h-[38.75rem] fixed top-2/4  w-px m-0 p-0  z-50 bg-text-white/10 lg:flex sm:hidden flex-col items-center justify-between overflow-visible`}
+            className={`h-[calc(80vh/1.3)] fixed top-2/4  w-px m-0 p-0  z-50 bg-text-white/10 lg:flex sm:hidden flex-col items-center justify-between overflow-visible`}
           >
             {pageSections.map((section) => (
               <Bubble key={section} linkTo={section} currentInView={getTrueKey(intersectionElements)} />

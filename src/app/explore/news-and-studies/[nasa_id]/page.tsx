@@ -22,7 +22,7 @@ export default async function ArticleDetail({ params }: { params: { nasa_id: str
   const getVideoUrl = prepareMediaForClient.find((item) => item.endsWith('orig.mp4'));
   const getMediaThumb = prepareMediaForClient.find((item) => item.endsWith('thumb.jpg'));
 
-  const DynamicContainer = dynamic(() => import('./ArticlePageContainer'), { ssr: false });
+  const DynamicContainer = dynamic(() => import('./ArticlePageContainer'));
 
   return (
     <Suspense fallback={<Loading />}>
