@@ -11,9 +11,7 @@ const PaginationArticles = () => {
     dispatch,
   } = useAppContext();
 
-  const [windowWidth, setWindowWidth] = React.useState<number | undefined>(
-    window !== undefined ? window.innerWidth : undefined
-  );
+  const [windowWidth, setWindowWidth] = React.useState<number | undefined>();
 
   const buttonArray = Array.from(
     Array(
@@ -26,7 +24,10 @@ const PaginationArticles = () => {
   const handleResize = () => setWindowWidth(window.innerWidth);
 
   React.useEffect(() => {
-    window && window.addEventListener('resize', handleResize);
+    if (window && typeof window !== undefined) {
+      handleResize();
+      window.addEventListener('resize', handleResize);
+    }
 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
