@@ -22,9 +22,7 @@ interface ContentInterface {
 }
 
 const ContentContainer = (props: ContentInterface) => {
-  const [currentDate, setCurrentDate] = React.useState<Date | null | undefined>(
-    getLocalStorageItem('@au-dela_date') ?? null
-  );
+  const [currentDate, setCurrentDate] = React.useState<Date | null | undefined>();
 
   const router = useRouter();
   const pathname = usePathname();
