@@ -19,6 +19,7 @@ import { ActionTypes } from '../types/actionTypes';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import ElipseEffect from '../components/ElipseEffect';
+import { useObserver } from '../utils/hooks/useObserver';
 
 const MissionContent = (props: CommonSectionProps) => {
   const { scrollPosition } = props;
@@ -30,28 +31,17 @@ const MissionContent = (props: CommonSectionProps) => {
   const missionSectionRef = React.useRef(null);
   const missionArticleRef = React.useRef(null);
 
+  const isMissionIntersecting = useObserver(missionSectionRef, { threshold: 0.5 });
+  const isArticleIntersecting = useObserver(missionArticleRef);
+
   const pathName = usePathname();
 
   React.useEffect(() => {
-    const missionObserver = new IntersectionObserver(
-      ([entry]) =>
-        entry.isIntersecting && dispatch({ type: ActionTypes.SET_INTERSECTION_ELEMENTS, payload: 'mission' }),
-
-      { threshold: 0.5 }
-    );
-
-    const missionArticleObserver = new IntersectionObserver(([entry]) =>
-      entry.isIntersecting ? setIsArticleInView(true) : setIsArticleInView(false)
-    );
-
-    missionSectionRef.current && missionObserver.observe(missionSectionRef.current);
-    missionArticleRef.current && missionArticleObserver.observe(missionArticleRef.current);
-
-    return () => {
-      missionObserver.disconnect();
-      missionArticleObserver.disconnect();
-    };
-  }, [dispatch]);
+    if (isMissionIntersecting) {
+      dispatch({ type: ActionTypes.SET_INTERSECTION_ELEMENTS, payload: 'mission' });
+    }
+    isArticleIntersecting ? setIsArticleInView(true) : setIsArticleInView(false);
+  }, [dispatch, isMissionIntersecting, isArticleIntersecting]);
 
   return (
     <section
