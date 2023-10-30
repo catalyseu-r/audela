@@ -15,6 +15,7 @@ const Options = () => {
     { title: 'Image of the day', icon: ImageIcon },
     { title: 'News and studies', icon: PlanetIcon },
     { title: 'Weather on Mars', icon: CloudIcon },
+    { title: 'Mars rover gallery', icon: LockIcon },
   ];
 
   return (

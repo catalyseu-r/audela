@@ -1,12 +1,15 @@
 export const getMarsWeather = async (params?: string) => {
   try {
     const callApi = await fetch(
-      `${process.env.NEXT_PUBLIC_MARS_WEATHER_BASE_URL}/?api_key=${process.env.NEXT_PUBLIC_API_KEY}&feedtype=json&ver=1.0`
+      `${process.env.NEXT_PUBLIC_MARS_WEATHER_BASE_URL}/?api_key=${process.env.NEXT_PUBLIC_API_KEY}&feedtype=json&ver=1.0`,
+      {
+        cache: 'default',
+        keepalive: true,
+      }
     );
 
-    const parseData = await callApi.json();
-
-    if (callApi.ok) {
+    if (callApi.ok && callApi.status !== 400) {
+      const parseData = await callApi.json();
       return parseData;
     }
   } catch (error) {
