@@ -3,13 +3,18 @@ import React from 'react';
 
 import { Chakra_Petch } from 'next/font/google';
 const chakraP = Chakra_Petch({ weight: '400', subsets: ['latin'] });
-import { BiPlanet as PlanetIcon, BiImage as ImageIcon, BiLock as LockIcon } from 'react-icons/bi';
+import {
+  BiPlanet as PlanetIcon,
+  BiImage as ImageIcon,
+  BiLock as LockIcon,
+  BiCloudDrizzle as CloudIcon,
+} from 'react-icons/bi';
 
 const Options = () => {
   const featureOptions = [
     { title: 'Image of the day', icon: ImageIcon },
     { title: 'News and studies', icon: PlanetIcon },
-    { title: 'Weather on Mars', icon: LockIcon },
+    { title: 'Weather on Mars', icon: CloudIcon },
   ];
 
   return (
@@ -26,7 +31,7 @@ const Options = () => {
         <div className='w-full  grid grid-cols-1 items-center gap-12'>
           {featureOptions.map((option, index, orig) => {
             const Icon = orig[index].icon;
-            return index !== featureOptions.length - 1 ? (
+            return (
               <Link
                 className='z-10 group lg:py-6 py-4 lg:px-8 px-4 flex items-center justify-between self-stretch border border-interactive-green/50 lg:text-2xl md:text-lg text-base  text-text-white rounded hover:border-interactive-green transition-all duration-300'
                 href={`/explore/${option.title.split(' ').join('-').toLowerCase()}`}
@@ -37,15 +42,6 @@ const Options = () => {
                 />
                 {option.title}
               </Link>
-            ) : (
-              <button
-                className='z-10 group lg:py-6 py-4 lg:px-8 px-4 flex items-center justify-between self-stretch border border-interactive-green/10 lg:text-2xl md:text-lg text-base  text-text-white rounded cursor-not-allowed'
-                key={option.title}
-                disabled
-              >
-                <Icon className={''} />
-                {option.title}
-              </button>
             );
           })}
         </div>
