@@ -1,3 +1,5 @@
+import { MarsWeatherResponse } from '@/app/types/marsWeather';
+
 export const getMarsWeather = async (params?: string) => {
   try {
     const callApi = await fetch(
@@ -9,7 +11,7 @@ export const getMarsWeather = async (params?: string) => {
     );
 
     if (callApi.ok && callApi.status !== 400) {
-      const parseData = await callApi.json();
+      const parseData: MarsWeatherResponse = await callApi.json();
       return parseData;
     }
   } catch (error) {
