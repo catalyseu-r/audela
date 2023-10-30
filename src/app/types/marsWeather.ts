@@ -2,7 +2,7 @@ export interface MarsWeatherResponse {
   sol_keys: string[];
   validity_checks: {
     [key: number]: {
-      AT: {};
+      AT: { sol_hours_with_data: number[]; valid: boolean };
       HWS: {
         sol_hours_with_data: number[];
         valid: boolean;
