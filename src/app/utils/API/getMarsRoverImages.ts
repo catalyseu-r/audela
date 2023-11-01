@@ -1,22 +1,4 @@
-interface MarsRoverProfile {
-  id: number;
-  name: string;
-  landing_date: string;
-  launch_date: string;
-  status: string;
-  max_sol: number;
-  max_date: string;
-  total_photos: number;
-  cameras: { name: string; full_name: string }[];
-}
-
-interface MarsRoverSearchParams {
-  rover: 'curiosity' | 'spirit' | 'opportunity' | 'perseverance';
-  sol?: string;
-  camera?: string;
-  date?: string;
-  latest?: boolean;
-}
+import { MarsRoverProfiles, MarsRoverSearchParams } from '@/app/types/marsRoverTypes';
 
 export const getMarsRoversInfo = async () => {
   try {
@@ -26,7 +8,7 @@ export const getMarsRoversInfo = async () => {
     );
 
     if (callApi.ok && callApi.status !== 400) {
-      const parseData: MarsRoverProfile[] = await callApi.json();
+      const parseData: MarsRoverProfiles = await callApi.json();
       return parseData;
     } else {
       return undefined;
