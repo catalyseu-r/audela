@@ -38,6 +38,10 @@
     .scrollbar-custom::hover {
       scrollbar-color: #66ff66 #0e0e0e;
     }
+
+    .perspective-3d {
+      perspective: 1000px;
+    }
   }
 }
 

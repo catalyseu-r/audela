@@ -7,13 +7,15 @@ import { GiTrackedRobot as RoverIcon, GiSunrise as SunIcon, GiPhotoCamera as Cam
 import { LuClock4 as ClockIcon } from 'react-icons/lu';
 import { IoRadioOutline as RadioIcon, IoCalendarClearOutline as CalendarIcon } from 'react-icons/io5';
 import dayjs from 'dayjs';
+import { getMarsRoverImages } from '@/app/utils/API/getMarsRoverImages';
 
 interface RoverGalleryContentType {
   data: MarsRoverProfiles;
 }
 
 const RoverGalleryContent = ({ data: { rovers } }: RoverGalleryContentType) => {
-  const [currentRover, setCurrentRover] = React.useState<MarsRoverProfile | null>(null);
+  //will persist later
+  const [currentRover, setCurrentRover] = React.useState<MarsRoverProfile | null>(rovers[0]);
 
   const updateCurrentRover = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const numValue = parseInt(event.target.value);
@@ -25,7 +27,7 @@ const RoverGalleryContent = ({ data: { rovers } }: RoverGalleryContentType) => {
 
   const GenerateRecency = () => {
     return (
-      <div className='flex flex-col gap-4 items-start transition-all basis-1/4 max-w-[142px]'>
+      <div className='flex flex-col gap-4 items-start transition-all md:basis-1/5 grow-0 shrink-0'>
         <label htmlFor='recency' className='flex items-center gap-2 font-normal leading-6 text-base text-deep-green'>
           <ClockIcon className={'text-2xl'} />
           <p>Recency</p>
@@ -40,7 +42,7 @@ const RoverGalleryContent = ({ data: { rovers } }: RoverGalleryContentType) => {
 
   const GenerateSolPicker = () => {
     return (
-      <div className='flex flex-col gap-4 items-start transition-all basis-1/4 max-w-[142px]'>
+      <div className='flex flex-col gap-4 items-start transition-all md:basis-1/5 grow-0 shrink-0'>
         <label htmlFor='sol' className='flex items-center gap-2 font-normal leading-6 text-base text-deep-green'>
           <SunIcon className={'text-2xl'} />
           <p>Sol</p>
@@ -59,7 +61,7 @@ const RoverGalleryContent = ({ data: { rovers } }: RoverGalleryContentType) => {
 
   const GenerateCameras = () => {
     return (
-      <div className='flex flex-col gap-4 items-start transition-all basis-1/4 max-w-[142px]'>
+      <div className='flex flex-col gap-4 items-start transition-all md:basis-1/5 grow-0 shrink-0'>
         <label htmlFor='camera' className='flex items-center gap-2 font-normal leading-6 text-base text-deep-green'>
           <CameraIcon className={'text-2xl'} />
           <p>Camera</p>
@@ -78,14 +80,11 @@ const RoverGalleryContent = ({ data: { rovers } }: RoverGalleryContentType) => {
     );
   };
 
-  const findNasaSource = React.useCallback(
-    (id: number | null) => NASA_ROVERS_3D.find((item) => item.id === id)?.source,
-    []
-  );
+  const findNasaSource = React.useCallback((id: number | null) => NASA_ROVERS_3D.find((item) => item.id === id), []);
 
   const GenerateRoverPicker = () => {
     return (
-      <div className='flex flex-col gap-4 items-start transition-all basis-1/4 max-w-[142px]'>
+      <div className='flex flex-col gap-4 items-start transition-all md:basis-1/5 grow-0 shrink-0'>
         <label htmlFor='rover' className='flex items-center gap-2 font-normal leading-6 text-base text-deep-green'>
           <RoverIcon className={'text-2xl'} />
           <p>Rover</p>
@@ -107,15 +106,27 @@ const RoverGalleryContent = ({ data: { rovers } }: RoverGalleryContentType) => {
     );
   };
 
+  React.useEffect(() => {
+    const getSelectedRoverImages = async () => {
+      if (currentRover) {
+        const getImages = await getMarsRoverImages({ rover: currentRover?.name, sol: '500' });
+        //"sol" is requiered..
+        console.log('IMAGES', getImages);
+      }
+    };
+
+    getSelectedRoverImages();
+  }, [currentRover]);
+
   const GenerateRoverIframe = () => {
     return (
-      <div className='w-[352px] h-[352px] aspect-square flex items-center justify-center md:shadow-custom-image-strong-shadow rounded'>
+      <div
+        className={`lg:w-[352px] lg:h-[352px] w-[calc(30vh+2.5rem)] h-[calc(30vh+2.5rem)] aspect-square flex items-center justify-center md:shadow-custom-image-strong-shadow rounded `}
+      >
         {currentRover && (
           <iframe
-            allowTransparency={true}
-            loading='lazy'
-            src={findNasaSource(currentRover.id)}
-            className='w-full h-full object-fill rounded'
+            src={findNasaSource(currentRover.id)?.source}
+            className='w-full h-full object-contain rounded transition-all'
             allowFullScreen
           />
         )}
@@ -124,13 +135,13 @@ const RoverGalleryContent = ({ data: { rovers } }: RoverGalleryContentType) => {
   };
 
   return (
-    <div className='flex gap-14 items-start max-w-full'>
+    <div className='flex gap-14 items-start max-w-full md:flex-nowrap flex-wrap mt-16'>
       <div className='grid gap-4'>
         <GenerateRoverIframe />
         <div className='flex items-center gap-2'>
           <RadioIcon
             className={`${
-              currentRover?.status === 'active' ? 'text-deep-green animate-pulse' : 'text-error-red'
+              currentRover?.status === 'active' ? 'text-deep-green animate-animate-ping-custom' : 'text-error-red'
             } text-2xl`}
           />
           <p className='flex items-center gap-1'>
@@ -150,11 +161,33 @@ const RoverGalleryContent = ({ data: { rovers } }: RoverGalleryContentType) => {
           </p>
         </div>
       </div>
-      <div className='flex items-center gap-10 transition-all w-full flex-wrap'>
-        <GenerateRoverPicker />
-        <GenerateSolPicker />
-        <GenerateCameras />
-        <GenerateRecency />
+      <div className='grid grid-cols-1 items-start'>
+        <div className='flex items-center gap-10 transition-all w-full flex-wrap'>
+          <GenerateRoverPicker />
+          <GenerateSolPicker />
+          <GenerateCameras />
+          <GenerateRecency />
+        </div>
+        <div className='py-4 self-stretch grid grid-cols-1 items-start'>
+          <label htmlFor='rover-bio' className='font-normal text-xl leading-10 text-deep-green'>
+            Bio
+          </label>
+          <div key={currentRover?.id} id='rover-bio' className='flex gap-[2px] flex-wrap items-center perspective-3d'>
+            {findNasaSource(currentRover!.id)
+              ?.bio.split(/(\s+)/)
+              .map((txt, index) => {
+                return (
+                  <span
+                    key={index}
+                    style={{ animationDelay: `${index / 40}s` }}
+                    className={`animate-animate-text-custom relative transition-all origin-right opacity-0 inline-block font-light text-xl leading-10 text-text-white`}
+                  >
+                    {txt}
+                  </span>
+                );
+              })}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 export interface MarsRoverProfile {
   id: number;
-  name: string;
+  name: MarsRoverSearchParams['rover'];
   landing_date: string;
   launch_date: string;
   status: 'active' | 'complete';
