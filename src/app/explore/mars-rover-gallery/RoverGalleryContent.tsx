@@ -32,7 +32,7 @@ const RoverGalleryContent = ({ data: { rovers } }: RoverGalleryContentType) => {
           <ClockIcon className={'text-2xl'} />
           <p>Recency</p>
         </label>
-        <select className='py-2 px-6 rounded bg-bg-black border outline-none focus:border-interactive-green transition-all border-deep-green/50 text-base text-text-white  !font-sans cursor-pointer w-full'>
+        <select className='py-2 px-6 rounded bg-bg-black  border-r-[16px] border-transparent outline outline-1 outline-deep-green/50 focus:outline-interactive-green transition-all text-base text-text-white  !font-sans cursor-pointer w-full'>
           <option value='all'>All</option>
           <option value='most_recent'>Most recent</option>
         </select>
@@ -48,7 +48,7 @@ const RoverGalleryContent = ({ data: { rovers } }: RoverGalleryContentType) => {
           <p>Sol</p>
         </label>
         <input
-          className='py-2 px-6 rounded bg-bg-black border outline-none focus:border-interactive-green transition-all border-deep-green/50 text-base text-text-white  !font-sans cursor-pointer w-full'
+          className='py-2 px-6 rounded bg-bg-black  border-r-[16px] border-transparent outline outline-1 outline-deep-green/50 focus:outline-interactive-green transition-all text-base text-text-white  !font-sans cursor-pointer w-full'
           type='number'
           inputMode='numeric'
           name='sol'
@@ -67,7 +67,7 @@ const RoverGalleryContent = ({ data: { rovers } }: RoverGalleryContentType) => {
           <p>Camera</p>
         </label>
 
-        <select className='py-2 px-6 rounded bg-bg-black border outline-none focus:border-interactive-green transition-all border-deep-green/50 text-base text-text-white  !font-sans cursor-pointer w-full'>
+        <select className='py-2 px-6 rounded bg-bg-black  border-r-[16px] border-transparent  outline outline-1 outline-deep-green/50 focus:outline-interactive-green transition-all text-base text-text-white  !font-sans cursor-pointer w-full'>
           {currentRover?.cameras.map((item) => {
             return (
               <option className='' key={item.full_name} value={item.name}>
@@ -90,7 +90,7 @@ const RoverGalleryContent = ({ data: { rovers } }: RoverGalleryContentType) => {
           <p>Rover</p>
         </label>
         <select
-          className='py-2 px-6 rounded bg-bg-black border outline-none focus:border-interactive-green transition-all border-deep-green/50 text-base text-text-white  !font-sans cursor-pointer w-full'
+          className='py-2 px-6 rounded bg-bg-black  border-r-[16px] border-transparent outline outline-1 outline-deep-green/50 focus:outline-interactive-green transition-all text-base text-text-white  !font-sans cursor-pointer w-full '
           onChange={updateCurrentRover}
           value={currentRover?.id}
         >
