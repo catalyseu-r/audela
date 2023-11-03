@@ -20,7 +20,7 @@ export default async function MarsRoverGallery() {
         <Navbar />
         <div className='lg:max-w-container-lg md:w-5/6 w-full  lg:mt-24 mt-20  md:px-0 px-4  mx-auto '>
           <Breadcrumbs />
-          {getMarsRoversData && <RoverGalleryContent data={getMarsRoversData} />}
+          {getMarsRoversData && <RoverGalleryContent {...getMarsRoversData} />}
         </div>
       </main>
     </Suspense>

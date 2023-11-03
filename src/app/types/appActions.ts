@@ -1,4 +1,5 @@
 import { ActionTypes } from './actionTypes';
+import { MarsRoverProfile } from './marsRoverTypes';
 import { PlanetaryDataArticle } from './planetaryData';
 import { SortState } from './sortState';
 
@@ -27,4 +28,11 @@ export type AppAction =
   | { type: ActionTypes.SET_PAGE; payload: number }
   | { type: ActionTypes.SET_INTERSECTION_ELEMENTS; payload: string }
   | { type: ActionTypes.SET_IS_SEARCH_LOADING; payload: boolean }
-  | { type: ActionTypes.SET_IS_SEARCH_ACTIVE; payload: boolean };
+  | { type: ActionTypes.SET_IS_SEARCH_ACTIVE; payload: boolean }
+  | { type: ActionTypes.SET_CURRENT_MARS_ROVER; payload: MarsRoverProfile }
+  | {
+      type: ActionTypes.SET_MARS_ROVER_FILTER_STATE;
+      payload: {
+        [key: string]: string;
+      };
+    };

@@ -1,3 +1,4 @@
+import { MarsRoverProfile } from './marsRoverTypes';
 import { PlanetaryDataArticle } from './planetaryData';
 import { SortState } from './sortState';
 
@@ -21,4 +22,11 @@ export interface AppState {
   sortState: SortState;
   isSearchActive: boolean;
   isSearchLoading: boolean;
+  marsFilterState: {
+    sol: string;
+    earth_date: string;
+    camera: string;
+    recency: string;
+  };
+  currentMarsRover: MarsRoverProfile | null;
 }
