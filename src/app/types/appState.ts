@@ -1,4 +1,4 @@
-import { MarsRoverProfile } from './marsRoverTypes';
+import { MarsRoverPhotos, MarsRoverProfile } from './marsRoverTypes';
 import { PlanetaryDataArticle } from './planetaryData';
 import { SortState } from './sortState';
 
@@ -29,4 +29,7 @@ export interface AppState {
     recency: string;
   };
   currentMarsRover: MarsRoverProfile | null;
+  currentGallery: {
+    photos: MarsRoverPhotos[];
+  };
 }

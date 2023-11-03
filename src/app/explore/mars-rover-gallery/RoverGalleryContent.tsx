@@ -1,7 +1,7 @@
 'use client';
 
 import { NASA_ROVERS_3D } from '@/app/staticData/nasaRovers3D';
-import { MarsRoverProfiles } from '@/app/types/marsRoverTypes';
+import { MarsRoverPhotos, MarsRoverProfiles } from '@/app/types/marsRoverTypes';
 import React, { memo } from 'react';
 
 import { IoRadioOutline as RadioIcon, IoCalendarClearOutline as CalendarIcon } from 'react-icons/io5';
@@ -15,6 +15,9 @@ import GenerateSolPicker from './GenerateSolPicker';
 import GenerateRecency from './GenerateRecency';
 import GenerateRoverPicker from './GenerateRoverPicker';
 import GenerateCameras from './GenerateCameras';
+import { ActionTypes } from '@/app/types/actionTypes';
+import Image from 'next/image';
+import { AppState } from '@/app/types/appState';
 
 export interface RoverGalleryContentType {
   data: MarsRoverProfiles;
@@ -22,26 +25,27 @@ export interface RoverGalleryContentType {
 
 const RoverGalleryContent = (data: MarsRoverProfiles) => {
   const {
-    state: { currentMarsRover, marsFilterState },
+    state: { currentMarsRover, marsFilterState, currentGallery },
+    dispatch,
   } = useAppContext();
 
   React.useEffect(() => {
     const getSelectedRoverImages = async () => {
       if (currentMarsRover) {
-        const getImages = await getMarsRoverImages({
+        const getImages: AppState['currentGallery'] = await getMarsRoverImages({
           rover: currentMarsRover?.name,
           sol: marsFilterState.sol.toString(),
         });
-        //"sol" is requiered..
-        console.log('IMAGES', getImages);
+
+        dispatch({ type: ActionTypes.SET_CURRENT_GALLERY, payload: getImages });
       }
     };
 
     getSelectedRoverImages();
-  }, [currentMarsRover, marsFilterState]);
+  }, [currentMarsRover, marsFilterState, dispatch]);
 
   return (
-    <div className='flex gap-14 items-start max-w-full md:flex-nowrap flex-wrap mt-16'>
+    <div className=''>
       <div className='grid gap-4'>
         <GenerateRoverIframe data={currentMarsRover} />
         <div className='flex items-center gap-2'>
@@ -67,7 +71,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
           </p>
         </div>
       </div>
-      <div className='grid grid-cols-1 items-start'>
+      <div className='grid grid-cols-1 items-start '>
         <div className='flex items-center gap-10 transition-all w-full flex-wrap'>
           <GenerateRoverPicker data={data} />
           <GenerateSolPicker />
@@ -99,6 +103,23 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
                 })}
           </div>
         </div>
+      </div>
+
+      <div className='  grid grid-cols-2 items-center content-center gap-16 w-full'>
+        {currentGallery.photos &&
+          currentGallery.photos.length > 0 &&
+          currentGallery.photos.map((photo) => (
+            <div key={photo.id} className='w-[28rem] h-[20rem] relative rounded overflow-hidden aspect-video '>
+              <Image
+                className='rounded object-cover opacity-0 transition-opacity'
+                loading='lazy'
+                src={photo.img_src}
+                fill
+                alt='Photo form Mars rover'
+                onLoadingComplete={(image) => image.classList.remove('opacity-0')}
+              />
+            </div>
+          ))}
       </div>
     </div>
   );

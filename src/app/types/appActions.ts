@@ -1,5 +1,5 @@
 import { ActionTypes } from './actionTypes';
-import { MarsRoverProfile } from './marsRoverTypes';
+import { MarsRoverPhotos, MarsRoverProfile } from './marsRoverTypes';
 import { PlanetaryDataArticle } from './planetaryData';
 import { SortState } from './sortState';
 
@@ -35,4 +35,5 @@ export type AppAction =
       payload: {
         [key: string]: string;
       };
-    };
+    }
+  | { type: ActionTypes.SET_CURRENT_GALLERY; payload: { photos: MarsRoverPhotos[] } };

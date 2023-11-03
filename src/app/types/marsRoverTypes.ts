@@ -21,3 +21,12 @@ export interface MarsRoverSearchParams {
   date?: string;
   latest?: boolean;
 }
+
+export interface MarsRoverPhotos {
+  earth_date: string;
+  id: number;
+  img_src: string;
+  rover: MarsRoverProfile;
+  sol: number;
+  cameras: { name: string; full_name: string }[];
+}
