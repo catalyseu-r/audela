@@ -73,6 +73,25 @@ const config: Config = {
           '50%': { transform: 'rotate(10.0deg)' },
         },
 
+        customPing: {
+          '75%, 100%': {
+            transform: 'scale(1.5)',
+            opacity: '.07',
+          },
+        },
+
+        bioTextAnima: {
+          '0%': {
+            transform: 'translateX(2em) rotate3d(0, 1, 0, 90deg)',
+            opacity: '0',
+          },
+
+          '100%': {
+            transform: 'translateX(0) rotate3d(0, 1, 0, 0deg)',
+            opacity: '1',
+          },
+        },
+
         baseFadeIn: {
           from: {
             opacity: '0',
@@ -123,6 +142,8 @@ const config: Config = {
         'animate-heart': 'heartTransform .5s ease-in-out .25s',
         'animate-hand': 'handTransform .5s ease-in-out',
         'waving-hand': 'wave 3s linear infinite',
+        'animate-ping-custom': 'customPing 1s cubic-bezier(0, 0, 0.2, 1) infinite ',
+        'animate-text-custom': 'bioTextAnima .5s cubic-bezier(.31,.05,0,1.03) forwards ',
       },
       transitionTimingFunction: {
         'custom-anim': 'cubic-bezier(.31,.05,0,1.03)',
