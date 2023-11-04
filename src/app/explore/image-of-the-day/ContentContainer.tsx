@@ -67,13 +67,13 @@ const ContentContainer = (props: ContentInterface) => {
         if (savedClientDate && !searchParams.get('date') && !currentDate) {
           setCurrentDate(savedClientDate);
           //
-        } else if (savedClientDate && searchParams.get('date') && !currentDate) {
+        } else if (!savedClientDate && searchParams.get('date') && !currentDate) {
           setCurrentDate(new Date(String(searchParams.get('date'))));
           //
-        } else if (savedClientDate && searchParams.get('date') && !currentDate) {
+        } else if (!currentDate && savedClientDate && searchParams.get('date')) {
           setCurrentDate(new Date(String(searchParams.get('date'))));
           //
-        } else if (!currentDate) {
+        } else if (!savedClientDate && !searchParams.get('date') && !currentDate) {
           setCurrentDate(new Date());
         }
       } catch (error) {
@@ -98,7 +98,7 @@ const ContentContainer = (props: ContentInterface) => {
           setContentState((_prev) => {
             return {
               ..._prev,
-              image: url,
+              image: hdurl ?? url,
               desc: explanation,
               date: date,
               title: title,
