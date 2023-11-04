@@ -26,7 +26,7 @@ const ContentContainer = (props: ContentInterface) => {
 
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams()!;
+  const searchParams = useSearchParams();
 
   const createQueryString = React.useCallback(
     (name: string, value: string) => {
