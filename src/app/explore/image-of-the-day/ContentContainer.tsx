@@ -1,7 +1,6 @@
 'use client';
 
 import Breadcrumbs from '@/app/components/Breadcrumbs';
-import { ImageOfTheDay } from '@/app/types/imageOfTheDay';
 import { getImageOfTheDay } from '@/app/utils/API/getImageOfTheDay';
 import dayjs from 'dayjs';
 import React from 'react';
@@ -16,17 +15,20 @@ import toast from 'react-hot-toast';
 import LikeAndShare from '@/app/components/LikeAndShare';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { getLocalStorageItem, setLocalStorageItem } from '@/app/utils/localStorage/handleLocalStorage';
+import { useAppContext } from '@/app/contexts/store';
+import { ActionTypes } from '@/app/types/actionTypes';
 
-interface ContentInterface {
-  data: ImageOfTheDay;
-}
+const minimumDate = new Date('1995/06/16');
+const maximumDate = new Date();
 
-const ContentContainer = (props: ContentInterface) => {
-  const [currentDate, setCurrentDate] = React.useState<Date | null | undefined>(null);
-
+const ContentContainer = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const {
+    state: { imageOfTheDayCurrentDate },
+    dispatch,
+  } = useAppContext();
 
   const createQueryString = React.useCallback(
     (name: string, value: string) => {
@@ -63,18 +65,23 @@ const ContentContainer = (props: ContentInterface) => {
 
     const getStoredDateFromClient = () => {
       const savedClientDate = getLocalStorageItem('@au-dela_date');
+      const checkParams = searchParams.get('date');
+      const getDateFromParams = new Date(String(searchParams.get('date')));
       try {
-        if (savedClientDate && !searchParams.get('date') && !currentDate) {
-          setCurrentDate(savedClientDate);
+        if (savedClientDate && !checkParams && !imageOfTheDayCurrentDate) {
+          dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: savedClientDate });
           //
-        } else if (!savedClientDate && searchParams.get('date') && !currentDate) {
-          setCurrentDate(new Date(String(searchParams.get('date'))));
           //
-        } else if (!currentDate && savedClientDate && searchParams.get('date')) {
-          setCurrentDate(new Date(String(searchParams.get('date'))));
+        } else if (!savedClientDate && checkParams && !imageOfTheDayCurrentDate) {
+          dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: getDateFromParams });
           //
-        } else if (!savedClientDate && !searchParams.get('date') && !currentDate) {
-          setCurrentDate(new Date());
+          //
+        } else if (savedClientDate && checkParams && !imageOfTheDayCurrentDate) {
+          dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: getDateFromParams });
+          //
+          //
+        } else if (!savedClientDate && !checkParams && !imageOfTheDayCurrentDate) {
+          dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: new Date() });
         }
       } catch (error) {
         console.log(error);
@@ -84,15 +91,18 @@ const ContentContainer = (props: ContentInterface) => {
     };
 
     getStoredDateFromClient();
-  }, [searchParams, currentDate]);
+  }, [searchParams, imageOfTheDayCurrentDate, dispatch]);
 
-  const handleDatePick = React.useCallback((date: Date) => setCurrentDate(date), []);
+  const handleDatePick = React.useCallback(
+    (date: Date) => dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: date }),
+    [dispatch]
+  );
 
   React.useEffect(() => {
     setIsLoading(true);
     const handleUserCalendar = async () => {
       try {
-        const callApi = await getImageOfTheDay({ date: dayjs(currentDate).format('YYYY-MM-DD') });
+        const callApi = await getImageOfTheDay({ date: dayjs(imageOfTheDayCurrentDate).format('YYYY-MM-DD') });
         if (callApi) {
           const { url, hdurl, explanation, date, title } = callApi;
           setContentState((_prev) => {
@@ -110,19 +120,22 @@ const ContentContainer = (props: ContentInterface) => {
             'There was a problem with your request 😓 try picking diffirent date! In the meantime we will revert the calendar to previous day.'
           );
 
-          setCurrentDate(new Date(dayjs(currentDate).subtract(1, 'day').toDate()));
+          const subtractByDay = new Date(dayjs(imageOfTheDayCurrentDate).subtract(1, 'day').toDate());
+          dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: subtractByDay });
         }
       } catch (error) {
         console.log(error);
       } finally {
         setIsLoading(false);
-        setLocalStorageItem('@au-dela_date', dayjs(currentDate).format('YYYY-MM-DD'));
-        router.replace(`${pathname}?${createQueryString('date', dayjs(currentDate).format('YYYY-MM-DD'))}`);
+        setLocalStorageItem('@au-dela_date', dayjs(imageOfTheDayCurrentDate).format('YYYY-MM-DD'));
+        router.replace(
+          `${pathname}?${createQueryString('date', dayjs(imageOfTheDayCurrentDate).format('YYYY-MM-DD'))}`
+        );
       }
     };
 
-    currentDate && handleUserCalendar();
-  }, [currentDate, pathname, router, createQueryString]);
+    imageOfTheDayCurrentDate && handleUserCalendar();
+  }, [imageOfTheDayCurrentDate, pathname, router, createQueryString, dispatch]);
 
   const CalendarLabel = () => {
     return (
@@ -131,10 +144,10 @@ const ContentContainer = (props: ContentInterface) => {
 
         <div className='flex group items-center justify-between border-b max-w-[11.5rem]  border-b-interactive-green/50 focus-within:border-b-interactive-green transition-colors duration-300 px-4 py-2 '>
           <ReactDatePicker
-            selected={currentDate}
+            selected={new Date(imageOfTheDayCurrentDate!)}
             onChange={(date) => handleDatePick(date!)}
-            maxDate={new Date()}
-            minDate={new Date('1995/06/16')}
+            maxDate={maximumDate}
+            minDate={minimumDate}
             className='!italic w-full bg-transparent font-light text-text-white text-base cursor-pointer  focus:outline-none '
             calendarClassName='!bg-main-white  !text-bg-black'
             disabledKeyboardNavigation
@@ -186,7 +199,10 @@ const ContentContainer = (props: ContentInterface) => {
                   <LikeAndShare
                     articleData={{
                       title: contentState.title,
-                      url: `${pathname}?${createQueryString('date', dayjs(currentDate).format('YYYY-MM-DD'))}`,
+                      url: `${pathname}?${createQueryString(
+                        'date',
+                        dayjs(imageOfTheDayCurrentDate).format('YYYY-MM-DD')
+                      )}`,
                       description: `${contentState.desc.slice(0, 60)}...`,
                       ogImage: contentState.image,
                     }}

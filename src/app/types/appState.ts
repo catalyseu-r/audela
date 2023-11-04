@@ -10,6 +10,8 @@ export interface AppState {
     currentPage: number;
   };
 
+  imageOfTheDayCurrentDate: string | Date | null | undefined;
+
   intersectionElements: {
     landing: boolean;
     mission: boolean;

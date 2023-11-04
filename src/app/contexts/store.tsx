@@ -17,6 +17,9 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
     case ActionTypes.SET_FULL_QUERY:
       return { ...state, fullQuery: action.payload };
 
+    case ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE:
+      return { ...state, imageOfTheDayCurrentDate: action.payload };
+
     case ActionTypes.SET_ARTICLE_STATE:
       return {
         ...state,
@@ -111,6 +114,7 @@ export const GlobalContextProvider = ({ children }: any) => {
       start: 0,
       end: 6,
     },
+    imageOfTheDayCurrentDate: null,
     intersectionElements: {
       landing: false,
       mission: false,
