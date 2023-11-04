@@ -9,27 +9,27 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import placeholder from '../../img/placeholder-article.jpg';
 import { NewsAndStudiesContent } from './NewsAndStudiesContent';
+import { useWindowSize } from '@/app/utils/hooks/useWindowSize';
 
 interface ArticleContainerData {
   data: NewsAndStudiesContent['data'];
 }
 
 const ArticleContainer = (props: ArticleContainerData) => {
-  const [windowSize, setWindowSize] = React.useState<number | null>();
-
-  React.useEffect(() => {
-    if (window && typeof window !== 'undefined') {
-      setWindowSize(window.innerWidth);
-    }
-  }, []);
-
   const pathName = usePathname();
+
+  const windowSize = useWindowSize();
+
+  const windowCheck = windowSize && windowSize.width > 768;
 
   return (
     <div
-      className={`${
-        windowSize && windowSize > 768 ? 'flex-wrap ' : 'flex-nowrap overflow-x-scroll  snap-x snap-proximity'
-      } flex  gap-8 items-center md:justify-center justify-between  w-full h-full  mt-16 no-scrollbar`}
+      style={{
+        flexWrap: windowCheck ? 'wrap' : 'nowrap',
+        overflowX: windowCheck ? 'hidden' : 'scroll',
+        scrollSnapType: windowCheck ? 'none' : 'x proximity',
+      }}
+      className={` flex  gap-8 items-center md:justify-center justify-between  w-full h-full  mt-16 no-scrollbar`}
     >
       <AnimatePresence>
         {props.data.map((item, index) => (

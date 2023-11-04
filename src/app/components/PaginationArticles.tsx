@@ -4,6 +4,7 @@ import { BsArrowLeft as ArrowLeft, BsArrowRight as ArrorwRight } from 'react-ico
 import { useAppContext } from '../contexts/store';
 import { ActionTypes } from '../types/actionTypes';
 import { articlesPerPage, maxPages } from '../staticData/variables';
+import { useWindowSize } from '../utils/hooks/useWindowSize';
 
 const PaginationArticles = () => {
   const {
@@ -11,7 +12,7 @@ const PaginationArticles = () => {
     dispatch,
   } = useAppContext();
 
-  const [windowWidth, setWindowWidth] = React.useState<number | undefined>();
+  const windowSize = useWindowSize();
 
   const buttonArray = Array.from(
     Array(
@@ -20,17 +21,6 @@ const PaginationArticles = () => {
         : Math.ceil(pagination.totalItems / articlesPerPage)
     ).keys()
   );
-
-  const handleResize = () => setWindowWidth(window.innerWidth);
-
-  React.useEffect(() => {
-    if (window && typeof window !== undefined) {
-      handleResize();
-      window.addEventListener('resize', handleResize);
-    }
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   const isForwrard = (current: number, button: 'forward' | 'back') => {
     if (button === 'forward' && current < buttonArray.length) {
@@ -55,7 +45,7 @@ const PaginationArticles = () => {
       >
         <ArrowLeft className='text-lg text-text-white' />
       </button>
-      {windowWidth && windowWidth > 768 ? (
+      {windowSize && windowSize.width > 768 ? (
         buttonArray.map((item, index) => {
           const appendIndex = index + 1;
           return (

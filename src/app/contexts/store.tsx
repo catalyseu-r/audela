@@ -71,6 +71,20 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
     case ActionTypes.SET_IS_SEARCH_ACTIVE:
       return { ...state, isSearchActive: action.payload };
 
+    case ActionTypes.SET_MARS_ROVER_FILTER_STATE: {
+      return {
+        ...state,
+        marsFilterState: { ...state.marsFilterState, [action.payload.key]: action.payload.value },
+      };
+    }
+    case ActionTypes.SET_CURRENT_MARS_ROVER: {
+      return { ...state, currentMarsRover: action.payload };
+    }
+
+    case ActionTypes.SET_CURRENT_GALLERY: {
+      return { ...state, currentGallery: action.payload };
+    }
+
     default:
       return state;
   }
@@ -102,6 +116,16 @@ export const GlobalContextProvider = ({ children }: any) => {
       mission: false,
       about: false,
       contact: false,
+    },
+    marsFilterState: {
+      sol: '200',
+      earth_date: '',
+      camera: '',
+      recency: '',
+    },
+    currentMarsRover: null,
+    currentGallery: {
+      photos: [],
     },
 
     isSearchLoading: false,
