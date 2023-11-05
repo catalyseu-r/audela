@@ -24,12 +24,15 @@ const GenerateRoverPicker = ({ data: { rovers } }: RoverGalleryContentType) => {
 
   return (
     <div className='flex flex-col gap-4 items-start transition-all'>
-      <label htmlFor='rover' className='flex items-center gap-2 font-normal leading-6 text-base text-deep-green'>
-        <RoverIcon className={'text-2xl'} />
+      <label
+        htmlFor='rover'
+        className='flex items-center gap-2 font-normal leading-6 lg:text-base text-sm text-deep-green'
+      >
+        <RoverIcon className={'lg:text-2xl text-base'} />
         <p>Rover</p>
       </label>
       <select
-        className='py-2 px-4 rounded bg-bg-black  border-r-[16px] border-transparent outline outline-1 outline-deep-green/50 focus:outline-interactive-green transition-all text-base text-text-white  !font-sans cursor-pointer max-w-[17ch] '
+        className='py-2 px-4 rounded bg-bg-black  border-r-[16px] border-transparent outline outline-1 outline-deep-green/50 focus:outline-interactive-green transition-all lg:text-base text-sm text-text-white  !font-sans cursor-pointer max-w-[17ch] '
         onChange={updateCurrentRover}
         value={currentMarsRover?.id}
       >

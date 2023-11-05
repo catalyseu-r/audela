@@ -16,8 +16,11 @@ const GenerateSolPicker = () => {
 
   return (
     <div className='flex flex-col gap-4 items-start transition-all '>
-      <label htmlFor='sol' className='flex items-center gap-2 font-normal leading-6 text-base text-deep-green'>
-        <SunIcon className={'text-2xl'} />
+      <label
+        htmlFor='sol'
+        className='flex items-center gap-2 font-normal leading-6 lg:text-base text-sm text-deep-green'
+      >
+        <SunIcon className={'lg:text-2xl text-base'} />
         <span>sol</span>
       </label>
       <input
@@ -25,7 +28,7 @@ const GenerateSolPicker = () => {
           WebkitAppearance: 'none',
           MozAppearance: 'textfield',
         }}
-        className='py-2 px-4 rounded bg-bg-black  border-r-[16px] border-transparent outline outline-1 outline-deep-green/50 focus:outline-interactive-green transition-all text-base text-text-white  !font-sans cursor-pointer w-full appearance-none max-w-[12ch]'
+        className='py-2 px-4 rounded bg-bg-black  border-r-[16px] border-transparent outline outline-1 outline-deep-green/50 focus:outline-interactive-green transition-all lg:text-base text-sm text-text-white  !font-sans cursor-pointer w-full appearance-none max-w-[12ch]'
         type='number'
         inputMode='numeric'
         name='sol'

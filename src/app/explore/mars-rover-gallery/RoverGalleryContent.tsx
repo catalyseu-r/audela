@@ -58,8 +58,8 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
   }, [data, dispatch]);
 
   return (
-    <div className='grid gap-20 pb-40 '>
-      <div className='flex items-start gap-14 lg:flex-nowrap flex-wrap'>
+    <div className='grid lg:gap-20 md:gap-16 gap-10 pb-40 lg:mt-24 mt-20 '>
+      <div className='flex md:justify-start justify-center gap-14 lg:flex-nowrap flex-wrap'>
         <div className='grid gap-10 '>
           <GenerateRoverIframe data={currentMarsRover} />
           <div className='w-full flex gap-4 items-center'>
@@ -90,7 +90,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
           </div>
         </div>
         <div className='grid grid-cols-1 items-start gap-10'>
-          <div className='flex items-center gap-10 transition-all  flex-wrap'>
+          <div className='flex items-center lg:gap-10 md:gap-8 gap-6 transition-all  flex-wrap'>
             <GenerateRoverPicker data={data} />
             <GenerateSolPicker />
             <GenerateCameras />
@@ -113,7 +113,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
                       <span
                         key={index}
                         style={{ animationDelay: `${index / 40}s` }}
-                        className={`animate-animate-text-custom relative transition-all origin-right opacity-0 inline-block font-light text-xl leading-10 text-text-white`}
+                        className={`animate-animate-text-custom relative transition-all origin-right opacity-0 inline-block font-light lg:text-xl text-base lg:leading-10 leading-8 text-text-white`}
                       >
                         {txt}
                       </span>

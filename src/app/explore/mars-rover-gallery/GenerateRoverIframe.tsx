@@ -20,9 +20,9 @@ const GenerateRoverIframe = ({ data }: RoverIframeComponentProps) => {
     <div
       ref={containerRef}
       style={{
-        height: containerRef.current?.clientWidth.toString(),
+        height: `${containerRef.current?.clientWidth}px`,
       }}
-      className={`lg:w-[352px] w-full aspect-square flex items-center justify-center md:shadow-custom-image-strong-shadow rounded `}
+      className={`lg:w-[352px] w-full  aspect-square flex items-center justify-center md:shadow-custom-image-strong-shadow rounded `}
     >
       <iframe
         src={findNasaSource(data.id, NASA_ROVERS_3D)?.source}

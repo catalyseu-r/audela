@@ -16,14 +16,17 @@ const GenerateRecency = () => {
 
   return (
     <div className='flex flex-col gap-4 items-start transition-all'>
-      <label htmlFor='recency' className='flex items-center gap-2 font-normal leading-6 text-base text-deep-green'>
-        <ClockIcon className={'text-2xl'} />
+      <label
+        htmlFor='recency'
+        className='flex items-center gap-2 font-normal leading-6 lg:text-base text-sm text-deep-green'
+      >
+        <ClockIcon className={'lg:text-2xl text-base'} />
         <p>Recency</p>
       </label>
       <select
         onChange={updateRecency}
         value={marsFilterState.recency}
-        className='py-2 px-4 rounded bg-bg-black  border-r-[16px] border-transparent outline outline-1 outline-deep-green/50 focus:outline-interactive-green transition-all text-base text-text-white  !font-sans cursor-pointer w-full max-w-[17ch]'
+        className='py-2 px-4 rounded bg-bg-black  border-r-[16px] border-transparent outline outline-1 outline-deep-green/50 focus:outline-interactive-green transition-all lg:text-base text-sm text-text-white  !font-sans cursor-pointer w-full max-w-[17ch]'
       >
         <option value='all'>All</option>
         <option value='most_recent'>Most recent</option>
