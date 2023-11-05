@@ -44,63 +44,73 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
     getSelectedRoverImages();
   }, [currentMarsRover, marsFilterState, dispatch]);
 
+  React.useEffect(() => {
+    data && dispatch({ type: ActionTypes.SET_CURRENT_MARS_ROVER, payload: data.rovers[0] });
+  }, [data, dispatch]);
+
   return (
     <div className=''>
-      <div className='grid gap-4'>
-        <GenerateRoverIframe data={currentMarsRover} />
-        <div className='flex items-center gap-2'>
-          <RadioIcon
-            className={`${
-              currentMarsRover?.status === 'active' ? 'text-deep-green animate-animate-ping-custom' : 'text-error-red'
-            } text-2xl`}
-          />
-          <p className='flex items-center gap-1'>
-            <span>Status: </span>
-            <span className={`${currentMarsRover?.status === 'active' ? 'text-deep-green' : 'text-error-red'} `}>
-              {currentMarsRover && currentMarsRover.status}
-            </span>
-          </p>
+      <div className='flex items-start gap-14 lg:flex-nowrap flex-wrap'>
+        <div className='grid gap-4 '>
+          <GenerateRoverIframe data={currentMarsRover} />
+          <div className='w-full'>
+            <div className='flex items-center gap-2'>
+              <RadioIcon
+                className={`${
+                  currentMarsRover?.status === 'active'
+                    ? 'text-deep-green animate-animate-ping-custom'
+                    : 'text-error-red'
+                } text-2xl`}
+              />
+              <p className='flex items-center gap-1'>
+                <span>Status: </span>
+                <span className={`${currentMarsRover?.status === 'active' ? 'text-deep-green' : 'text-error-red'} `}>
+                  {currentMarsRover && currentMarsRover.status}
+                </span>
+              </p>
+            </div>
+            <div className='flex items-center gap-2'>
+              <CalendarIcon className={`text-2xl`} />
+              <p className='flex items-center gap-1'>
+                <span>Launch date: </span>
+                <span className='font-light italic'>
+                  {currentMarsRover && dayjs(currentMarsRover.launch_date).format('DD/MM/YYYY')}
+                </span>
+              </p>
+            </div>
+          </div>
         </div>
-        <div className='flex items-center gap-2'>
-          <CalendarIcon className={`text-2xl`} />
-          <p className='flex items-center gap-1'>
-            <span>Launch date: </span>
-            <span className='font-light italic'>
-              {currentMarsRover && dayjs(currentMarsRover.launch_date).format('DD/MM/YYYY')}
-            </span>
-          </p>
-        </div>
-      </div>
-      <div className='grid grid-cols-1 items-start '>
-        <div className='flex items-center gap-10 transition-all w-full flex-wrap'>
-          <GenerateRoverPicker data={data} />
-          <GenerateSolPicker />
-          <GenerateCameras />
-          <GenerateRecency />
-        </div>
-        <div className='py-4 self-stretch grid grid-cols-1 items-start'>
-          <label htmlFor='rover-bio' className='font-normal text-xl leading-10 text-deep-green'>
-            Bio
-          </label>
-          <div
-            key={currentMarsRover?.id}
-            id='rover-bio'
-            className='flex gap-[2px] flex-wrap items-center perspective-3d'
-          >
-            {currentMarsRover &&
-              findNasaSource(currentMarsRover!.id, NASA_ROVERS_3D)
-                ?.bio.split(/(\s+)/)
-                .map((txt, index) => {
-                  return (
-                    <span
-                      key={index}
-                      style={{ animationDelay: `${index / 40}s` }}
-                      className={`animate-animate-text-custom relative transition-all origin-right opacity-0 inline-block font-light text-xl leading-10 text-text-white`}
-                    >
-                      {txt}
-                    </span>
-                  );
-                })}
+        <div className='grid grid-cols-1 items-start '>
+          <div className='flex items-center gap-10 transition-all  flex-wrap'>
+            <GenerateRoverPicker data={data} />
+            <GenerateSolPicker />
+            <GenerateCameras />
+            <GenerateRecency />
+          </div>
+          <div className='py-4 self-stretch grid grid-cols-1 items-start'>
+            <label htmlFor='rover-bio' className='font-normal text-xl leading-10 text-deep-green'>
+              Bio
+            </label>
+            <div
+              key={currentMarsRover?.id}
+              id='rover-bio'
+              className='flex gap-[2px] flex-wrap items-center perspective-3d px-4'
+            >
+              {currentMarsRover &&
+                findNasaSource(currentMarsRover!.id, NASA_ROVERS_3D)
+                  ?.bio.split(/(\s+)/)
+                  .map((txt, index) => {
+                    return (
+                      <span
+                        key={index}
+                        style={{ animationDelay: `${index / 40}s` }}
+                        className={`animate-animate-text-custom relative transition-all origin-right opacity-0 inline-block font-light text-xl leading-10 text-text-white`}
+                      >
+                        {txt}
+                      </span>
+                    );
+                  })}
+            </div>
           </div>
         </div>
       </div>

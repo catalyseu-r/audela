@@ -22,7 +22,7 @@ const GenerateRoverPicker = ({ data: { rovers } }: RoverGalleryContentType) => {
   }
 
   return (
-    <div className='flex flex-col gap-4 items-start transition-all md:basis-1/5 grow-0 shrink-0'>
+    <div className='flex flex-col gap-4 items-start transition-all'>
       <label htmlFor='rover' className='flex items-center gap-2 font-normal leading-6 text-base text-deep-green'>
         <RoverIcon className={'text-2xl'} />
         <p>Rover</p>

@@ -1,23 +1,32 @@
+'use client';
+
 import { NASA_ROVERS_3D } from '@/app/staticData/nasaRovers3D';
 import { MarsRoverProfile } from '@/app/types/marsRoverTypes';
 import { findNasaSource } from '@/app/utils/lists/findNasaSource';
+import React from 'react';
 
 interface RoverIframeComponentProps {
   data: MarsRoverProfile | null;
 }
 
 const GenerateRoverIframe = ({ data }: RoverIframeComponentProps) => {
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
+
   if (!data) {
     return null;
   }
 
   return (
     <div
-      className={`lg:w-[352px] lg:h-[352px] w-[calc(30vh+2.5rem)] h-[calc(30vh+2.5rem)] aspect-square flex items-center justify-center md:shadow-custom-image-strong-shadow rounded `}
+      ref={containerRef}
+      style={{
+        height: containerRef.current?.clientWidth.toString(),
+      }}
+      className={`lg:w-[352px] w-full aspect-square flex items-center justify-center md:shadow-custom-image-strong-shadow rounded `}
     >
       <iframe
         src={findNasaSource(data.id, NASA_ROVERS_3D)?.source}
-        className='w-full h-full object-contain rounded transition-all'
+        className='w-full h-full object-fill rounded transition-all'
         allowFullScreen
       />
     </div>
