@@ -1,8 +1,8 @@
 'use client';
 
 import { NASA_ROVERS_3D } from '@/app/staticData/nasaRovers3D';
-import { MarsRoverPhotos, MarsRoverProfiles } from '@/app/types/marsRoverTypes';
-import React, { memo } from 'react';
+import { MarsRoverProfiles } from '@/app/types/marsRoverTypes';
+import React from 'react';
 
 import { IoRadioOutline as RadioIcon, IoCalendarClearOutline as CalendarIcon } from 'react-icons/io5';
 import dayjs from 'dayjs';
@@ -49,20 +49,20 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
   }, [data, dispatch]);
 
   return (
-    <div className=''>
+    <div className='grid gap-20 '>
       <div className='flex items-start gap-14 lg:flex-nowrap flex-wrap'>
-        <div className='grid gap-4 '>
+        <div className='grid gap-10 '>
           <GenerateRoverIframe data={currentMarsRover} />
-          <div className='w-full'>
+          <div className='w-full flex gap-4 items-center'>
             <div className='flex items-center gap-2'>
               <RadioIcon
                 className={`${
                   currentMarsRover?.status === 'active'
                     ? 'text-deep-green animate-animate-ping-custom'
                     : 'text-error-red'
-                } text-2xl`}
+                } text-base`}
               />
-              <p className='flex items-center gap-1'>
+              <p className='flex items-center gap-1 text-base leading-6'>
                 <span>Status: </span>
                 <span className={`${currentMarsRover?.status === 'active' ? 'text-deep-green' : 'text-error-red'} `}>
                   {currentMarsRover && currentMarsRover.status}
@@ -70,17 +70,17 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
               </p>
             </div>
             <div className='flex items-center gap-2'>
-              <CalendarIcon className={`text-2xl`} />
-              <p className='flex items-center gap-1'>
-                <span>Launch date: </span>
-                <span className='font-light italic'>
+              <CalendarIcon className={`text-base`} />
+              <p className='flex items-center gap-1 text-base leading-6'>
+                <span className='leading-6 text-base'>Launch date: </span>
+                <span className='font-light italic leading-6 text-base'>
                   {currentMarsRover && dayjs(currentMarsRover.launch_date).format('DD/MM/YYYY')}
                 </span>
               </p>
             </div>
           </div>
         </div>
-        <div className='grid grid-cols-1 items-start '>
+        <div className='grid grid-cols-1 items-start gap-10'>
           <div className='flex items-center gap-10 transition-all  flex-wrap'>
             <GenerateRoverPicker data={data} />
             <GenerateSolPicker />
@@ -115,13 +115,13 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
         </div>
       </div>
 
-      <div className='  grid grid-cols-2 items-center content-center gap-16 w-full'>
+      <div className='flex flex-nowrap snap-x overflow-auto snap-mandatory no-scrollbar   gap-16 '>
         {currentGallery.photos &&
           currentGallery.photos.length > 0 &&
           currentGallery.photos.map((photo) => (
-            <div key={photo.id} className='w-[28rem] h-[20rem] relative rounded overflow-hidden aspect-video '>
+            <div key={photo.id} className='w-[28rem] h-[20rem] relative rounded snap-always snap-start aspect-video '>
               <Image
-                className='rounded object-cover opacity-0 transition-opacity'
+                className='rounded object-cover opacity-0 transition-opacity  aspect-video '
                 loading='lazy'
                 src={photo.img_src}
                 fill
