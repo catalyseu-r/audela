@@ -40,4 +40,5 @@ export type AppAction =
       type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE;
       payload: string | Date;
     }
+  | { type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING; payload: boolean }
   | { type: ActionTypes.SET_CURRENT_GALLERY; payload: { photos: MarsRoverPhotos[] } };

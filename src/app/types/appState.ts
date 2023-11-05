@@ -33,5 +33,6 @@ export interface AppState {
   currentMarsRover: MarsRoverProfile | null;
   currentGallery: {
     photos: MarsRoverPhotos[];
+    isLoading: boolean;
   };
 }

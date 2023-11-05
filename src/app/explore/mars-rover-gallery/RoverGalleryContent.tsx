@@ -18,6 +18,8 @@ import GenerateCameras from './GenerateCameras';
 import { ActionTypes } from '@/app/types/actionTypes';
 import Image from 'next/image';
 import { AppState } from '@/app/types/appState';
+import Loading from '../loading';
+import RoverPhotoGallery from './RoverPhotoGallery';
 
 export interface RoverGalleryContentType {
   data: MarsRoverProfiles;
@@ -30,18 +32,25 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
   } = useAppContext();
 
   React.useEffect(() => {
-    const getSelectedRoverImages = async () => {
-      if (currentMarsRover) {
-        const getImages: AppState['currentGallery'] = await getMarsRoverImages({
-          rover: currentMarsRover?.name,
-          sol: marsFilterState.sol.toString(),
-        });
+    try {
+      dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: true });
+      const getSelectedRoverImages = async () => {
+        if (currentMarsRover) {
+          const getImages: AppState['currentGallery'] = await getMarsRoverImages({
+            rover: currentMarsRover?.name,
+            sol: marsFilterState.sol.toString(),
+          });
 
-        dispatch({ type: ActionTypes.SET_CURRENT_GALLERY, payload: getImages });
-      }
-    };
+          dispatch({ type: ActionTypes.SET_CURRENT_GALLERY, payload: getImages });
+          dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: false });
+        }
+      };
 
-    getSelectedRoverImages();
+      getSelectedRoverImages();
+    } catch (error) {
+      console.error(error);
+      dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: false });
+    }
   }, [currentMarsRover, marsFilterState, dispatch]);
 
   React.useEffect(() => {
@@ -49,7 +58,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
   }, [data, dispatch]);
 
   return (
-    <div className='grid gap-20 '>
+    <div className='grid gap-20 pb-40 '>
       <div className='flex items-start gap-14 lg:flex-nowrap flex-wrap'>
         <div className='grid gap-10 '>
           <GenerateRoverIframe data={currentMarsRover} />
@@ -115,21 +124,8 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
         </div>
       </div>
 
-      <div className='flex flex-nowrap snap-x overflow-auto snap-mandatory no-scrollbar   gap-16 '>
-        {currentGallery.photos &&
-          currentGallery.photos.length > 0 &&
-          currentGallery.photos.map((photo) => (
-            <div key={photo.id} className='w-[28rem] h-[20rem] relative rounded snap-always snap-start aspect-video '>
-              <Image
-                className='rounded object-cover opacity-0 transition-opacity  aspect-video '
-                loading='lazy'
-                src={photo.img_src}
-                fill
-                alt='Photo form Mars rover'
-                onLoadingComplete={(image) => image.classList.remove('opacity-0')}
-              />
-            </div>
-          ))}
+      <div className='flex flex-nowrap snap-x overflow-auto snap-mandatory no-scrollbar relative min-h-iframes-images-sm   gap-16 '>
+        {currentGallery.photos && currentGallery.photos.length > 0 && <RoverPhotoGallery />}
       </div>
     </div>
   );

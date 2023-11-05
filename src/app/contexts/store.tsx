@@ -85,7 +85,11 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
     }
 
     case ActionTypes.SET_CURRENT_GALLERY: {
-      return { ...state, currentGallery: action.payload };
+      return { ...state, currentGallery: { ...state.currentGallery, photos: action.payload.photos } };
+    }
+
+    case ActionTypes.SET_IS_CURRENT_GALLERY_LOADING: {
+      return { ...state, currentGallery: { ...state.currentGallery, isLoading: action.payload } };
     }
 
     default:
@@ -130,6 +134,7 @@ export const GlobalContextProvider = ({ children }: any) => {
     currentMarsRover: null,
     currentGallery: {
       photos: [],
+      isLoading: false,
     },
 
     isSearchLoading: false,
