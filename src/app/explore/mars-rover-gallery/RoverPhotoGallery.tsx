@@ -13,6 +13,12 @@ const RoverPhotoGallery = () => {
 
   if (isLoading) {
     return <Loading />;
+  } else if (!photos || photos.length === 0) {
+    return (
+      <h2 className='mx-auto text-error-red/80 text-2xl leading-6'>
+        There are no images for that filter setting! Try with diffirent settings 👨🏻‍🚀
+      </h2>
+    );
   } else {
     return photos.map((photo) => (
       <div key={photo.id} className='w-[28rem] h-[20rem] relative rounded snap-always snap-start aspect-video '>

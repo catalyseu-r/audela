@@ -98,7 +98,13 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
     }
 
     case ActionTypes.SET_CURRENT_GALLERY: {
-      return { ...state, currentGallery: { ...state.currentGallery, photos: action.payload.photos } };
+      return {
+        ...state,
+        currentGallery: {
+          ...state.currentGallery,
+          photos: action.payload.photos,
+        },
+      };
     }
 
     case ActionTypes.SET_IS_CURRENT_GALLERY_LOADING: {

@@ -31,6 +31,8 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
     dispatch,
   } = useAppContext();
 
+  console.log('CURRENTGALE', marsFilterState);
+
   React.useEffect(() => {
     try {
       dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: true });
@@ -39,6 +41,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
           const getImages: AppState['currentGallery'] = await getMarsRoverImages({
             rover: currentMarsRover?.name,
             sol: marsFilterState.sol.toString(),
+            camera: marsFilterState.camera,
           });
 
           dispatch({ type: ActionTypes.SET_CURRENT_GALLERY, payload: getImages });
@@ -125,13 +128,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
       </div>
 
       <div className='flex flex-nowrap snap-x overflow-auto snap-mandatory no-scrollbar relative min-h-iframes-images-sm   gap-16'>
-        {currentGallery.photos && currentGallery.photos.length > 0 ? (
-          <RoverPhotoGallery />
-        ) : (
-          <h2 className='mx-auto text-error-red/80 text-2xl leading-6'>
-            There are no images for that filter setting! Try with diffirent settings 👨🏻‍🚀
-          </h2>
-        )}
+        <RoverPhotoGallery />
       </div>
     </div>
   );
