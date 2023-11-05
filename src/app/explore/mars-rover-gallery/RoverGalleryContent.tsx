@@ -16,9 +16,9 @@ import GenerateRecency from './GenerateRecency';
 import GenerateRoverPicker from './GenerateRoverPicker';
 import GenerateCameras from './GenerateCameras';
 import { ActionTypes } from '@/app/types/actionTypes';
-import Image from 'next/image';
+
 import { AppState } from '@/app/types/appState';
-import Loading from '../loading';
+
 import RoverPhotoGallery from './RoverPhotoGallery';
 
 export interface RoverGalleryContentType {
@@ -79,9 +79,9 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
               </p>
             </div>
             <div className='flex items-center gap-2'>
-              <CalendarIcon className={`text-base`} />
+              <CalendarIcon className={`text-base text-deep-green`} />
               <p className='flex items-center gap-1 text-base leading-6'>
-                <span className='leading-6 text-base'>Launch date: </span>
+                <span className='leading-6 text-base'>Launched:</span>
                 <span className='font-light italic leading-6 text-base'>
                   {currentMarsRover && dayjs(currentMarsRover.launch_date).format('DD/MM/YYYY')}
                 </span>
@@ -124,8 +124,14 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
         </div>
       </div>
 
-      <div className='flex flex-nowrap snap-x overflow-auto snap-mandatory no-scrollbar relative min-h-iframes-images-sm   gap-16 '>
-        {currentGallery.photos && currentGallery.photos.length > 0 && <RoverPhotoGallery />}
+      <div className='flex flex-nowrap snap-x overflow-auto snap-mandatory no-scrollbar relative min-h-iframes-images-sm   gap-16'>
+        {currentGallery.photos && currentGallery.photos.length > 0 ? (
+          <RoverPhotoGallery />
+        ) : (
+          <h2 className='mx-auto text-error-red/80 text-2xl leading-6'>
+            There are no images for that filter setting! Try with diffirent settings 👨🏻‍🚀
+          </h2>
+        )}
       </div>
     </div>
   );

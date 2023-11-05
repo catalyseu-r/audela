@@ -22,7 +22,7 @@ const GenerateRecency = () => {
       </label>
       <select
         onChange={updateRecency}
-        defaultValue={marsFilterState.recency}
+        value={marsFilterState.recency}
         className='py-2 px-4 rounded bg-bg-black  border-r-[16px] border-transparent outline outline-1 outline-deep-green/50 focus:outline-interactive-green transition-all text-base text-text-white  !font-sans cursor-pointer w-full max-w-[17ch]'
       >
         <option value='all'>All</option>

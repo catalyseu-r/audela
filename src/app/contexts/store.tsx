@@ -80,6 +80,19 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
         marsFilterState: { ...state.marsFilterState, [action.payload.key]: action.payload.value },
       };
     }
+
+    case ActionTypes.RESET_MARS_ROVER_FILTER_STATE: {
+      return {
+        ...state,
+        marsFilterState: {
+          sol: '200',
+          earth_date: '',
+          camera: '',
+          recency: '',
+        },
+      };
+    }
+
     case ActionTypes.SET_CURRENT_MARS_ROVER: {
       return { ...state, currentMarsRover: action.payload };
     }
