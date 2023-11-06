@@ -27,11 +27,9 @@ export interface RoverGalleryContentType {
 
 const RoverGalleryContent = (data: MarsRoverProfiles) => {
   const {
-    state: { currentMarsRover, marsFilterState, currentGallery },
+    state: { currentMarsRover, marsFilterState },
     dispatch,
   } = useAppContext();
-
-  console.log('CURRENTGALE', marsFilterState);
 
   React.useEffect(() => {
     try {
@@ -127,9 +125,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
         </div>
       </div>
 
-      <div className='flex flex-nowrap snap-x overflow-auto snap-mandatory no-scrollbar relative min-h-iframes-images-sm   gap-16'>
-        <RoverPhotoGallery />
-      </div>
+      <RoverPhotoGallery />
     </div>
   );
 };
