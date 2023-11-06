@@ -22,6 +22,7 @@ import placeholder from '../../../img/placeholder-article.jpg';
 import { planetarySearch } from '@/app/utils/API/planetarySearch';
 import { ActionTypes } from '@/app/types/actionTypes';
 import { generateRelatedItems } from '@/app/utils/lists/generateRelated';
+import { useCustomScroll } from '@/app/utils/hooks/useCustomScroll';
 
 interface ArticlePageContainerData {
   articleData: PlanetaryDataArticleBody | undefined;
@@ -36,18 +37,9 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
   const { title, description, description_508, keywords, photographer, secondary_creator } = articleData!;
 
   const scrollContainerRef = React.useRef<HTMLDivElement | null>(null);
-  const [isDragging, setIsDragging] = React.useState<boolean>(false);
-  const [startX, setStartX] = React.useState<number | null>(null);
-  const [scrollLeft, setScrollLeft] = React.useState<number>(0);
-
   const currentPath = usePathname();
 
-  const handleMouseDown = React.useCallback((e: React.MouseEvent) => {
-    setIsDragging(true);
-    setStartX(e.pageX - (scrollContainerRef.current?.offsetLeft || 0));
-
-    setScrollLeft(scrollContainerRef.current?.scrollLeft || 0);
-  }, []);
+  const [handleMouseDown, handleMouseMove, handleMouseUp] = useCustomScroll(scrollContainerRef);
 
   const {
     state: { relatedItems, fullQuery },
@@ -67,8 +59,6 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
     fetchRelatedContent();
   }, [dispatch, fullQuery]);
 
-  const handleMouseUp = () => setIsDragging(false);
-
   const pathName = usePathname();
 
   const generateLinkToNext = () => {
@@ -77,18 +67,6 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
     const cutCurrent = pathArray.slice(0, pathArray.length - 1).join('/');
 
     return cutCurrent;
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-
-    e.preventDefault();
-    const x = e.pageX - (scrollContainerRef.current?.offsetLeft || 0);
-
-    const walk = (x - (startX || 0)) * 0.75;
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollLeft = (scrollLeft || 0) - walk;
-    }
   };
 
   const reg = /(https?:\/\/[^\s]+)/g;

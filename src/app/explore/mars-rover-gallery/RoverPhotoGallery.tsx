@@ -4,6 +4,7 @@ import { useAppContext } from '@/app/contexts/store';
 import Image from 'next/image';
 import Loading from '../loading';
 import React from 'react';
+import { useCustomScroll } from '@/app/utils/hooks/useCustomScroll';
 
 const RoverPhotoGallery = () => {
   const {
@@ -12,33 +13,8 @@ const RoverPhotoGallery = () => {
     },
   } = useAppContext();
 
-  const [isDragging, setIsDragging] = React.useState<boolean>(false);
-  const [startX, setStartX] = React.useState<number | null>(null);
-  const [scrollLeft, setScrollLeft] = React.useState<number>(0);
-
   const scrollContainerRef = React.useRef<HTMLDivElement | null>(null);
-
-  const handleMouseDown = React.useCallback((e: React.MouseEvent) => {
-    setIsDragging(true);
-
-    setStartX(e.pageX - (scrollContainerRef.current?.offsetLeft || 0));
-
-    setScrollLeft(scrollContainerRef.current?.scrollLeft || 0);
-  }, []);
-
-  const handleMouseUp = () => setIsDragging(false);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-
-    e.preventDefault();
-    const x = e.pageX - (scrollContainerRef.current?.offsetLeft || 0);
-
-    const walk = (x - (startX || 0)) * 0.75;
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollLeft = (scrollLeft || 0) - walk;
-    }
-  };
+  const [handleMouseDown, handleMouseUp, handleMouseMove] = useCustomScroll(scrollContainerRef);
 
   if (isLoading) {
     return <Loading />;
