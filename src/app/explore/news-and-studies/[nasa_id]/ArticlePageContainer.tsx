@@ -3,7 +3,7 @@
 import { PlanetaryDataArticleBody } from '@/app/types/planetaryData';
 
 import Image from 'next/image';
-import React from 'react';
+import React, { memo } from 'react';
 import ReactPlayer from 'react-player';
 import Link from 'next/link';
 
@@ -23,6 +23,7 @@ import { planetarySearch } from '@/app/utils/API/planetarySearch';
 import { ActionTypes } from '@/app/types/actionTypes';
 import { generateRelatedItems } from '@/app/utils/lists/generateRelated';
 import { useCustomScroll } from '@/app/utils/hooks/useCustomScroll';
+import RelatedArticles from './RelatedArticles';
 
 interface ArticlePageContainerData {
   articleData: PlanetaryDataArticleBody | undefined;
@@ -36,13 +37,10 @@ interface ArticlePageContainerData {
 const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerData) => {
   const { title, description, description_508, keywords, photographer, secondary_creator } = articleData!;
 
-  const scrollContainerRef = React.useRef<HTMLDivElement | null>(null);
   const currentPath = usePathname();
 
-  const [handleMouseDown, handleMouseMove, handleMouseUp] = useCustomScroll(scrollContainerRef);
-
   const {
-    state: { relatedItems, fullQuery },
+    state: { fullQuery },
     dispatch,
   } = useAppContext();
 
@@ -60,14 +58,6 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
   }, [dispatch, fullQuery]);
 
   const pathName = usePathname();
-
-  const generateLinkToNext = () => {
-    const pathArray = pathName.split('/');
-
-    const cutCurrent = pathArray.slice(0, pathArray.length - 1).join('/');
-
-    return cutCurrent;
-  };
 
   const reg = /(https?:\/\/[^\s]+)/g;
 
@@ -88,7 +78,7 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
     });
 
   return (
-    <div className='py-24 flex flex-col  gap-20 w-full z-20 '>
+    <div className='py-24 flex flex-col  gap-20 w-full  overflow-x-hidden'>
       <div className=' flex w-full justify-between items-center flex-wrap gap-8'>
         <Breadcrumbs />
       </div>
@@ -181,43 +171,10 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
           </div>
         </div>
 
-        <div className='mt-40 grid items-start grid-cols-1 gap-8'>
-          <h3 className='text-subHeading text-accent-pink font-light leading-10'>More like this</h3>
-
-          <div
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-            onMouseMove={handleMouseMove}
-            ref={scrollContainerRef}
-            className='overflow-x-scroll w-full cursor-grab active:cursor-grabbing no-scrollbar'
-          >
-            <div className='flex gap-12 flex-nowrap    snap-mandatory snap-x'>
-              {relatedItems.map((item, index) => {
-                return (
-                  <Link key={index} href={`${generateLinkToNext()}/${item.data[0].nasa_id}`}>
-                    <div className='w-72 h-[24.5rem] relative overflow-hidden shrink-0 snap-start select-none group rounded aspect-square'>
-                      <Image
-                        className='select-none pointer-events-none snap-both rounded aspect-square placeholder:text-bg-black'
-                        fill
-                        src={item.links[0].href.toString()}
-                        alt='article'
-                      />
-                      <div className='absolute bottom-0 grid grid-cols-1 place-items-end w-full translate-y-full group-hover:translate-y-0 transition-all gap-4 bg-text-white/90 py-2 px-6'>
-                        <h2 className='text-deep-green text-xl leading-6 font-normal w-full'>{item.data[0].title}</h2>
-                        <div className='w-6 h-6 grid items-center justify-center border border-deep-green rounded-full'>
-                          <ArrowIcon className={`text-base text-deep-green`} />
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+        <RelatedArticles />
       </div>
     </div>
   );
 };
 
-export default React.memo(ArticlePageContainer);
+export default memo(ArticlePageContainer);

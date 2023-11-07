@@ -14,7 +14,7 @@ const RoverPhotoGallery = () => {
   } = useAppContext();
 
   const scrollContainerRef = React.useRef<HTMLDivElement | null>(null);
-  const [handleMouseDown, handleMouseUp, handleMouseMove] = useCustomScroll(scrollContainerRef);
+  const [handleMouseDown, handleMouseMove, handleMouseUp] = useCustomScroll(scrollContainerRef);
 
   if (isLoading) {
     return <Loading />;
@@ -28,10 +28,10 @@ const RoverPhotoGallery = () => {
     return (
       <div
         onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
         ref={scrollContainerRef}
-        className=' w-full overflow-auto scroll-smooth    snap-mandatory cursor-grab active:cursor-grabbing no-scrollbar'
+        className=' w-full  overflow-auto scroll-smooth  overscroll-contain  snap-proximity snap-x cursor-grab active:cursor-grabbing no-scrollbar'
       >
         <div className='flex flex-nowrap  w-full  relative min-h-iframes-images-sm   gap-16'>
           {photos.map((photo) => (

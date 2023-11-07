@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { WheelEvent } from 'react';
 
 export const useCustomScroll = (elementContainer: React.MutableRefObject<HTMLDivElement | null>) => {
   const [isDragging, setIsDragging] = React.useState<boolean>(false);
   const [startX, setStartX] = React.useState<number | null>(null);
   const [scrollLeft, setScrollLeft] = React.useState<number>(0);
+
   //
   const handleMouseDown = React.useCallback(
     (e: React.MouseEvent) => {
@@ -16,7 +17,11 @@ export const useCustomScroll = (elementContainer: React.MutableRefObject<HTMLDiv
     [elementContainer]
   );
   //
-  const handleMouseUp = React.useCallback(() => setIsDragging(false), []);
+  const handleMouseUp = React.useCallback(() => {
+    if (isDragging) {
+      setIsDragging(false);
+    }
+  }, [isDragging]);
   //
   const handleMouseMove = React.useCallback(
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -33,20 +38,32 @@ export const useCustomScroll = (elementContainer: React.MutableRefObject<HTMLDiv
 
     [elementContainer, isDragging, scrollLeft, startX]
   );
+
+  const handleMouseWheel = React.useCallback(
+    (e: WheelEvent) => {
+      // e.preventDefault();
+      if (elementContainer && elementContainer.current) {
+        elementContainer.current.scrollLeft = e.deltaY * 7;
+      }
+    },
+    [elementContainer]
+  );
   //
   React.useEffect(() => {
     const containerVar = elementContainer.current;
 
-    if (elementContainer) {
-      containerVar?.addEventListener('mousemove', handleMouseMove as any);
-      containerVar?.addEventListener('mouseup', handleMouseUp);
+    if (containerVar) {
+      containerVar.addEventListener('mousemove', handleMouseMove as any);
+      containerVar.addEventListener('mouseup', handleMouseUp);
+      // elementContainer.current?.addEventListener('wheel', handleMouseWheel as any);
     }
 
     return () => {
-      containerVar?.removeEventListener('mousemove', handleMouseMove as any);
-      containerVar?.removeEventListener('mouseup', handleMouseUp);
+      containerVar && containerVar.removeEventListener('mousemove', handleMouseMove as any);
+      containerVar && containerVar.removeEventListener('mouseup', handleMouseUp);
+      // elementContainer.current?.removeEventListener('wheel', handleMouseWheel as any);
     };
-  }, [elementContainer, handleMouseMove, handleMouseUp]);
+  }, [elementContainer, handleMouseMove, handleMouseWheel, handleMouseUp]);
 
-  return [handleMouseDown, handleMouseUp, handleMouseMove];
+  return [handleMouseDown, handleMouseMove, handleMouseUp];
 };

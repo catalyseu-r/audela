@@ -31,7 +31,7 @@ export default async function ArticleDetail({ params }: { params: { nasa_id: str
 
         <Navbar />
 
-        <div className='lg:max-w-container-lg md:w-5/6 w-full md:px-0 px-4 z-20 mx-auto '>
+        <div className='lg:max-w-container-lg md:w-5/6 w-full md:px-0 px-4  mx-auto '>
           {singleArticleData && (
             <DynamicContainer
               mainImage={{
