@@ -30,26 +30,25 @@ const RoverPhotoGallery = () => {
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
         ref={scrollContainerRef}
-        className=' w-full  overflow-auto scroll-smooth  overscroll-contain  snap-proximity snap-x cursor-grab active:cursor-grabbing no-scrollbar'
+        className=' w-full flex flex-nowrap gap-16  overflow-auto scroll-smooth  overscroll-contain scroll-px-2 snap-proximity snap-x cursor-grab active:cursor-grabbing no-scrollbar'
       >
-        <div className='flex flex-nowrap  w-full  relative min-h-iframes-images-sm   gap-16'>
-          {photos.map((photo) => (
-            <div
-              key={photo.id}
-              className='w-[28rem] h-[20rem] relative rounded snap-always snap-center aspect-video pointer-events-none select-none'
-            >
-              <Image
-                className='rounded object-cover opacity-0 transition-opacity  aspect-video '
-                loading='lazy'
-                src={photo.img_src}
-                fill
-                alt='Photo form Mars rover'
-                onLoadingComplete={(image) => image.classList.remove('opacity-0')}
-              />
-            </div>
-          ))}
-        </div>
+        {photos.map((photo) => (
+          <div
+            key={photo.id}
+            className='w-[28rem] h-[20rem] relative rounded snap-always snap-center aspect-video pointer-events-none select-none'
+          >
+            <Image
+              className='rounded object-cover opacity-0 transition-opacity  aspect-video '
+              loading='lazy'
+              src={photo.img_src}
+              fill
+              alt='Photo form Mars rover'
+              onLoadingComplete={(image) => image.classList.remove('opacity-0')}
+            />
+          </div>
+        ))}
       </div>
     );
   }

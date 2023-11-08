@@ -8,7 +8,7 @@ import ReactPlayer from 'react-player';
 import Link from 'next/link';
 
 import { useAppContext } from '@/app/contexts/store';
-import { PiArrowBendUpRightBold as ArrowIcon } from 'react-icons/pi';
+
 import { usePathname } from 'next/navigation';
 import { Chakra_Petch } from 'next/font/google';
 import { HiOutlineHashtag as HashTag } from 'react-icons/hi';
@@ -22,7 +22,7 @@ import placeholder from '../../../img/placeholder-article.jpg';
 import { planetarySearch } from '@/app/utils/API/planetarySearch';
 import { ActionTypes } from '@/app/types/actionTypes';
 import { generateRelatedItems } from '@/app/utils/lists/generateRelated';
-import { useCustomScroll } from '@/app/utils/hooks/useCustomScroll';
+
 import RelatedArticles from './RelatedArticles';
 
 interface ArticlePageContainerData {
@@ -56,8 +56,6 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
 
     fetchRelatedContent();
   }, [dispatch, fullQuery]);
-
-  const pathName = usePathname();
 
   const reg = /(https?:\/\/[^\s]+)/g;
 
