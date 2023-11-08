@@ -35,7 +35,6 @@ const GenerateSolPicker = () => {
         id='sol'
         max={currentMarsRover?.max_sol}
         onChange={updateCurrentSol}
-        defaultValue={marsFilterState.sol}
         value={marsFilterState.sol}
       />
     </div>

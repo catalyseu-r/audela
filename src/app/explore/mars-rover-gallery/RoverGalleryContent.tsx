@@ -20,6 +20,7 @@ import { ActionTypes } from '@/app/types/actionTypes';
 import { AppState } from '@/app/types/appState';
 
 import RoverPhotoGallery from './RoverPhotoGallery';
+import { useCreateQueryString } from '@/app/utils/hooks/useCreateQueryString';
 
 export interface RoverGalleryContentType {
   data: MarsRoverProfiles;
@@ -31,9 +32,12 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
     dispatch,
   } = useAppContext();
 
+  const { updatePath } = useCreateQueryString();
+
   React.useEffect(() => {
     try {
       dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: true });
+
       const getSelectedRoverImages = async () => {
         if (currentMarsRover) {
           const getImages: AppState['currentGallery'] = await getMarsRoverImages({
@@ -44,6 +48,12 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
 
           dispatch({ type: ActionTypes.SET_CURRENT_GALLERY, payload: getImages });
           dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: false });
+
+          updatePath({
+            sol: marsFilterState.sol.toString(),
+            camera: marsFilterState.camera,
+            rover: currentMarsRover.name,
+          });
         }
       };
 
@@ -52,11 +62,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
       console.error(error);
       dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: false });
     }
-  }, [currentMarsRover, marsFilterState, dispatch]);
-
-  React.useEffect(() => {
-    data && dispatch({ type: ActionTypes.SET_CURRENT_MARS_ROVER, payload: data.rovers[0] });
-  }, [data, dispatch]);
+  }, [currentMarsRover, marsFilterState, dispatch, updatePath]);
 
   return (
     <div className='grid lg:gap-20 md:gap-16 gap-10 pb-40 lg:mt-24 mt-20 '>

@@ -15,7 +15,7 @@ const GenerateRoverPicker = ({ data: { rovers } }: RoverGalleryContentType) => {
     const findFromStaticData = rovers.find((rover) => rover.id === numValue);
 
     findFromStaticData && dispatch({ type: ActionTypes.SET_CURRENT_MARS_ROVER, payload: findFromStaticData });
-    dispatch({ type: ActionTypes.RESET_MARS_ROVER_FILTER_STATE });
+    // dispatch({ type: ActionTypes.RESET_MARS_ROVER_FILTER_STATE });
   };
 
   if (!rovers) {
