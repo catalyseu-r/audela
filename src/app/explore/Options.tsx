@@ -3,12 +3,7 @@ import React from 'react';
 
 import { Chakra_Petch } from 'next/font/google';
 const chakraP = Chakra_Petch({ weight: '400', subsets: ['latin'] });
-import {
-  BiPlanet as PlanetIcon,
-  BiImage as ImageIcon,
-  BiLock as LockIcon,
-  // BiCloudDrizzle as CloudIcon,
-} from 'react-icons/bi';
+import { BiPlanet as PlanetIcon, BiImage as ImageIcon, BiLock as LockIcon } from 'react-icons/bi';
 
 const Options = () => {
   const featureOptions = [

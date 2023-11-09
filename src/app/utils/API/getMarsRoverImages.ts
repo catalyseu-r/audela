@@ -29,7 +29,7 @@ export const getMarsRoverImages = async (params: MarsRoverSearchParams) => {
       ${params.camera ? `&camera=${params.camera}` : ``}
       ${params.date ? `&earth_date=${params.date}` : ``}`,
 
-      { keepalive: true, cache: 'default' }
+      { keepalive: true, cache: 'force-cache' }
     );
     if (callApi.ok && callApi.status !== 400) {
       const parseData = await callApi.json();

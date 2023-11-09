@@ -1,7 +1,11 @@
+'use client';
+
 import { useAppContext } from '@/app/contexts/store';
 import { RoverGalleryContentType } from './RoverGalleryContent';
 import { ActionTypes } from '@/app/types/actionTypes';
 import { GiTrackedRobot as RoverIcon } from 'react-icons/gi';
+import React from 'react';
+import { MarsRoverProfile } from '@/app/types/marsRoverTypes';
 
 const GenerateRoverPicker = ({ data: { rovers } }: RoverGalleryContentType) => {
   const {
@@ -9,16 +13,30 @@ const GenerateRoverPicker = ({ data: { rovers } }: RoverGalleryContentType) => {
     dispatch,
   } = useAppContext();
 
-  const updateCurrentRover = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const numValue = parseInt(event.target.value);
+  const resetFiltersAfterRoverChange = (rover: MarsRoverProfile) => {
+    dispatch({ type: ActionTypes.RESET_MARS_ROVER_FILTER_STATE });
+    dispatch({
+      type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
+      payload: { key: 'sol', value: (rover.max_sol - 25).toString() },
+    });
 
-    const findFromStaticData = rovers.find((rover) => rover.id === numValue);
-
-    findFromStaticData && dispatch({ type: ActionTypes.SET_CURRENT_MARS_ROVER, payload: findFromStaticData });
-    // dispatch({ type: ActionTypes.RESET_MARS_ROVER_FILTER_STATE });
+    dispatch({
+      type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
+      payload: { key: 'camera', value: rover.cameras[0].name },
+    });
   };
 
-  if (!rovers) {
+  const updateCurrentRover = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const numValue = parseInt(event.target.value);
+    const findFromStaticData = rovers.find((rover) => rover.id === numValue);
+
+    if (findFromStaticData) {
+      dispatch({ type: ActionTypes.SET_CURRENT_MARS_ROVER, payload: findFromStaticData });
+      resetFiltersAfterRoverChange(findFromStaticData);
+    }
+  };
+
+  if (!currentMarsRover) {
     return null;
   }
 
@@ -35,6 +53,7 @@ const GenerateRoverPicker = ({ data: { rovers } }: RoverGalleryContentType) => {
         className='py-2 px-4 rounded bg-bg-black  border-r-[16px] border-transparent outline outline-1 outline-deep-green/50 focus:outline-interactive-green transition-all lg:text-base text-sm text-text-white  !font-sans cursor-pointer max-w-[17ch] '
         onChange={updateCurrentRover}
         value={currentMarsRover?.id}
+        defaultValue={rovers[0].id}
       >
         {rovers.map((item) => {
           return (
