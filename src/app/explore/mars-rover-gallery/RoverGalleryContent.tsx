@@ -22,6 +22,7 @@ import { AppState } from '@/app/types/appState';
 import RoverPhotoGallery from './RoverPhotoGallery';
 import { useCreateQueryString } from '@/app/utils/hooks/useCreateQueryString';
 import Loading from '../loading';
+import { setLocalStorageItem } from '@/app/utils/localStorage/handleLocalStorage';
 
 export interface RoverGalleryContentType {
   data: MarsRoverProfiles;
@@ -39,6 +40,12 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
 
   const { updatePath } = useCreateQueryString();
 
+  console.log('LOCATION PARAMS', window.location.search);
+
+  const roverFilterObject = React.useMemo(() => {
+    return { ...marsFilterState, rover: currentMarsRover ? currentMarsRover.name : '' };
+  }, [currentMarsRover, marsFilterState]);
+
   const getSelectedRoverImages = React.useCallback(async () => {
     if (currentMarsRover) {
       const getImages: AppState['currentGallery'] = await getMarsRoverImages({
@@ -55,10 +62,12 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
           rover: currentMarsRover.name,
         });
 
+        setLocalStorageItem('@au-dela_filters', roverFilterObject);
+
         dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: false });
       }
     }
-  }, [currentMarsRover, marsFilterState, dispatch, updatePath]);
+  }, [currentMarsRover, marsFilterState, dispatch, updatePath, roverFilterObject]);
 
   React.useEffect(() => {
     try {
