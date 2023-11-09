@@ -1,18 +1,11 @@
 import Link from 'next/link';
 import React from 'react';
-
 import { Chakra_Petch } from 'next/font/google';
+import { featureOptions } from '../staticData/featureOptions';
+
 const chakraP = Chakra_Petch({ weight: '400', subsets: ['latin'] });
-import { BiPlanet as PlanetIcon, BiImage as ImageIcon, BiLock as LockIcon } from 'react-icons/bi';
 
 const Options = () => {
-  const featureOptions = [
-    { title: 'Image of the day', icon: ImageIcon },
-    { title: 'News and studies', icon: PlanetIcon },
-    { title: 'Weather on Mars', icon: LockIcon },
-    { title: 'Mars rover gallery', icon: LockIcon },
-  ];
-
   const convertToLink = (input: string) => input.split(' ').join('-').toLowerCase();
 
   return (
