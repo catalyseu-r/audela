@@ -11,9 +11,8 @@ const GenerateCameras = () => {
     dispatch,
   } = useAppContext();
 
-  const handleCameraPick = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleCameraPick = (event: React.ChangeEvent<HTMLSelectElement>) =>
     dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key: 'camera', value: event.target.value } });
-  };
 
   return (
     <div className='flex flex-col gap-4 items-start transition-all '>

@@ -85,7 +85,7 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
       return {
         ...state,
         marsFilterState: {
-          sol: '200',
+          sol: '',
           earth_date: '',
           camera: '',
           recency: '',
@@ -145,7 +145,7 @@ export const GlobalContextProvider = ({ children }: any) => {
       contact: false,
     },
     marsFilterState: {
-      sol: '200',
+      sol: '',
       earth_date: '',
       camera: '',
       recency: '',

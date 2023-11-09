@@ -34,12 +34,30 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
 
   const { updatePath } = useCreateQueryString();
 
+  console.log('MARS FILTER STATE', marsFilterState, currentMarsRover);
+
+  // React.useEffect(() => {
+  //   const initialRover = data.rovers.find((rover) => rover.status === 'active');
+  //   if (!currentMarsRover) {
+  //     dispatch({ type: ActionTypes.SET_CURRENT_MARS_ROVER, payload: initialRover! });
+  //     dispatch({
+  //       type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
+  //       payload: { key: 'sol', value: initialRover?.max_sol.toString() ?? '' },
+  //     });
+  //     dispatch({
+  //       type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
+  //       payload: { key: 'camera', value: initialRover?.cameras[0].name ?? '' },
+  //     });
+  //   }
+  // }, [data.rovers, dispatch, currentMarsRover]);
+
   React.useEffect(() => {
     try {
-      dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: true });
+      // dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: true });
 
       const getSelectedRoverImages = async () => {
         if (currentMarsRover) {
+          console.log('PUCAN TRAZENJE');
           const getImages: AppState['currentGallery'] = await getMarsRoverImages({
             rover: currentMarsRover?.name,
             sol: marsFilterState.sol.toString(),
@@ -68,7 +86,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
     <div className='grid lg:gap-20 md:gap-16 gap-10 pb-40 lg:mt-24 mt-20 '>
       <div className='flex md:justify-start justify-center gap-14 lg:flex-nowrap flex-wrap'>
         <div className='grid gap-10 '>
-          <GenerateRoverIframe data={currentMarsRover} />
+          <GenerateRoverIframe />
           <div className='w-full flex gap-4 items-center'>
             <div className='flex items-center gap-2'>
               <RadioIcon
