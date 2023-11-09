@@ -39,30 +39,6 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
 
   const { updatePath } = useCreateQueryString();
 
-  React.useEffect(() => {
-    if (data && data.rovers) {
-      const initialRover = data.rovers.find((rover) => rover.status === 'active');
-
-      const setDefaultRover = () => {
-        if (initialRover) {
-          dispatch({ type: ActionTypes.SET_CURRENT_MARS_ROVER, payload: initialRover! });
-          dispatch({
-            type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
-            payload: { key: 'sol', value: (initialRover.max_sol - 25).toString() ?? '' },
-          });
-          dispatch({
-            type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
-            payload: { key: 'camera', value: initialRover.cameras[0].name ?? '' },
-          });
-        }
-      };
-
-      if (!currentMarsRover) {
-        setDefaultRover();
-      }
-    }
-  }, [data, dispatch, currentMarsRover]);
-
   const getSelectedRoverImages = React.useCallback(async () => {
     if (currentMarsRover) {
       const getImages: AppState['currentGallery'] = await getMarsRoverImages({
