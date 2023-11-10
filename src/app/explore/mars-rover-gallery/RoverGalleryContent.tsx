@@ -39,10 +39,11 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
 
   const { updatePath } = useCreateQueryString();
   const location = React.useMemo(() => (window !== undefined ? window.location.search : undefined), []);
-
   const initRover = React.useMemo(() => data.rovers.find((rover) => rover.status === 'active'), [data]);
-
-  console.log('sol, camera, rover', sol, camera, rover);
+  const findFromStaticData = React.useCallback(
+    (roverName: string) => data.rovers.find((item) => item.name === roverName),
+    [data.rovers]
+  );
 
   React.useEffect(() => {
     const getSelectedRoverImages = async () => {
@@ -117,14 +118,28 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
         Object.entries(params).map((entry) => {
           const [key, value] = entry;
 
-          dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
+          if (key === 'rover') {
+            dispatch({
+              type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
+              payload: { key: key, value: findFromStaticData(value) ?? '' },
+            });
+          } else {
+            dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
+          }
         });
       } else if (!checkLocalStorage && params && !rover) {
         console.log('DRUGI UVJET');
 
         Object.entries(params).map((entry) => {
           const [key, value] = entry;
-          dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
+          if (key === 'rover') {
+            dispatch({
+              type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
+              payload: { key: key, value: findFromStaticData(value) ?? '' },
+            });
+          } else {
+            dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
+          }
         });
       } else if (checkLocalStorage && !params && !rover) {
         console.log('TRECI UVJET');
@@ -133,8 +148,10 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
           const [key, value] = entry;
 
           if (key === 'rover') {
-            const findFromStaticData = data.rovers.find((rover) => rover.name === value);
-            dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, findFromStaticData } });
+            dispatch({
+              type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
+              payload: { key: key, value: findFromStaticData(value) ?? '' },
+            });
           } else {
             dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
           }
@@ -147,7 +164,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
     } finally {
       dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: false });
     }
-  }, [getQueryParams, dispatch, initRover, rover]);
+  }, [getQueryParams, dispatch, initRover, rover, findFromStaticData]);
 
   return (
     <div className='grid lg:gap-20 md:gap-16 gap-10 pb-40 lg:mt-24 mt-20'>
