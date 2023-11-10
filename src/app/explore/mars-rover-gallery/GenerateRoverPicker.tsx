@@ -15,7 +15,7 @@ const GenerateRoverPicker = ({ data: { rovers } }: RoverGalleryContentType) => {
 
   const initRover = React.useMemo(() => rovers.find((rover) => rover.status === 'active'), [rovers]);
 
-  const setDefaultRover = () => {
+  const setDefaultRover = React.useCallback(() => {
     if (initRover) {
       dispatch({ type: ActionTypes.SET_CURRENT_MARS_ROVER, payload: initRover });
       dispatch({
@@ -27,7 +27,7 @@ const GenerateRoverPicker = ({ data: { rovers } }: RoverGalleryContentType) => {
         payload: { key: 'camera', value: initRover.cameras[0].name ?? '' },
       });
     }
-  };
+  }, [initRover, dispatch]);
 
   const resetFiltersAfterRoverChange = (rover: MarsRoverProfile) => {
     dispatch({ type: ActionTypes.RESET_MARS_ROVER_FILTER_STATE });
@@ -52,9 +52,11 @@ const GenerateRoverPicker = ({ data: { rovers } }: RoverGalleryContentType) => {
     }
   };
 
-  if (!currentMarsRover) {
-    setDefaultRover();
-  }
+  React.useEffect(() => {
+    if (!currentMarsRover) {
+      setDefaultRover();
+    }
+  }, [setDefaultRover, currentMarsRover]);
 
   return (
     <div className='flex flex-col gap-4 items-start transition-all'>

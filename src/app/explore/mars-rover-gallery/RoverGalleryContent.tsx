@@ -1,7 +1,7 @@
 'use client';
 
 import { NASA_ROVERS_3D } from '@/app/staticData/nasaRovers3D';
-import { MarsRoverProfiles } from '@/app/types/marsRoverTypes';
+import { MarsRoverProfile, MarsRoverProfiles } from '@/app/types/marsRoverTypes';
 import React from 'react';
 
 import { IoRadioOutline as RadioIcon, IoCalendarClearOutline as CalendarIcon } from 'react-icons/io5';
@@ -40,47 +40,65 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
 
   const { updatePath } = useCreateQueryString();
 
-  console.log('LOCATION PARAMS', window.location.search);
+  // console.log('LOCATION PARAMS', window.location.search);
 
   const roverFilterObject = React.useMemo(() => {
     return { ...marsFilterState, rover: currentMarsRover ? currentMarsRover.name : '' };
   }, [currentMarsRover, marsFilterState]);
 
-  const getSelectedRoverImages = React.useCallback(async () => {
-    if (currentMarsRover) {
-      const getImages: AppState['currentGallery'] = await getMarsRoverImages({
-        rover: currentMarsRover?.name,
-        sol: marsFilterState.sol.toString(),
-        camera: marsFilterState.camera,
-      });
-
-      if (getImages) {
-        dispatch({ type: ActionTypes.SET_CURRENT_GALLERY, payload: getImages });
-        updatePath({
-          sol: marsFilterState.sol.toString(),
-          camera: marsFilterState.camera,
-          rover: currentMarsRover.name,
-        });
-
-        setLocalStorageItem('@au-dela_filters', roverFilterObject);
-
-        dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: false });
-      }
-    }
-  }, [currentMarsRover, marsFilterState, dispatch, updatePath, roverFilterObject]);
-
   React.useEffect(() => {
-    try {
+    const getSelectedRoverImages = async () => {
       dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: true });
 
-      getSelectedRoverImages();
-    } catch (error) {
-      console.error(error);
+      try {
+        const getImages: AppState['currentGallery'] | undefined = await getMarsRoverImages({
+          rover: roverFilterObject.rover as MarsRoverProfile['name'],
+          sol: roverFilterObject.sol.toString(),
+          camera: roverFilterObject.camera,
+        });
+
+        if (getImages) {
+          dispatch({ type: ActionTypes.SET_CURRENT_GALLERY, payload: getImages });
+
+          dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: false });
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLocalStorageItem('@au-dela_filters', roverFilterObject);
+        updatePath({
+          sol: roverFilterObject.sol.toString(),
+          camera: roverFilterObject.camera,
+          rover: roverFilterObject.rover,
+        });
+      }
+    };
+
+    roverFilterObject.rover && getSelectedRoverImages();
+  }, [dispatch, roverFilterObject, updatePath]);
+
+  const getQueryParams = () => {
+    if (typeof window !== 'undefined') {
+      const location = window.location.search;
+
+      const queryStr = location.substring(1);
+
+      const splitQuery = queryStr.split('&');
+
+      const readParams = splitQuery.reduce<Record<string, string>>((acc, curr) => {
+        const [key, value] = curr.split('=');
+        acc[key] = decodeURIComponent(value);
+        return acc;
+      }, {});
+
+      return readParams;
     }
-  }, [getSelectedRoverImages, dispatch]);
+  };
+
+  // getQueryParams();
 
   return (
-    <div className='grid lg:gap-20 md:gap-16 gap-10 pb-40 lg:mt-24 mt-20 animate-enter'>
+    <div key={currentMarsRover?.name} className='grid lg:gap-20 md:gap-16 gap-10 pb-40 lg:mt-24 mt-20'>
       {isLoading ? (
         <Loading />
       ) : (
