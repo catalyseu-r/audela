@@ -27,10 +27,11 @@ export interface AppState {
   marsFilterState: {
     sol: string;
     earth_date: string;
-    camera: string;
+    camera: string | null;
     recency: string;
+    rover: MarsRoverProfile | null;
   };
-  currentMarsRover: MarsRoverProfile | null;
+
   currentGallery: {
     photos: MarsRoverPhotos[];
 

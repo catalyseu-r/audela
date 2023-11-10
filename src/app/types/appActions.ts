@@ -33,7 +33,7 @@ export type AppAction =
   | {
       type: ActionTypes.SET_MARS_ROVER_FILTER_STATE;
       payload: {
-        [key: string]: string;
+        [key: string]: string | MarsRoverProfile;
       };
     }
   | {

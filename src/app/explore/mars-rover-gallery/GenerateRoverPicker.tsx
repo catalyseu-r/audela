@@ -9,28 +9,13 @@ import { MarsRoverProfile } from '@/app/types/marsRoverTypes';
 
 const GenerateRoverPicker = ({ data: { rovers } }: RoverGalleryContentType) => {
   const {
-    state: { currentMarsRover },
+    state: {
+      marsFilterState: { rover },
+    },
     dispatch,
   } = useAppContext();
 
-  const initRover = React.useMemo(() => rovers.find((rover) => rover.status === 'active'), [rovers]);
-
-  const setDefaultRover = React.useCallback(() => {
-    if (initRover) {
-      dispatch({ type: ActionTypes.SET_CURRENT_MARS_ROVER, payload: initRover });
-      dispatch({
-        type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
-        payload: { key: 'sol', value: (initRover.max_sol - 25).toString() ?? '' },
-      });
-      dispatch({
-        type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
-        payload: { key: 'camera', value: initRover.cameras[0].name ?? '' },
-      });
-    }
-  }, [initRover, dispatch]);
-
   const resetFiltersAfterRoverChange = (rover: MarsRoverProfile) => {
-    dispatch({ type: ActionTypes.RESET_MARS_ROVER_FILTER_STATE });
     dispatch({
       type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
       payload: { key: 'sol', value: (rover.max_sol - 25).toString() },
@@ -47,16 +32,14 @@ const GenerateRoverPicker = ({ data: { rovers } }: RoverGalleryContentType) => {
     const findFromStaticData = rovers.find((rover) => rover.id === numValue);
 
     if (findFromStaticData) {
-      dispatch({ type: ActionTypes.SET_CURRENT_MARS_ROVER, payload: findFromStaticData });
+      dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key: 'rover', value: findFromStaticData } });
       resetFiltersAfterRoverChange(findFromStaticData);
     }
   };
 
-  React.useEffect(() => {
-    if (!currentMarsRover) {
-      setDefaultRover();
-    }
-  }, [setDefaultRover, currentMarsRover]);
+  if (!rover || !rover.name) {
+    return null;
+  }
 
   return (
     <div className='flex flex-col gap-4 items-start transition-all'>
@@ -70,7 +53,7 @@ const GenerateRoverPicker = ({ data: { rovers } }: RoverGalleryContentType) => {
       <select
         className='py-2 px-4 rounded bg-bg-black  border-r-[16px] border-transparent outline outline-1 outline-deep-green/50 focus:outline-interactive-green transition-all lg:text-base text-sm text-text-white  !font-sans cursor-pointer max-w-[17ch] '
         onChange={updateCurrentRover}
-        value={currentMarsRover?.id}
+        value={rover?.id}
       >
         {rovers.map((item) => {
           return (

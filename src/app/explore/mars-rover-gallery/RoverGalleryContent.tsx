@@ -22,7 +22,7 @@ import { AppState } from '@/app/types/appState';
 import RoverPhotoGallery from './RoverPhotoGallery';
 import { useCreateQueryString } from '@/app/utils/hooks/useCreateQueryString';
 import Loading from '../loading';
-import { setLocalStorageItem } from '@/app/utils/localStorage/handleLocalStorage';
+import { getLocalStorageItem, setLocalStorageItem } from '@/app/utils/localStorage/handleLocalStorage';
 
 export interface RoverGalleryContentType {
   data: MarsRoverProfiles;
@@ -31,20 +31,18 @@ export interface RoverGalleryContentType {
 const RoverGalleryContent = (data: MarsRoverProfiles) => {
   const {
     state: {
-      currentMarsRover,
-      marsFilterState,
+      marsFilterState: { sol, camera, rover },
       currentGallery: { isLoading },
     },
     dispatch,
   } = useAppContext();
 
   const { updatePath } = useCreateQueryString();
+  const location = React.useMemo(() => (window !== undefined ? window.location.search : undefined), []);
 
-  // console.log('LOCATION PARAMS', window.location.search);
+  const initRover = React.useMemo(() => data.rovers.find((rover) => rover.status === 'active'), [data]);
 
-  const roverFilterObject = React.useMemo(() => {
-    return { ...marsFilterState, rover: currentMarsRover ? currentMarsRover.name : '' };
-  }, [currentMarsRover, marsFilterState]);
+  console.log('sol, camera, rover', sol, camera, rover);
 
   React.useEffect(() => {
     const getSelectedRoverImages = async () => {
@@ -52,9 +50,9 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
 
       try {
         const getImages: AppState['currentGallery'] | undefined = await getMarsRoverImages({
-          rover: roverFilterObject.rover as MarsRoverProfile['name'],
-          sol: roverFilterObject.sol.toString(),
-          camera: roverFilterObject.camera,
+          rover: rover!.name,
+          sol: sol,
+          camera: camera!,
         });
 
         if (getImages) {
@@ -65,22 +63,20 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
       } catch (error) {
         console.log(error);
       } finally {
-        setLocalStorageItem('@au-dela_filters', roverFilterObject);
+        setLocalStorageItem('@au-dela_filters', { sol: sol, camera: camera, rover: rover });
         updatePath({
-          sol: roverFilterObject.sol.toString(),
-          camera: roverFilterObject.camera,
-          rover: roverFilterObject.rover,
+          sol: sol,
+          camera: camera!,
+          rover: rover!.name,
         });
       }
     };
 
-    roverFilterObject.rover && getSelectedRoverImages();
-  }, [dispatch, roverFilterObject, updatePath]);
+    rover?.name && getSelectedRoverImages();
+  }, [dispatch, sol, camera, rover, updatePath]);
 
-  const getQueryParams = () => {
-    if (typeof window !== 'undefined') {
-      const location = window.location.search;
-
+  const getQueryParams = React.useCallback(() => {
+    if (location) {
       const queryStr = location.substring(1);
 
       const splitQuery = queryStr.split('&');
@@ -93,12 +89,68 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
 
       return readParams;
     }
-  };
+  }, [location]);
 
-  // getQueryParams();
+  React.useEffect(() => {
+    const checkLocalStorage: Record<string, string> = getLocalStorageItem('@au-dela_filters');
+
+    const params = getQueryParams();
+
+    const setDefaultRover = () => {
+      if (initRover) {
+        dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key: 'rover', value: initRover } });
+        dispatch({
+          type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
+          payload: { key: 'sol', value: (initRover.max_sol - 25).toString() ?? '' },
+        });
+        dispatch({
+          type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
+          payload: { key: 'camera', value: initRover.cameras[0].name ?? '' },
+        });
+      }
+    };
+
+    try {
+      dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: true });
+      if (checkLocalStorage && params && !rover) {
+        console.log('PRVI UVJET');
+        Object.entries(params).map((entry) => {
+          const [key, value] = entry;
+
+          dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
+        });
+      } else if (!checkLocalStorage && params && !rover) {
+        console.log('DRUGI UVJET');
+
+        Object.entries(params).map((entry) => {
+          const [key, value] = entry;
+          dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
+        });
+      } else if (checkLocalStorage && !params && !rover) {
+        console.log('TRECI UVJET');
+
+        Object.entries(checkLocalStorage).map((entry) => {
+          const [key, value] = entry;
+
+          if (key === 'rover') {
+            const findFromStaticData = data.rovers.find((rover) => rover.name === value);
+            dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, findFromStaticData } });
+          } else {
+            dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
+          }
+        });
+      } else if (!checkLocalStorage && !params && !rover) {
+        setDefaultRover();
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: false });
+    }
+  }, [getQueryParams, dispatch, initRover, rover]);
 
   return (
-    <div key={currentMarsRover?.name} className='grid lg:gap-20 md:gap-16 gap-10 pb-40 lg:mt-24 mt-20'>
+    <div className='grid lg:gap-20 md:gap-16 gap-10 pb-40 lg:mt-24 mt-20'>
       {isLoading ? (
         <Loading />
       ) : (
@@ -109,15 +161,13 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
               <div className='flex items-center gap-2'>
                 <RadioIcon
                   className={`${
-                    currentMarsRover?.status === 'active'
-                      ? 'text-deep-green animate-animate-ping-custom'
-                      : 'text-error-red'
+                    rover?.status === 'active' ? 'text-deep-green animate-animate-ping-custom' : 'text-error-red'
                   } text-base`}
                 />
                 <p className='flex items-center gap-1 text-base leading-6'>
                   <span>Status: </span>
-                  <span className={`${currentMarsRover?.status === 'active' ? 'text-deep-green' : 'text-error-red'} `}>
-                    {currentMarsRover && currentMarsRover.status}
+                  <span className={`${rover?.status === 'active' ? 'text-deep-green' : 'text-error-red'} `}>
+                    {rover && rover.status}
                   </span>
                 </p>
               </div>
@@ -126,7 +176,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
                 <p className='flex items-center gap-1 text-base leading-6'>
                   <span className='leading-6 text-base'>Launched:</span>
                   <span className='font-light italic leading-6 text-base'>
-                    {currentMarsRover && dayjs(currentMarsRover.launch_date).format('DD/MM/YYYY')}
+                    {rover && dayjs(rover.launch_date).format('DD/MM/YYYY')}
                   </span>
                 </p>
               </div>
@@ -143,13 +193,9 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
               <label htmlFor='rover-bio' className='font-normal text-xl leading-10 text-deep-green'>
                 Bio
               </label>
-              <div
-                key={currentMarsRover?.id}
-                id='rover-bio'
-                className='flex gap-[2px] flex-wrap items-center perspective-3d px-4'
-              >
-                {currentMarsRover &&
-                  findNasaSource(currentMarsRover!.id, NASA_ROVERS_3D)
+              <div key={rover?.id} id='rover-bio' className='flex gap-[2px] flex-wrap items-center perspective-3d px-4'>
+                {rover &&
+                  findNasaSource(rover!.id, NASA_ROVERS_3D)
                     ?.bio.split(/(\s+)/)
                     .map((txt, index) => {
                       return (

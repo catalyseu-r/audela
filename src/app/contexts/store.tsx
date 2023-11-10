@@ -77,7 +77,7 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
     case ActionTypes.SET_MARS_ROVER_FILTER_STATE: {
       return {
         ...state,
-        marsFilterState: { ...state.marsFilterState, [action.payload.key]: action.payload.value },
+        marsFilterState: { ...state.marsFilterState, [action.payload.key.toString()]: action.payload.value },
       };
     }
 
@@ -87,15 +87,16 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
         marsFilterState: {
           sol: '',
           earth_date: '',
-          camera: '',
+          camera: null,
           recency: '',
+          rover: null,
         },
       };
     }
 
-    case ActionTypes.SET_CURRENT_MARS_ROVER: {
-      return { ...state, currentMarsRover: action.payload };
-    }
+    // case ActionTypes.SET_CURRENT_MARS_ROVER: {
+    //   return { ...state, currentMarsRover: action.payload };
+    // }
 
     case ActionTypes.SET_CURRENT_GALLERY: {
       return {
@@ -147,10 +148,11 @@ export const GlobalContextProvider = ({ children }: any) => {
     marsFilterState: {
       sol: '',
       earth_date: '',
-      camera: '',
+      camera: null,
       recency: '',
+      rover: null,
     },
-    currentMarsRover: null,
+
     currentGallery: {
       photos: [],
       isLoading: false,

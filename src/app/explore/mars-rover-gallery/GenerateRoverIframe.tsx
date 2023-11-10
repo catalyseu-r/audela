@@ -10,10 +10,12 @@ const GenerateRoverIframe = () => {
   const containerRef = React.useRef<HTMLDivElement | null>(null);
 
   const {
-    state: { currentMarsRover },
+    state: {
+      marsFilterState: { rover },
+    },
   } = useAppContext();
 
-  if (!currentMarsRover) {
+  if (!rover?.name) {
     return null;
   }
 
@@ -26,7 +28,7 @@ const GenerateRoverIframe = () => {
       className={`lg:w-[352px] w-full  aspect-square flex items-center justify-center md:shadow-custom-image-strong-shadow rounded `}
     >
       <iframe
-        src={findNasaSource(currentMarsRover.id, NASA_ROVERS_3D)?.source}
+        src={findNasaSource(rover.id, NASA_ROVERS_3D)?.source}
         className='w-full h-full object-fill rounded transition-all'
         allowFullScreen
       />

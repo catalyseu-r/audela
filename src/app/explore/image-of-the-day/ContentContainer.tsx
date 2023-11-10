@@ -43,7 +43,7 @@ const ContentContainer = () => {
     setIsLoading(true);
 
     const getStoredDateFromClient = () => {
-      const savedClientDate = getLocalStorageItem('@au-dela_date');
+      const savedClientDate = new Date(getLocalStorageItem('@au-dela_date'));
       const checkParams = searchParams.get('date');
       const getDateFromParams = new Date(String(searchParams.get('date')));
       try {

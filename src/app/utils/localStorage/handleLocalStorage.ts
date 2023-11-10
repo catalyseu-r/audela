@@ -1,7 +1,7 @@
 export const getLocalStorageItem = <T>(key: string): T | null | any => {
   try {
     const item = typeof window !== 'undefined' && typeof localStorage !== 'undefined' && localStorage.getItem(key);
-    return item ? new Date(JSON.parse(item)) : null;
+    return item ? JSON.parse(item) : null;
   } catch (error) {
     console.error('Error reading from localStorage:', error);
     return null;

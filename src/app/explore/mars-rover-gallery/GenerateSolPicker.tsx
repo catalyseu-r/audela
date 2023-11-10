@@ -4,7 +4,9 @@ import { GiSunrise as SunIcon } from 'react-icons/gi';
 
 const GenerateSolPicker = () => {
   const {
-    state: { currentMarsRover, marsFilterState },
+    state: {
+      marsFilterState: { rover, sol },
+    },
     dispatch,
   } = useAppContext();
 
@@ -13,6 +15,10 @@ const GenerateSolPicker = () => {
 
     dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key: 'sol', value: parseInput } });
   };
+
+  if (!rover) {
+    return null;
+  }
 
   return (
     <div className='flex flex-col gap-4 items-start transition-all '>
@@ -33,9 +39,9 @@ const GenerateSolPicker = () => {
         inputMode='numeric'
         name='sol'
         id='sol'
-        max={currentMarsRover?.max_sol}
+        max={rover.max_sol}
         onChange={updateCurrentSol}
-        value={marsFilterState.sol}
+        value={sol}
       />
     </div>
   );
