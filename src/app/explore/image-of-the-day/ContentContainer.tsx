@@ -43,20 +43,23 @@ const ContentContainer = () => {
     setIsLoading(true);
 
     const getStoredDateFromClient = () => {
-      const savedClientDate = new Date(getLocalStorageItem('@au-dela_date'));
+      const savedClientDate = getLocalStorageItem('@au-dela_date');
       const checkParams = searchParams.get('date');
       const getDateFromParams = new Date(String(searchParams.get('date')));
       try {
         if (savedClientDate && !checkParams && !imageOfTheDayCurrentDate) {
-          dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: savedClientDate });
+          dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: new Date(savedClientDate) });
+
           //
           //
         } else if (!savedClientDate && checkParams && !imageOfTheDayCurrentDate) {
           dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: getDateFromParams });
+
           //
           //
         } else if (savedClientDate && checkParams && !imageOfTheDayCurrentDate) {
           dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: getDateFromParams });
+
           //
           //
         } else if (!savedClientDate && !checkParams && !imageOfTheDayCurrentDate) {
