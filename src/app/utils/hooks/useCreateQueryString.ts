@@ -23,8 +23,14 @@ export const useCreateQueryString = () => {
   );
 
   const updatePath = React.useCallback(
-    (queryParams: Record<string, string>) => router.replace(`${createQueryString(queryParams)}`),
-    [createQueryString, router]
+    (queryParams: Record<string, string>) => {
+      window.history.replaceState(
+        { ...window.history.state, as: queryParams, url: createQueryString(queryParams) },
+        '',
+        createQueryString(queryParams)
+      );
+    },
+    [createQueryString]
   );
 
   return { createQueryString, updatePath, searchParams, currentPath };

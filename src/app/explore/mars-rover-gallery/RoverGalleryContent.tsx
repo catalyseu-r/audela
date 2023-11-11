@@ -3,12 +3,10 @@
 import { NASA_ROVERS_3D } from '@/app/staticData/nasaRovers3D';
 import { MarsRoverProfile, MarsRoverProfiles } from '@/app/types/marsRoverTypes';
 import React from 'react';
-
 import { IoRadioOutline as RadioIcon, IoCalendarClearOutline as CalendarIcon } from 'react-icons/io5';
 import dayjs from 'dayjs';
 import { getMarsRoverImages } from '@/app/utils/API/getMarsRoverImages';
 import { useAppContext } from '@/app/contexts/store';
-
 import { findNasaSource } from '@/app/utils/lists/findNasaSource';
 import GenerateRoverIframe from './GenerateRoverIframe';
 import GenerateSolPicker from './GenerateSolPicker';
@@ -16,17 +14,12 @@ import GenerateRecency from './GenerateRecency';
 import GenerateRoverPicker from './GenerateRoverPicker';
 import GenerateCameras from './GenerateCameras';
 import { ActionTypes } from '@/app/types/actionTypes';
-
 import { AppState } from '@/app/types/appState';
-
 import RoverPhotoGallery from './RoverPhotoGallery';
 import { useCreateQueryString } from '@/app/utils/hooks/useCreateQueryString';
 import Loading from '../loading';
 import { getLocalStorageItem, setLocalStorageItem } from '@/app/utils/localStorage/handleLocalStorage';
-
-export interface RoverGalleryContentType {
-  data: MarsRoverProfiles;
-}
+import { useWindowSearch } from '@/app/utils/hooks/useWindowSearch';
 
 const RoverGalleryContent = (data: MarsRoverProfiles) => {
   const {
@@ -38,7 +31,8 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
   } = useAppContext();
 
   const { updatePath } = useCreateQueryString();
-  const location = React.useMemo(() => (window !== undefined ? window.location.search : undefined), []);
+
+  const { searchParamsFromLocation } = useWindowSearch();
   const initRover = React.useMemo(() => data.rovers.find((rover) => rover.status === 'active'), [data]);
   const findFromStaticData = React.useCallback(
     (roverName: string) => data.rovers.find((item) => item.name === roverName),
@@ -77,8 +71,8 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
   }, [dispatch, sol, camera, rover, updatePath]);
 
   const getQueryParams = React.useCallback(() => {
-    if (location) {
-      const queryStr = location.substring(1);
+    if (searchParamsFromLocation) {
+      const queryStr = searchParamsFromLocation.substring(1);
 
       const splitQuery = queryStr.split('&');
 
@@ -88,12 +82,14 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
         return acc;
       }, {});
 
+      console.log('READ PARAMS', readParams);
+
       return readParams;
     }
-  }, [location]);
+  }, [searchParamsFromLocation]);
 
   React.useEffect(() => {
-    const checkLocalStorage: Record<string, string> = getLocalStorageItem('@au-dela_filters');
+    const checkLocalStorage: Record<string, MarsRoverProfile | string> = getLocalStorageItem('@au-dela_filters');
 
     const params = getQueryParams();
 
@@ -111,58 +107,59 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
       }
     };
 
-    try {
-      dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: true });
-      if (checkLocalStorage && params && !rover) {
-        console.log('PRVI UVJET');
-        Object.entries(params).map((entry) => {
-          const [key, value] = entry;
+    if (params) {
+      try {
+        dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: true });
+        if (checkLocalStorage && typeof params !== 'undefined' && !rover) {
+          Object.entries(params).map((entry) => {
+            const [key, value] = entry;
 
-          if (key === 'rover') {
-            dispatch({
-              type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
-              payload: { key: key, value: findFromStaticData(value) ?? '' },
-            });
-          } else {
-            dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
-          }
-        });
-      } else if (!checkLocalStorage && params && !rover) {
-        console.log('DRUGI UVJET');
+            if (key === 'rover') {
+              dispatch({
+                type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
+                payload: { key: key, value: findFromStaticData(value) ?? '' },
+              });
+            } else {
+              dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
+            }
+          });
+        } else if (!checkLocalStorage && params && !rover) {
+          console.log('ALO NEMA STORAGE IMA PARAM');
 
-        Object.entries(params).map((entry) => {
-          const [key, value] = entry;
-          if (key === 'rover') {
-            dispatch({
-              type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
-              payload: { key: key, value: findFromStaticData(value) ?? '' },
-            });
-          } else {
-            dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
-          }
-        });
-      } else if (checkLocalStorage && !params && !rover) {
-        console.log('TRECI UVJET');
+          Object.entries(params).map((entry) => {
+            const [key, value] = entry;
+            if (key === 'rover') {
+              dispatch({
+                type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
+                payload: { key: key, value: findFromStaticData(value) ?? '' },
+              });
+            } else {
+              dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
+            }
+          });
+        } else if (checkLocalStorage && typeof params === 'undefined' && !rover) {
+          console.log('ALO IMA STORAGE NEMA PARAM');
+          Object.entries(checkLocalStorage).map((entry) => {
+            const [key, value] = entry;
 
-        Object.entries(checkLocalStorage).map((entry) => {
-          const [key, value] = entry;
-
-          if (key === 'rover') {
-            dispatch({
-              type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
-              payload: { key: key, value: findFromStaticData(value) ?? '' },
-            });
-          } else {
-            dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
-          }
-        });
-      } else if (!checkLocalStorage && !params && !rover) {
-        setDefaultRover();
+            if (key === 'rover' && typeof value !== 'string') {
+              dispatch({
+                type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
+                payload: { key: key, value: findFromStaticData(value.name) ?? '' },
+              });
+            } else {
+              dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
+            }
+          });
+        } else if (!checkLocalStorage && !params && !rover) {
+          console.log('ALO NEMA NISTA');
+          setDefaultRover();
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: false });
       }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: false });
     }
   }, [getQueryParams, dispatch, initRover, rover, findFromStaticData]);
 
