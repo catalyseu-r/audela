@@ -20,6 +20,7 @@ import { useCreateQueryString } from '@/app/utils/hooks/useCreateQueryString';
 import Loading from '../loading';
 import { getLocalStorageItem, setLocalStorageItem } from '@/app/utils/localStorage/handleLocalStorage';
 import { useWindowSearch } from '@/app/utils/hooks/useWindowSearch';
+import FilterGroup from './FilterGroup';
 
 const RoverGalleryContent = (data: MarsRoverProfiles) => {
   const {
@@ -169,9 +170,9 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
         key={rover?.name}
         className='flex md:justify-start justify-center gap-14 lg:flex-nowrap flex-wrap animate-enter'
       >
-        <div className='grid gap-10 '>
+        <div className='grid md:gap-10 w-full md:grid-cols-1 md:items-center grid-cols-2 items-start gap-5 '>
           <GenerateRoverIframe />
-          <div className='w-full flex gap-4 items-center'>
+          <div className='w-full flex flex-wrap gap-4 items-center'>
             <div className='flex items-center gap-2'>
               <RadioIcon
                 className={`${
@@ -197,12 +198,8 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
           </div>
         </div>
         <div className='grid grid-cols-1 items-start gap-10'>
-          <div className='flex items-center lg:gap-10 md:gap-8 gap-6 transition-all  flex-wrap'>
-            <GenerateRoverPicker data={data} />
-            <GenerateSolPicker />
-            <GenerateCameras />
-            <GenerateRecency />
-          </div>
+          <FilterGroup rovers={data.rovers} />
+
           <div className='py-4 self-stretch grid grid-cols-1 items-start'>
             <label htmlFor='rover-bio' className='font-normal text-xl leading-10 text-deep-green'>
               Bio

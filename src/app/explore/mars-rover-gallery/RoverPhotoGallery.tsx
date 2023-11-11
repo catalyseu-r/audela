@@ -37,7 +37,7 @@ const RoverPhotoGallery = () => {
         {photos.map((photo) => (
           <div
             key={photo.id}
-            className='w-[28rem] h-[20rem] relative rounded snap-always snap-center aspect-video pointer-events-none select-none'
+            className='md:w-[28rem] md:h-[20rem] w-60 h-32 relative rounded snap-always snap-center aspect-video pointer-events-none select-none'
           >
             <Image
               className='rounded object-cover opacity-0 transition-opacity  aspect-video '

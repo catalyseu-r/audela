@@ -1,13 +1,13 @@
 'use client';
 
 import { useAppContext } from '@/app/contexts/store';
-import { RoverGalleryContentType } from './RoverGalleryContent';
+
 import { ActionTypes } from '@/app/types/actionTypes';
 import { GiTrackedRobot as RoverIcon } from 'react-icons/gi';
 import React from 'react';
-import { MarsRoverProfile } from '@/app/types/marsRoverTypes';
+import { MarsRoverProfile, MarsRoverProfiles } from '@/app/types/marsRoverTypes';
 
-const GenerateRoverPicker = ({ data: { rovers } }: RoverGalleryContentType) => {
+const GenerateRoverPicker = ({ rovers }: MarsRoverProfiles) => {
   const {
     state: {
       marsFilterState: { rover },
