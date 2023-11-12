@@ -42,7 +42,7 @@ const GenerateRoverPicker = ({ rovers }: MarsRoverProfiles) => {
   }
 
   return (
-    <div className='flex flex-col gap-4 items-start transition-all'>
+    <div className='flex flex-col gap-4 items-start transition-all '>
       <label
         htmlFor='rover'
         className='flex items-center gap-2 font-normal leading-6 lg:text-base text-sm text-deep-green'

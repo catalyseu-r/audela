@@ -173,33 +173,32 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
         <div className='grid md:gap-10 w-full md:grid-cols-1 md:items-center grid-cols-2 items-start gap-5 '>
           <GenerateRoverIframe />
           <div className='w-full flex flex-wrap gap-4 items-center'>
-            <div className='flex items-center gap-2'>
+            <div className='flex md:flex-row flex-col md:items-center items-startgap-2'>
               <RadioIcon
                 className={`${
                   rover?.status === 'active' ? 'text-deep-green animate-animate-ping-custom' : 'text-error-red'
-                } text-base`}
+                } md:text-base text-sm`}
               />
-              <p className='flex items-center gap-1 text-base leading-6'>
+              <p className='flex items-center gap-1 md:text-base text-sm leading-6'>
                 <span>Status: </span>
                 <span className={`${rover?.status === 'active' ? 'text-deep-green' : 'text-error-red'} `}>
                   {rover && rover.status}
                 </span>
               </p>
             </div>
-            <div className='flex items-center gap-2'>
+            <div className='flex md:flex-row flex-col md:items-center items-start gap-2'>
               <CalendarIcon className={`text-base text-deep-green`} />
-              <p className='flex items-center gap-1 text-base leading-6'>
-                <span className='leading-6 text-base'>Launched:</span>
-                <span className='font-light italic leading-6 text-base'>
+              <p className='flex items-center gap-1 md:text-base text-sm leading-6'>
+                <span className='leading-6 '>Launched:</span>
+                <span className='font-light italic leading-6'>
                   {rover && dayjs(rover.launch_date).format('DD/MM/YYYY')}
                 </span>
               </p>
             </div>
+            <FilterGroup rovers={data.rovers} />
           </div>
         </div>
         <div className='grid grid-cols-1 items-start gap-10'>
-          <FilterGroup rovers={data.rovers} />
-
           <div className='py-4 self-stretch grid grid-cols-1 items-start'>
             <label htmlFor='rover-bio' className='font-normal text-xl leading-10 text-deep-green'>
               Bio
