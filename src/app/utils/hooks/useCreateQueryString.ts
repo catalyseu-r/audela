@@ -5,7 +5,6 @@ import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 export const useCreateQueryString = () => {
   const currentPath = usePathname();
   const searchParams = useSearchParams();
-  const router = useRouter();
 
   const createQueryString = React.useCallback(
     (queryParams: Record<string, string>) => {

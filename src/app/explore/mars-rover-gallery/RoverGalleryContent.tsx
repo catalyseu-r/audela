@@ -9,10 +9,7 @@ import { getMarsRoverImages } from '@/app/utils/API/getMarsRoverImages';
 import { useAppContext } from '@/app/contexts/store';
 import { findNasaSource } from '@/app/utils/lists/findNasaSource';
 import GenerateRoverIframe from './GenerateRoverIframe';
-import GenerateSolPicker from './GenerateSolPicker';
-import GenerateRecency from './GenerateRecency';
-import GenerateRoverPicker from './GenerateRoverPicker';
-import GenerateCameras from './GenerateCameras';
+
 import { ActionTypes } from '@/app/types/actionTypes';
 import { AppState } from '@/app/types/appState';
 import RoverPhotoGallery from './RoverPhotoGallery';
@@ -33,12 +30,84 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
 
   const { updatePath } = useCreateQueryString();
 
-  const { searchParamsFromLocation } = useWindowSearch();
+  const { searchParamsFromLocation, params } = useWindowSearch();
   const initRover = React.useMemo(() => data.rovers.find((rover) => rover.status === 'active'), [data]);
   const findFromStaticData = React.useCallback(
     (roverName: string) => data.rovers.find((item) => item.name === roverName),
     [data.rovers]
   );
+
+  const setDefaultRover = React.useCallback(() => {
+    if (initRover) {
+      dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key: 'rover', value: initRover } });
+      dispatch({
+        type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
+        payload: { key: 'sol', value: (initRover.max_sol - 25).toString() ?? '' },
+      });
+      dispatch({
+        type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
+        payload: { key: 'camera', value: initRover.cameras[0].name ?? '' },
+      });
+    }
+  }, [dispatch, initRover]);
+
+  React.useEffect(() => {
+    const checkLocalStorage: Record<string, MarsRoverProfile | string> = getLocalStorageItem('@au-dela_filters');
+    try {
+      dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: true });
+      if (checkLocalStorage && searchParamsFromLocation && params && !rover) {
+        console.log('ALO IMA I PARAM I STORAGE');
+
+        Object.entries(searchParamsFromLocation).map((entry) => {
+          const [key, value] = entry;
+
+          if (key === 'rover') {
+            dispatch({
+              type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
+              payload: { key: key, value: findFromStaticData(value) ?? '' },
+            });
+          } else {
+            dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
+          }
+        });
+      } else if (!checkLocalStorage && searchParamsFromLocation && params && !rover) {
+        console.log('ALO NEMA STORAGE IMA PARAM');
+
+        Object.entries(searchParamsFromLocation).map((entry) => {
+          const [key, value] = entry;
+          if (key === 'rover') {
+            dispatch({
+              type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
+              payload: { key: key, value: findFromStaticData(value) ?? '' },
+            });
+          } else {
+            dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
+          }
+        });
+      } else if (checkLocalStorage && !searchParamsFromLocation && !params && !rover) {
+        console.log('ALO IMA STORAGE NEMA PARAM');
+        Object.entries(checkLocalStorage).map((entry) => {
+          const [key, value] = entry;
+
+          if (key === 'rover' && typeof value !== 'string') {
+            dispatch({
+              type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
+              payload: { key: key, value: findFromStaticData(value.name) ?? '' },
+            });
+          } else {
+            dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
+          }
+        });
+      } else if (!checkLocalStorage && !searchParamsFromLocation && !params && !rover) {
+        console.log('ALO NEMA NISTA');
+        setDefaultRover();
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: false });
+    }
+  }, [searchParamsFromLocation, params, dispatch, setDefaultRover, findFromStaticData, rover]);
 
   React.useEffect(() => {
     const getSelectedRoverImages = async () => {
@@ -53,7 +122,6 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
 
         if (getImages) {
           dispatch({ type: ActionTypes.SET_CURRENT_GALLERY, payload: getImages });
-
           dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: false });
         }
       } catch (error) {
@@ -70,99 +138,6 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
 
     rover?.name && getSelectedRoverImages();
   }, [dispatch, sol, camera, rover, updatePath]);
-
-  const getQueryParams = React.useCallback(() => {
-    if (searchParamsFromLocation) {
-      const queryStr = searchParamsFromLocation.substring(1);
-
-      const splitQuery = queryStr.split('&');
-
-      const readParams = splitQuery.reduce<Record<string, string>>((acc, curr) => {
-        const [key, value] = curr.split('=');
-        acc[key] = decodeURIComponent(value);
-        return acc;
-      }, {});
-
-      console.log('READ PARAMS', readParams);
-
-      return readParams;
-    }
-  }, [searchParamsFromLocation]);
-
-  React.useEffect(() => {
-    const checkLocalStorage: Record<string, MarsRoverProfile | string> = getLocalStorageItem('@au-dela_filters');
-
-    const params = getQueryParams();
-
-    const setDefaultRover = () => {
-      if (initRover) {
-        dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key: 'rover', value: initRover } });
-        dispatch({
-          type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
-          payload: { key: 'sol', value: (initRover.max_sol - 25).toString() ?? '' },
-        });
-        dispatch({
-          type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
-          payload: { key: 'camera', value: initRover.cameras[0].name ?? '' },
-        });
-      }
-    };
-
-    if (params) {
-      try {
-        dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: true });
-        if (checkLocalStorage && typeof params !== 'undefined' && !rover) {
-          Object.entries(params).map((entry) => {
-            const [key, value] = entry;
-
-            if (key === 'rover') {
-              dispatch({
-                type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
-                payload: { key: key, value: findFromStaticData(value) ?? '' },
-              });
-            } else {
-              dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
-            }
-          });
-        } else if (!checkLocalStorage && params && !rover) {
-          console.log('ALO NEMA STORAGE IMA PARAM');
-
-          Object.entries(params).map((entry) => {
-            const [key, value] = entry;
-            if (key === 'rover') {
-              dispatch({
-                type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
-                payload: { key: key, value: findFromStaticData(value) ?? '' },
-              });
-            } else {
-              dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
-            }
-          });
-        } else if (checkLocalStorage && typeof params === 'undefined' && !rover) {
-          console.log('ALO IMA STORAGE NEMA PARAM');
-          Object.entries(checkLocalStorage).map((entry) => {
-            const [key, value] = entry;
-
-            if (key === 'rover' && typeof value !== 'string') {
-              dispatch({
-                type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
-                payload: { key: key, value: findFromStaticData(value.name) ?? '' },
-              });
-            } else {
-              dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
-            }
-          });
-        } else if (!checkLocalStorage && !params && !rover) {
-          console.log('ALO NEMA NISTA');
-          setDefaultRover();
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: false });
-      }
-    }
-  }, [getQueryParams, dispatch, initRover, rover, findFromStaticData]);
 
   return (
     <div className='grid lg:gap-20 md:gap-16 gap-10 pb-40 lg:mt-24 mt-20'>
