@@ -22,7 +22,7 @@ import FilterGroup from './FilterGroup';
 const RoverGalleryContent = (data: MarsRoverProfiles) => {
   const {
     state: {
-      marsFilterState: { sol, camera, rover },
+      marsFilterState: { sol, camera, rover, recency },
       currentGallery: { isLoading },
     },
     dispatch,
@@ -114,13 +114,15 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
       dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: true });
 
       try {
-        const getImages: AppState['currentGallery'] | undefined = await getMarsRoverImages({
+        const getImages = await getMarsRoverImages({
           rover: rover!.name,
           sol: sol,
           camera: camera!,
+          latest: recency,
         });
 
         if (getImages) {
+          console.log('IMAGES', getImages);
           dispatch({ type: ActionTypes.SET_CURRENT_GALLERY, payload: getImages });
           dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: false });
         }
@@ -137,7 +139,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
     };
 
     rover?.name && getSelectedRoverImages();
-  }, [dispatch, sol, camera, rover, updatePath]);
+  }, [dispatch, sol, camera, rover, recency, updatePath]);
 
   return (
     <div className='grid lg:gap-20 md:gap-16 gap-10 pb-40 lg:mt-24 mt-20'>

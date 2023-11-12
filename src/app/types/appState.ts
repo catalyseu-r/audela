@@ -34,7 +34,7 @@ export interface AppState {
 
   currentGallery: {
     photos: MarsRoverPhotos[];
-
+    // latest_photos: MarsRoverPhotos[];
     isLoading: boolean;
   };
 }
