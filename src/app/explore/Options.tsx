@@ -23,7 +23,7 @@ const Options = () => {
           {featureOptions.map((option, index, orig) => {
             const Icon = orig[index].icon;
 
-            return index === orig.length - 1 || index === orig.length - 2 ? (
+            return index === orig.length - 1 ? (
               <button
                 disabled
                 className='z-10 group lg:py-6 py-4 lg:px-8 px-4 flex items-center justify-between self-stretch border border-interactive-green/20 lg:text-2xl md:text-lg text-base  text-text-white/50 rounded cursor-not-allowed'

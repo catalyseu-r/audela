@@ -16,13 +16,14 @@ import RoverPhotoGallery from './RoverPhotoGallery';
 import { useCreateQueryString } from '@/app/utils/hooks/useCreateQueryString';
 import Loading from '../loading';
 import { getLocalStorageItem, setLocalStorageItem } from '@/app/utils/localStorage/handleLocalStorage';
-import { useWindowSearch } from '@/app/utils/hooks/useWindowSearch';
+
 import FilterGroup from './FilterGroup';
+import { useSearchParams } from 'next/navigation';
 
 const RoverGalleryContent = (data: MarsRoverProfiles) => {
   const {
     state: {
-      marsFilterState: { sol, camera, rover, recency },
+      marsFilterState: { sol, camera, rover },
       currentGallery: { isLoading },
     },
     dispatch,
@@ -30,12 +31,12 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
 
   const { updatePath } = useCreateQueryString();
 
-  const { searchParamsFromLocation, params } = useWindowSearch();
   const initRover = React.useMemo(() => data.rovers.find((rover) => rover.status === 'active'), [data]);
   const findFromStaticData = React.useCallback(
     (roverName: string) => data.rovers.find((item) => item.name === roverName),
     [data.rovers]
   );
+  const checkParams = useSearchParams();
 
   const setDefaultRover = React.useCallback(() => {
     if (initRover) {
@@ -52,13 +53,25 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
   }, [dispatch, initRover]);
 
   React.useEffect(() => {
+    const paramsHookCheck = checkParams.toString().length;
+
+    const parseString = checkParams.toString().split('&');
+
+    const parseQueryParams = parseString.reduce<Record<string, string>>((acc, curr) => {
+      const [key, value] = curr.split('=');
+
+      acc[key] = decodeURIComponent(value);
+
+      return acc;
+    }, {});
+
     const checkLocalStorage: Record<string, MarsRoverProfile | string> = getLocalStorageItem('@au-dela_filters');
     try {
       dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: true });
-      if (checkLocalStorage && searchParamsFromLocation && params && !rover) {
-        console.log('ALO IMA I PARAM I STORAGE');
+      if (checkLocalStorage && paramsHookCheck && !rover) {
+        console.log('BOTH STORAGE AND PARAMS');
 
-        Object.entries(searchParamsFromLocation).map((entry) => {
+        Object.entries(parseQueryParams).map((entry) => {
           const [key, value] = entry;
 
           if (key === 'rover') {
@@ -70,10 +83,10 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
             dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
           }
         });
-      } else if (!checkLocalStorage && searchParamsFromLocation && params && !rover) {
-        console.log('ALO NEMA STORAGE IMA PARAM');
+      } else if (!checkLocalStorage && paramsHookCheck && !rover) {
+        console.log('NO STORAGE, ONLY PARAM');
 
-        Object.entries(searchParamsFromLocation).map((entry) => {
+        Object.entries(parseQueryParams).map((entry) => {
           const [key, value] = entry;
           if (key === 'rover') {
             dispatch({
@@ -84,8 +97,8 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
             dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
           }
         });
-      } else if (checkLocalStorage && !searchParamsFromLocation && !params && !rover) {
-        console.log('ALO IMA STORAGE NEMA PARAM');
+      } else if (checkLocalStorage && !paramsHookCheck && !rover) {
+        console.log('ONLY STORAGE, NO PARAM');
         Object.entries(checkLocalStorage).map((entry) => {
           const [key, value] = entry;
 
@@ -98,8 +111,8 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
             dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key, value } });
           }
         });
-      } else if (!checkLocalStorage && !searchParamsFromLocation && !params && !rover) {
-        console.log('ALO NEMA NISTA');
+      } else if (!checkLocalStorage && !paramsHookCheck && !rover) {
+        console.log('BLANK STATE');
         setDefaultRover();
       }
     } catch (error) {
@@ -107,23 +120,22 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
     } finally {
       dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: false });
     }
-  }, [searchParamsFromLocation, params, dispatch, setDefaultRover, findFromStaticData, rover]);
+  }, [checkParams, dispatch, setDefaultRover, findFromStaticData, rover]);
 
   React.useEffect(() => {
     const getSelectedRoverImages = async () => {
       dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: true });
 
       try {
-        const getImages = await getMarsRoverImages({
+        const getImages: AppState['currentGallery'] | undefined = await getMarsRoverImages({
           rover: rover!.name,
           sol: sol,
           camera: camera!,
-          latest: recency,
         });
 
         if (getImages) {
-          console.log('IMAGES', getImages);
           dispatch({ type: ActionTypes.SET_CURRENT_GALLERY, payload: getImages });
+
           dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: false });
         }
       } catch (error) {
@@ -139,7 +151,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
     };
 
     rover?.name && getSelectedRoverImages();
-  }, [dispatch, sol, camera, rover, recency, updatePath]);
+  }, [dispatch, sol, camera, rover, updatePath]);
 
   return (
     <div className='grid lg:gap-20 md:gap-16 gap-10 pb-40 lg:mt-24 mt-20'>
