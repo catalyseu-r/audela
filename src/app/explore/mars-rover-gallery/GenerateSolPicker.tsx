@@ -1,5 +1,6 @@
 import { useAppContext } from '@/app/contexts/store';
 import { ActionTypes } from '@/app/types/actionTypes';
+
 import { GiSunrise as SunIcon } from 'react-icons/gi';
 
 const GenerateSolPicker = () => {

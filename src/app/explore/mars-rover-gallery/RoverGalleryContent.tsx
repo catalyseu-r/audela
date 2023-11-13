@@ -38,6 +38,8 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
   );
   const checkParams = useSearchParams();
 
+  // const [isRoverChange, setIsRoverChange] = React.useState<boolean>(false)
+
   const setDefaultRover = React.useCallback(() => {
     if (initRover) {
       dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key: 'rover', value: initRover } });
@@ -155,14 +157,11 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
 
   return (
     <div className='grid  lg:gap-20 md:gap-16 gap-10 pb-40 lg:mt-24 md:mt-20 mt-8'>
-      <div
-        key={rover?.name}
-        className='flex md:justify-start justify-center md:gap-14 gap-7 lg:flex-nowrap flex-wrap animate-enter '
-      >
-        <div className='grid lg:shrink-0 md:gap-10  md:grid-cols-1 md:items-center grid-cols-2 items-start gap-5 '>
+      <div key={rover?.name} className='flex justify-start md:gap-14 gap-7 md:flex-nowrap flex-wrap animate-enter '>
+        <div className='grid lg:shrink-0 md:gap-10 place-items-start  md:grid-cols-1  grid-cols-2  gap-5 '>
           <GenerateRoverIframe />
           <div className='w-full flex flex-wrap gap-4 items-center'>
-            <div className='flex md:flex-row flex-col md:items-center items-startgap-2'>
+            <div className='flex md:flex-row flex-col md:items-center items-start gap-2'>
               <RadioIcon
                 className={`${
                   rover?.status === 'active' ? 'text-deep-green animate-animate-ping-custom' : 'text-error-red'
@@ -186,7 +185,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
             </div>
           </div>
         </div>
-        <div className='grid md:grid-cols-1  place-items-start lg:gap-10 md:gap-8 gap-6'>
+        <div className='grid md:grid-cols-1  place-items-start lg:w-auto w-full lg:gap-10 md:gap-8 gap-6 '>
           <FilterGroup rovers={data.rovers} />
           <div className='md:py-4 py-0 order-1  grid grid-cols-1 place-items-start'>
             <label

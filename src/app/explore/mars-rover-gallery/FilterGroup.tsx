@@ -7,16 +7,13 @@ import GenerateSolPicker from './GenerateSolPicker';
 import GenerateCameras from './GenerateCameras';
 import GenerateRecency from './GenerateRecency';
 import { HiOutlineCog as CogIcon } from 'react-icons/hi';
-import { useWindowSize } from '@/app/utils/hooks/useWindowSize';
 
 const FilterGroup = ({ rovers }: MarsRoverProfiles) => {
   const [isDropdownOpen, setIsDropdownOpen] = React.useState<boolean>(false);
 
-  const clientWindowWidth = useWindowSize();
-
   return (
     <div className={`order-1 md:w-auto w-full `}>
-      <div className='md:flex hidden gap-10 items-center justify-start'>
+      <div className='md:flex hidden gap-10 items-center flex-wrap justify-start'>
         <GenerateRoverPicker rovers={rovers} />
         <GenerateSolPicker />
         <GenerateCameras />
