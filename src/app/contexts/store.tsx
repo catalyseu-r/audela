@@ -103,7 +103,7 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
         ...state,
         currentGallery: {
           ...state.currentGallery,
-          photos: action.payload.photos,
+          photos: action.payload,
         },
       };
     }

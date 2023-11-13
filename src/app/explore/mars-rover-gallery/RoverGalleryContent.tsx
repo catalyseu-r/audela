@@ -1,7 +1,7 @@
 'use client';
 
 import { NASA_ROVERS_3D } from '@/app/staticData/nasaRovers3D';
-import { MarsRoverProfile, MarsRoverProfiles } from '@/app/types/marsRoverTypes';
+import { MarsRoverPhotos, MarsRoverProfile, MarsRoverProfiles } from '@/app/types/marsRoverTypes';
 import React from 'react';
 import { IoRadioOutline as RadioIcon, IoCalendarClearOutline as CalendarIcon } from 'react-icons/io5';
 import dayjs from 'dayjs';
@@ -23,7 +23,7 @@ import { useSearchParams } from 'next/navigation';
 const RoverGalleryContent = (data: MarsRoverProfiles) => {
   const {
     state: {
-      marsFilterState: { sol, camera, rover },
+      marsFilterState: { sol, camera, rover, recency },
       currentGallery: { isLoading },
     },
     dispatch,
@@ -37,6 +37,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
     [data.rovers]
   );
   const checkParams = useSearchParams();
+  const [isMostRecent, setIsMostRecent] = React.useState<boolean>();
 
   // const [isRoverChange, setIsRoverChange] = React.useState<boolean>(false)
 
@@ -124,19 +125,29 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
     }
   }, [checkParams, dispatch, setDefaultRover, findFromStaticData, rover]);
 
+  interface GetImagesResponse {
+    photos?: MarsRoverPhotos[];
+    latest_photos?: MarsRoverPhotos[];
+  }
+
   React.useEffect(() => {
     const getSelectedRoverImages = async () => {
       dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: true });
 
       try {
-        const getImages: AppState['currentGallery'] | undefined = await getMarsRoverImages({
+        const getImages: GetImagesResponse | undefined = await getMarsRoverImages({
           rover: rover!.name,
           sol: sol,
           camera: camera!,
+          latest: recency,
         });
 
         if (getImages) {
-          dispatch({ type: ActionTypes.SET_CURRENT_GALLERY, payload: getImages });
+          console.log('GET IMAGES', 'latest_photos' in getImages);
+          dispatch({
+            type: ActionTypes.SET_CURRENT_GALLERY,
+            payload: 'latest_photos' in getImages ? getImages.latest_photos! : getImages.photos!,
+          });
 
           dispatch({ type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING, payload: false });
         }
@@ -153,7 +164,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
     };
 
     rover?.name && getSelectedRoverImages();
-  }, [dispatch, sol, camera, rover, updatePath]);
+  }, [dispatch, sol, camera, rover, recency, updatePath]);
 
   return (
     <div className='grid  lg:gap-20 md:gap-16 gap-10 pb-40 lg:mt-24 md:mt-20 mt-8'>

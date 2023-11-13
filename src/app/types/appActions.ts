@@ -42,4 +42,4 @@ export type AppAction =
     }
   | { type: ActionTypes.SET_IS_CURRENT_GALLERY_LOADING; payload: boolean }
   | { type: ActionTypes.RESET_MARS_ROVER_FILTER_STATE }
-  | { type: ActionTypes.SET_CURRENT_GALLERY; payload: { photos: MarsRoverPhotos[] } };
+  | { type: ActionTypes.SET_CURRENT_GALLERY; payload: MarsRoverPhotos[] };

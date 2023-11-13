@@ -43,6 +43,7 @@ const GenerateSolPicker = () => {
         max={rover.max_sol}
         onChange={updateCurrentSol}
         value={sol}
+        // disabled
       />
     </div>
   );
