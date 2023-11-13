@@ -7,31 +7,42 @@ import GenerateSolPicker from './GenerateSolPicker';
 import GenerateCameras from './GenerateCameras';
 import GenerateRecency from './GenerateRecency';
 import { HiOutlineCog as CogIcon } from 'react-icons/hi';
+import { useWindowSize } from '@/app/utils/hooks/useWindowSize';
 
 const FilterGroup = ({ rovers }: MarsRoverProfiles) => {
   const [isDropdownOpen, setIsDropdownOpen] = React.useState<boolean>(false);
 
+  const clientWindowWidth = useWindowSize();
+
   return (
-    <div
-      className={`flex items-center relative  w-full justify-start  ${
-        !isDropdownOpen && 'overflow-clip'
-      }   transition-all `}
-    >
-      <CogIcon
-        className={`z-50 text-base cursor-pointer ${
-          isDropdownOpen ? 'rotate-45 text-interactive-green scale-125' : 'text-text-white'
-        } transition-all `}
-        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-      />
-      <div
-        className={`absolute w-full flex flex-wrap lg:gap-10 md:gap-8 gap-6 h-min inset-0 py-6 px-4 transition-all duration-300 origin-top z-20 ${
-          isDropdownOpen ? 'translate-y-0 visible  bg-bg-black/80 rounded' : '-translate-y-full invisible'
-        }`}
-      >
+    <div className={`order-1 md:w-auto w-full `}>
+      <div className='md:flex hidden gap-10 items-center justify-start'>
         <GenerateRoverPicker rovers={rovers} />
         <GenerateSolPicker />
         <GenerateCameras />
         <GenerateRecency />
+      </div>
+      <div
+        className={`md:hidden  relative flex items-center justify-start  ${
+          !isDropdownOpen && 'overflow-hidden '
+        } transition-all `}
+      >
+        <CogIcon
+          className={`z-20 text-base cursor-pointer ${
+            isDropdownOpen ? 'rotate-45 text-interactive-green scale-125' : 'text-text-white'
+          } transition-all `}
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+        />
+        <div
+          className={`absolute w-full flex flex-wrap items-start lg:gap-10 md:gap-8 gap-6 h-min inset-0 py-6 px-4 transition-all duration-300 origin-top z-10 ${
+            isDropdownOpen ? 'translate-y-0 visible  bg-bg-black/90  rounded' : '-translate-y-[8%] invisible '
+          }`}
+        >
+          <GenerateRoverPicker rovers={rovers} />
+          <GenerateSolPicker />
+          <GenerateCameras />
+          <GenerateRecency />
+        </div>
       </div>
     </div>
   );

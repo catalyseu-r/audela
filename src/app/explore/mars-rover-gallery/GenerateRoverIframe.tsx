@@ -22,8 +22,8 @@ const GenerateRoverIframe = () => {
   }
 
   return (
-    <div className={`w-full  flex items-center  `}>
-      {clientWindowSize && clientWindowSize?.width > 768 ? (
+    <div className={` flex items-center  `}>
+      {clientWindowSize && clientWindowSize.width > 768 ? (
         <iframe
           src={findNasaSource(rover.id, NASA_ROVERS_3D)?.source}
           className='w-72 h-72  object-fill rounded transition-all md:shadow-custom-image-strong-shadow '

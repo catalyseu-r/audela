@@ -154,12 +154,12 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
   }, [dispatch, sol, camera, rover, updatePath]);
 
   return (
-    <div className='grid lg:gap-20 md:gap-16 gap-10 pb-40 lg:mt-24 mt-20'>
+    <div className='grid  lg:gap-20 md:gap-16 gap-10 pb-40 lg:mt-24 md:mt-20 mt-8'>
       <div
         key={rover?.name}
-        className='flex md:justify-start justify-center gap-14 lg:flex-nowrap flex-wrap animate-enter'
+        className='flex md:justify-start justify-center md:gap-14 gap-7 lg:flex-nowrap flex-wrap animate-enter '
       >
-        <div className='grid md:gap-10 w-full md:grid-cols-1 md:items-center grid-cols-2 items-start gap-5 '>
+        <div className='grid lg:shrink-0 md:gap-10  md:grid-cols-1 md:items-center grid-cols-2 items-start gap-5 '>
           <GenerateRoverIframe />
           <div className='w-full flex flex-wrap gap-4 items-center'>
             <div className='flex md:flex-row flex-col md:items-center items-startgap-2'>
@@ -184,15 +184,18 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
                 </span>
               </p>
             </div>
-            <FilterGroup rovers={data.rovers} />
           </div>
         </div>
-        <div className='grid grid-cols-1 items-start gap-10'>
-          <div className='py-4 self-stretch grid grid-cols-1 items-start'>
-            <label htmlFor='rover-bio' className='font-normal text-xl leading-10 text-deep-green'>
+        <div className='grid md:grid-cols-1  place-items-start lg:gap-10 md:gap-8 gap-6'>
+          <FilterGroup rovers={data.rovers} />
+          <div className='md:py-4 py-0 order-1  grid grid-cols-1 place-items-start'>
+            <label
+              htmlFor='rover-bio'
+              className='font-normal lg:text-xl text-base lg:leading-10 leading-6 text-deep-green'
+            >
               Bio
             </label>
-            <div key={rover?.id} id='rover-bio' className='flex gap-[2px] flex-wrap items-center perspective-3d px-4'>
+            <div key={rover?.id} id='rover-bio' className='flex gap-[2px] flex-wrap items-center perspective-3d px-4 '>
               {rover &&
                 findNasaSource(rover!.id, NASA_ROVERS_3D)
                   ?.bio.split(/(\s+)/)
@@ -201,7 +204,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
                       <span
                         key={index}
                         style={{ animationDelay: `${index / 40}s` }}
-                        className={`animate-animate-text-custom relative transition-all origin-right opacity-0 inline-block font-light lg:text-xl text-base lg:leading-10 leading-8 text-text-white`}
+                        className={`animate-animate-text-custom relative transition-all origin-right opacity-0 inline-block font-light lg:text-xl text-sm lg:leading-10 leading-6 text-text-white`}
                       >
                         {txt}
                       </span>
