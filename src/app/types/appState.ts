@@ -2,6 +2,11 @@ import { MarsRoverPhotos, MarsRoverProfile } from './marsRoverTypes';
 import { PlanetaryDataArticle } from './planetaryData';
 import { SortState } from './sortState';
 
+export enum PhotoRecency {
+  all = 'all',
+  latest_photos = 'latest_photos',
+}
+
 export interface AppState {
   userQuery: string;
   fullQuery: string;
@@ -28,13 +33,12 @@ export interface AppState {
     sol: string;
     earth_date: string;
     camera: string | null;
-    recency: string;
+    recency: PhotoRecency;
     rover: MarsRoverProfile | null;
   };
 
   currentGallery: {
     photos: MarsRoverPhotos[];
-    // latest_photos: MarsRoverPhotos[];
     isLoading: boolean;
   };
 }

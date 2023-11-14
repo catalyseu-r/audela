@@ -5,7 +5,7 @@ import React from 'react';
 import { sortByDate } from '../utils/lists/sort';
 
 import { ActionTypes } from '../types/actionTypes';
-import { AppState } from '../types/appState';
+import { AppState, PhotoRecency } from '../types/appState';
 import { AppAction } from '../types/appActions';
 import { SortState } from '../types/sortState';
 
@@ -88,15 +88,11 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
           sol: '',
           earth_date: '',
           camera: null,
-          recency: '',
+          recency: PhotoRecency.all,
           rover: null,
         },
       };
     }
-
-    // case ActionTypes.SET_CURRENT_MARS_ROVER: {
-    //   return { ...state, currentMarsRover: action.payload };
-    // }
 
     case ActionTypes.SET_CURRENT_GALLERY: {
       return {
@@ -149,7 +145,7 @@ export const GlobalContextProvider = ({ children }: any) => {
       sol: '',
       earth_date: '',
       camera: null,
-      recency: '',
+      recency: PhotoRecency.all,
       rover: null,
     },
 

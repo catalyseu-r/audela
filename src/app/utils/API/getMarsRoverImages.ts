@@ -1,3 +1,4 @@
+import { PhotoRecency } from '@/app/types/appState';
 import { MarsRoverProfiles, MarsRoverSearchParams } from '@/app/types/marsRoverTypes';
 
 export const getMarsRoversInfo = async () => {
@@ -22,7 +23,7 @@ export const getMarsRoverImages = async (params: MarsRoverSearchParams) => {
   const baseCall = `${process.env.NEXT_PUBLIC_MARS_ROVER_PHOTOS_BASE_URL}/${params.rover}`;
 
   const paramsTriage = (params: MarsRoverSearchParams): string => {
-    if (params.latest === 'most_recent') {
+    if (params.latest === PhotoRecency.latest_photos) {
       return `${baseCall}/latest_photos?api_key=${process.env.NEXT_PUBLIC_API_KEY}`;
     } else {
       return `${baseCall}/photos/?api_key=${process.env.NEXT_PUBLIC_API_KEY}${params.sol ? `&sol=${params.sol}` : ``}
