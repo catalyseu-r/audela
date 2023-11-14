@@ -28,7 +28,7 @@ const GenerateCameras = () => {
           }`}
         >
           <CameraIcon className={'lg:text-2xl text-base'} />
-          <p>Camera</p>
+          <span>Camera</span>
         </label>
 
         <select

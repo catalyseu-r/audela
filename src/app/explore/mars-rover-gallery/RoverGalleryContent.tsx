@@ -37,9 +37,6 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
     [data.rovers]
   );
   const checkParams = useSearchParams();
-  // const [isMostRecent, setIsMostRecent] = React.useState<boolean>();
-
-  // const [isRoverChange, setIsRoverChange] = React.useState<boolean>(false)
 
   const setDefaultRover = React.useCallback(() => {
     if (initRover) {

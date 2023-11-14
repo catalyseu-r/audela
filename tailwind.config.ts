@@ -132,6 +132,15 @@ const config: Config = {
             transform: 'skewY(-12deg)',
           },
         },
+
+        tooltipFadeIn: {
+          '0%': {
+            transform: 'translateY(-50%) translateX(-25%)',
+          },
+          '100%': {
+            transform: 'translateY(-100%) translateX(-25%)',
+          },
+        },
       },
       animation: {
         enter: 'baseFadeIn 1s ease',
@@ -144,6 +153,7 @@ const config: Config = {
         'waving-hand': 'wave 3s linear infinite',
         'animate-ping-custom': 'customPing 1s cubic-bezier(0, 0, 0.2, 1) infinite ',
         'animate-text-custom': 'bioTextAnima .5s cubic-bezier(.31,.05,0,1.03) forwards ',
+        'animate-tooltip': 'tooltipFadeIn 1s cubic-bezier(.31,.05,0,1.03) forwards',
       },
       transitionTimingFunction: {
         'custom-anim': 'cubic-bezier(.31,.05,0,1.03)',

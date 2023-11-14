@@ -20,7 +20,7 @@ const RoverPhotoGallery = () => {
     return <Loading />;
   } else if (photos.length === 0 && !isLoading) {
     return (
-      <h2 className='mx-auto text-error-red/80 lg:text-2xl md:text-xl text-sm leading-6'>
+      <h2 className='mx-auto px-4 text-error-red/80 lg:text-2xl md:text-xl text-sm leading-6'>
         There are no images for that filter setting! Try with diffirent settings 👨🏻‍🚀
       </h2>
     );
