@@ -1,25 +1,44 @@
+'use client';
+
+import { useAppContext } from '@/app/contexts/store';
 import { NASA_ROVERS_3D } from '@/app/staticData/nasaRovers3D';
-import { MarsRoverProfile } from '@/app/types/marsRoverTypes';
+import { useWindowSize } from '@/app/utils/hooks/useWindowSize';
+
 import { findNasaSource } from '@/app/utils/lists/findNasaSource';
+import Image from 'next/image';
+import React from 'react';
 
-interface RoverIframeComponentProps {
-  data: MarsRoverProfile | null;
-}
+const GenerateRoverIframe = () => {
+  const {
+    state: {
+      marsFilterState: { rover },
+    },
+  } = useAppContext();
 
-const GenerateRoverIframe = ({ data }: RoverIframeComponentProps) => {
-  if (!data) {
+  const clientWindowSize = useWindowSize();
+
+  if (!rover?.name) {
     return null;
   }
 
   return (
-    <div
-      className={`lg:w-[352px] lg:h-[352px] w-[calc(30vh+2.5rem)] h-[calc(30vh+2.5rem)] aspect-square flex items-center justify-center md:shadow-custom-image-strong-shadow rounded `}
-    >
-      <iframe
-        src={findNasaSource(data.id, NASA_ROVERS_3D)?.source}
-        className='w-full h-full object-contain rounded transition-all'
-        allowFullScreen
-      />
+    <div className={` flex relative items-center  w-fit`}>
+      {clientWindowSize && clientWindowSize.width >= 768 ? (
+        <iframe
+          src={findNasaSource(rover.id, NASA_ROVERS_3D)?.source}
+          className='lg:w-72 lg:h-72 md:w-56 md:h-56  object-fill rounded transition-all md:shadow-custom-image-strong-shadow '
+          allowFullScreen
+        />
+      ) : (
+        <div className=' h-[calc(50vw-3rem)] w-[calc(50vw-3rem)] rounded md:shadow-custom-image-strong-shadow '>
+          <Image
+            fill
+            src={findNasaSource(rover.id, NASA_ROVERS_3D)?.static ?? ''}
+            alt='NASA ROVER STATIC IMAGE NOT INTERACTIVE'
+            className='object-cover w-full h-full block aspect-square rounded'
+          />
+        </div>
+      )}
     </div>
   );
 };

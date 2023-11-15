@@ -19,7 +19,7 @@ export interface MarsRoverSearchParams {
   sol?: string;
   camera?: string;
   date?: string;
-  latest?: boolean;
+  latest?: string;
 }
 
 export interface MarsRoverPhotos {
