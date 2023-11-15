@@ -45,7 +45,17 @@ const ContentContainer = () => {
     const getStoredDateFromClient = () => {
       const savedClientDate = getLocalStorageItem('@au-dela_date');
       const checkParams = searchParams.get('date');
-      const getDateFromParams = new Date(String(searchParams.get('date')));
+      const getDateFromParams = () => {
+        if (
+          new Date(String(searchParams.get('date'))) > new Date() ||
+          !dayjs(new Date(String(searchParams.get('date')))).isValid()
+        ) {
+          toast.error("it seems like you've ented invalid time value, we will revert to last working date");
+          return new Date();
+        } else {
+          return new Date(String(searchParams.get('date')));
+        }
+      };
       try {
         if (savedClientDate && !checkParams && !imageOfTheDayCurrentDate) {
           dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: new Date(savedClientDate) });
@@ -53,12 +63,12 @@ const ContentContainer = () => {
           //
           //
         } else if (!savedClientDate && checkParams && !imageOfTheDayCurrentDate) {
-          dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: getDateFromParams });
+          dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: getDateFromParams() });
 
           //
           //
         } else if (savedClientDate && checkParams && !imageOfTheDayCurrentDate) {
-          dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: getDateFromParams });
+          dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: getDateFromParams() });
 
           //
           //
