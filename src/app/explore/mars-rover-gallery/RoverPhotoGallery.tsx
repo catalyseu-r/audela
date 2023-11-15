@@ -32,7 +32,7 @@ const RoverPhotoGallery = () => {
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
         ref={scrollContainerRef}
-        className=' w-full flex flex-nowrap gap-16  overflow-auto scroll-smooth  overscroll-contain scroll-px-2 snap-proximity snap-x cursor-grab active:cursor-grabbing no-scrollbar'
+        className=' w-full flex flex-nowrap lg:gap-12 md:gap-8 gap-6  overflow-auto scroll-smooth  overscroll-contain scroll-px-2 snap-proximity snap-x cursor-grab active:cursor-grabbing no-scrollbar'
       >
         {photos.map((photo) => (
           <div

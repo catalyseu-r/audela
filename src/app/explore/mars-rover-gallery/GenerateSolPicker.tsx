@@ -3,6 +3,7 @@
 import { useAppContext } from '@/app/contexts/store';
 import { ActionTypes } from '@/app/types/actionTypes';
 import { PhotoRecency } from '@/app/types/appState';
+
 import React from 'react';
 
 import { GiSunrise as SunIcon } from 'react-icons/gi';
@@ -16,10 +17,17 @@ const GenerateSolPicker = () => {
     dispatch,
   } = useAppContext();
 
+  let timeoutId: any;
+
   const updateCurrentSol = (event: React.ChangeEvent<HTMLInputElement>) => {
     const parseInput = event.target.value.toString();
 
-    dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key: 'sol', value: parseInput } });
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(
+      () => dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key: 'sol', value: parseInput } }),
+      350
+    );
   };
 
   const [isTooltip, setIsTooltip] = React.useState<boolean>(false);

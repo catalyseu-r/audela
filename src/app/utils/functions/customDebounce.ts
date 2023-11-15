@@ -1,9 +1,13 @@
 // export const customDebounce = (original: any, timer: number) => {
-//   let init: any;
+//   let timeoutId: any;
 
 //   return function (args: any) {
-//     clearTimeout(init);
+//     clearTimeout(timeoutId);
 
-//     init = setTimeout(() => original(args), timer);
+//     //     console.log('PUICA debounce');
+
+//     timeoutId = setTimeout(() => {
+//       return original(args);
+//     }, timer);
 //   };
 // };
