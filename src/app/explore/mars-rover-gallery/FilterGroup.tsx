@@ -30,16 +30,16 @@ const FilterGroup = ({ rovers }: MarsRoverProfiles) => {
           } transition-all `}
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         />
-        <div
-          className={`absolute w-full flex flex-wrap items-start lg:gap-10 md:gap-8 gap-6 h-min inset-0 py-6 px-4 transition-all duration-300 origin-top z-10 ${
-            isDropdownOpen ? 'translate-y-0 visible  bg-bg-black/90  rounded' : '-translate-y-[8%] invisible '
-          }`}
-        >
-          <GenerateRoverPicker rovers={rovers} />
-          <GenerateSolPicker />
-          <GenerateCameras />
-          <GenerateRecency />
-        </div>
+        {isDropdownOpen && (
+          <div
+            className={`animate-animate-filters absolute w-full min-h-iframes-images-sm  bg-bg-black/90 rounded flex flex-wrap items-start lg:gap-10 md:gap-8 gap-6 h-min inset-0 py-6 px-4 z-10`}
+          >
+            <GenerateRoverPicker rovers={rovers} />
+            <GenerateSolPicker />
+            <GenerateCameras />
+            <GenerateRecency />
+          </div>
+        )}
       </div>
     </div>
   );

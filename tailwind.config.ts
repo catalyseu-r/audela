@@ -82,7 +82,7 @@ const config: Config = {
 
         bioTextAnima: {
           '0%': {
-            transform: 'translateX(2em) rotate3d(0, 1, 0, 90deg)',
+            transform: 'translateX(4em) rotate3d(0, 1, 0, 180deg)',
             opacity: '0',
           },
 
@@ -141,6 +141,15 @@ const config: Config = {
             transform: 'translateY(-100%) translateX(-25%)',
           },
         },
+
+        filterSettingsFadeIn: {
+          '0%': {
+            transform: 'translateY(-8%)',
+          },
+          '100%': {
+            transform: 'translateY(0)',
+          },
+        },
       },
       animation: {
         enter: 'baseFadeIn 1s ease',
@@ -154,6 +163,7 @@ const config: Config = {
         'animate-ping-custom': 'customPing 1s cubic-bezier(0, 0, 0.2, 1) infinite ',
         'animate-text-custom': 'bioTextAnima .5s cubic-bezier(.31,.05,0,1.03) forwards ',
         'animate-tooltip': 'tooltipFadeIn 1s cubic-bezier(.31,.05,0,1.03) forwards',
+        'animate-filters': 'filterSettingsFadeIn 1s cubic-bezier(.31,.05,0,1.03) forwards',
       },
       transitionTimingFunction: {
         'custom-anim': 'cubic-bezier(.31,.05,0,1.03)',

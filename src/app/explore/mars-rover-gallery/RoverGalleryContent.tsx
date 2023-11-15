@@ -160,10 +160,10 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
   return (
     <div className='grid  lg:gap-20 md:gap-16 gap-10 pb-40 lg:mt-24 md:mt-20 mt-8'>
       <div key={rover?.name} className='flex justify-start md:gap-14 gap-7 md:flex-nowrap flex-wrap animate-enter '>
-        <div className='grid lg:shrink-0 md:gap-10 place-items-start  md:grid-cols-1  grid-cols-2  gap-5 '>
+        <div className='grid lg:shrink-0 md:gap-10 place-items-start  md:grid-cols-1  grid-cols-2  gap-3 '>
           <GenerateRoverIframe />
-          <div className='w-full flex flex-wrap gap-4 items-center'>
-            <div className='flex md:flex-row flex-col md:items-center items-start gap-2'>
+          <div className='w-full flex md:flex-row flex-col flex-wrap gap-4 items-start justify-start'>
+            <div className='flex  items-center  gap-2'>
               <RadioIcon
                 className={`${
                   rover?.status === 'active' ? 'text-deep-green animate-animate-ping-custom' : 'text-error-red'
@@ -176,7 +176,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
                 </span>
               </p>
             </div>
-            <div className='flex md:flex-row flex-col md:items-center items-start gap-2'>
+            <div className='flex items-center gap-2'>
               <CalendarIcon className={`text-base text-deep-green`} />
               <p className='flex items-center gap-1 md:text-base text-sm leading-6'>
                 <span className='leading-6 '>Launched:</span>

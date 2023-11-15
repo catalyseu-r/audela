@@ -56,7 +56,7 @@ const GenerateSolPicker = () => {
       </label>
 
       {isTooltip && (
-        <div className='animate-animate-tooltip absolute flex gap-1 flex-wrap bg-bg-black/90 rounded py-2 px-4 text-text-white md:w-[calc(45vw+2rem)] w-[calc(60vw+2rem)]   transition-all'>
+        <div className='animate-animate-tooltip absolute flex gap-1 items-center flex-wrap bg-bg-black/90 rounded py-2 px-4 text-text-white md:w-[calc(45vw+2rem)] w-[calc(60vw+2rem)]   transition-all'>
           {tooltipText.split(/(\s+)/).map((txt, index) => {
             return (
               <span
