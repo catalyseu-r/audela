@@ -5,7 +5,7 @@ import React from 'react';
 import { sortByDate } from '../utils/lists/sort';
 
 import { ActionTypes } from '../types/actionTypes';
-import { AppState } from '../types/appState';
+import { AppState, PhotoRecency } from '../types/appState';
 import { AppAction } from '../types/appActions';
 import { SortState } from '../types/sortState';
 
@@ -16,6 +16,9 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
 
     case ActionTypes.SET_FULL_QUERY:
       return { ...state, fullQuery: action.payload };
+
+    case ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE:
+      return { ...state, imageOfTheDayCurrentDate: action.payload };
 
     case ActionTypes.SET_ARTICLE_STATE:
       return {
@@ -74,15 +77,35 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
     case ActionTypes.SET_MARS_ROVER_FILTER_STATE: {
       return {
         ...state,
-        marsFilterState: { ...state.marsFilterState, [action.payload.key]: action.payload.value },
+        marsFilterState: { ...state.marsFilterState, [action.payload.key.toString()]: action.payload.value },
       };
     }
-    case ActionTypes.SET_CURRENT_MARS_ROVER: {
-      return { ...state, currentMarsRover: action.payload };
+
+    case ActionTypes.RESET_MARS_ROVER_FILTER_STATE: {
+      return {
+        ...state,
+        marsFilterState: {
+          sol: '',
+          earth_date: '',
+          camera: null,
+          recency: PhotoRecency.all,
+          rover: null,
+        },
+      };
     }
 
     case ActionTypes.SET_CURRENT_GALLERY: {
-      return { ...state, currentGallery: action.payload };
+      return {
+        ...state,
+        currentGallery: {
+          ...state.currentGallery,
+          photos: action.payload,
+        },
+      };
+    }
+
+    case ActionTypes.SET_IS_CURRENT_GALLERY_LOADING: {
+      return { ...state, currentGallery: { ...state.currentGallery, isLoading: action.payload } };
     }
 
     default:
@@ -111,6 +134,7 @@ export const GlobalContextProvider = ({ children }: any) => {
       start: 0,
       end: 6,
     },
+    imageOfTheDayCurrentDate: null,
     intersectionElements: {
       landing: false,
       mission: false,
@@ -118,14 +142,16 @@ export const GlobalContextProvider = ({ children }: any) => {
       contact: false,
     },
     marsFilterState: {
-      sol: '200',
+      sol: '',
       earth_date: '',
-      camera: '',
-      recency: '',
+      camera: null,
+      recency: PhotoRecency.all,
+      rover: null,
     },
-    currentMarsRover: null,
+
     currentGallery: {
       photos: [],
+      isLoading: false,
     },
 
     isSearchLoading: false,

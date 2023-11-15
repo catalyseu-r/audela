@@ -1,42 +1,33 @@
 'use client';
 
 import Breadcrumbs from '@/app/components/Breadcrumbs';
-import { ImageOfTheDay } from '@/app/types/imageOfTheDay';
 import { getImageOfTheDay } from '@/app/utils/API/getImageOfTheDay';
 import dayjs from 'dayjs';
 import React from 'react';
 import ImageContainer from './ImageContainer';
 import DescriptionContainer from './DescriptionContainer';
-import { BsCalendarDate as CalendarIcon } from 'react-icons/bs';
-import ReactDatePicker from 'react-datepicker';
-import { Variants, motion } from 'framer-motion';
+
+import CalendarContainer from './CalendarContainer';
+import { motion } from 'framer-motion';
 
 import Loading from './loading';
 import toast from 'react-hot-toast';
 import LikeAndShare from '@/app/components/LikeAndShare';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
 import { getLocalStorageItem, setLocalStorageItem } from '@/app/utils/localStorage/handleLocalStorage';
+import { useAppContext } from '@/app/contexts/store';
+import { ActionTypes } from '@/app/types/actionTypes';
+import { useCreateQueryString } from '@/app/utils/hooks/useCreateQueryString';
 
-interface ContentInterface {
-  data: ImageOfTheDay;
-}
+import { variantsArticle_imageOfTheDay, variantsImage_imageOfTheDay } from '@/app/staticData/framerVariats';
 
-const ContentContainer = (props: ContentInterface) => {
-  const [currentDate, setCurrentDate] = React.useState<Date | null | undefined>(null);
+const ContentContainer = () => {
+  const {
+    state: { imageOfTheDayCurrentDate },
+    dispatch,
+  } = useAppContext();
 
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const createQueryString = React.useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams);
-      params.set(name, value);
-
-      return params.toString();
-    },
-    [searchParams]
-  );
+  const { createQueryString, searchParams, updatePath, currentPath } = useCreateQueryString();
 
   const [contentState, setContentState] = React.useState({
     image: '',
@@ -48,33 +39,31 @@ const ContentContainer = (props: ContentInterface) => {
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const variantsArticle: Variants = {
-    exit: { opacity: 0, transform: 'translateX(-100%)' },
-    enter: { opacity: 1, transform: 'translateX(0)' },
-  };
-
-  const variantsImage: Variants = {
-    exit: { opacity: 0, transform: 'translateX(100%)' },
-    enter: { opacity: 1, transform: 'translateX(0)' },
-  };
-
   React.useEffect(() => {
     setIsLoading(true);
 
     const getStoredDateFromClient = () => {
       const savedClientDate = getLocalStorageItem('@au-dela_date');
+      const checkParams = searchParams.get('date');
+      const getDateFromParams = new Date(String(searchParams.get('date')));
       try {
-        if (savedClientDate && !searchParams.get('date') && !currentDate) {
-          setCurrentDate(savedClientDate);
+        if (savedClientDate && !checkParams && !imageOfTheDayCurrentDate) {
+          dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: new Date(savedClientDate) });
+
           //
-        } else if (!savedClientDate && searchParams.get('date') && !currentDate) {
-          setCurrentDate(new Date(String(searchParams.get('date'))));
           //
-        } else if (!currentDate && savedClientDate && searchParams.get('date')) {
-          setCurrentDate(new Date(String(searchParams.get('date'))));
+        } else if (!savedClientDate && checkParams && !imageOfTheDayCurrentDate) {
+          dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: getDateFromParams });
+
           //
-        } else if (!savedClientDate && !searchParams.get('date') && !currentDate) {
-          setCurrentDate(new Date());
+          //
+        } else if (savedClientDate && checkParams && !imageOfTheDayCurrentDate) {
+          dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: getDateFromParams });
+
+          //
+          //
+        } else if (!savedClientDate && !checkParams && !imageOfTheDayCurrentDate) {
+          dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: new Date() });
         }
       } catch (error) {
         console.log(error);
@@ -84,15 +73,13 @@ const ContentContainer = (props: ContentInterface) => {
     };
 
     getStoredDateFromClient();
-  }, [searchParams, currentDate]);
-
-  const handleDatePick = React.useCallback((date: Date) => setCurrentDate(date), []);
+  }, [searchParams, imageOfTheDayCurrentDate, dispatch]);
 
   React.useEffect(() => {
     setIsLoading(true);
     const handleUserCalendar = async () => {
       try {
-        const callApi = await getImageOfTheDay({ date: dayjs(currentDate).format('YYYY-MM-DD') });
+        const callApi = await getImageOfTheDay({ date: dayjs(imageOfTheDayCurrentDate).format('YYYY-MM-DD') });
         if (callApi) {
           const { url, hdurl, explanation, date, title } = callApi;
           setContentState((_prev) => {
@@ -110,49 +97,26 @@ const ContentContainer = (props: ContentInterface) => {
             'There was a problem with your request 😓 try picking diffirent date! In the meantime we will revert the calendar to previous day.'
           );
 
-          setCurrentDate(new Date(dayjs(currentDate).subtract(1, 'day').toDate()));
+          const subtractByDay = new Date(dayjs(imageOfTheDayCurrentDate).subtract(1, 'day').toDate());
+          dispatch({ type: ActionTypes.SET_CURRENT_IMAGE_OF_THE_DAY_DATE, payload: subtractByDay });
         }
       } catch (error) {
         console.log(error);
       } finally {
         setIsLoading(false);
-        setLocalStorageItem('@au-dela_date', dayjs(currentDate).format('YYYY-MM-DD'));
-        router.replace(`${pathname}?${createQueryString('date', dayjs(currentDate).format('YYYY-MM-DD'))}`);
+        setLocalStorageItem('@au-dela_date', dayjs(imageOfTheDayCurrentDate).format('YYYY-MM-DD'));
+        updatePath({ date: dayjs(imageOfTheDayCurrentDate).format('YYYY-MM-DD') });
       }
     };
 
-    currentDate && handleUserCalendar();
-  }, [currentDate, pathname, router, createQueryString]);
-
-  const CalendarLabel = () => {
-    return (
-      <div className='flex flex-col lg:items-start items-end justify-end gap-2  lg:px-5 lg:w-auto w-full lg:justify-self-auto justify-self-center'>
-        <p className='text-text-white text-base italic font-light leading-normal'>Got a specific date in mind?</p>
-
-        <div className='flex group items-center justify-between border-b max-w-[11.5rem]  border-b-interactive-green/50 focus-within:border-b-interactive-green transition-colors duration-300 px-4 py-2 '>
-          <ReactDatePicker
-            selected={currentDate}
-            onChange={(date) => handleDatePick(date!)}
-            maxDate={new Date()}
-            minDate={new Date('1995/06/16')}
-            className='!italic w-full bg-transparent font-light text-text-white text-base cursor-pointer  focus:outline-none '
-            calendarClassName='!bg-main-white  !text-bg-black'
-            disabledKeyboardNavigation
-            onFocus={(e) => e.target.blur()}
-            scrollableYearDropdown
-            showYearDropdown
-          />
-          <CalendarIcon className={`lg:text-2xl text-lg group-focus:text-interactive-green  text-text-white`} />
-        </div>
-      </div>
-    );
-  };
+    imageOfTheDayCurrentDate && handleUserCalendar();
+  }, [imageOfTheDayCurrentDate, updatePath, dispatch]);
 
   return (
     <div className='lg:mt-24 mt-20 w-full flex flex-col gap-8 min-h-custom-page-min transition-all duration-300'>
       <div className=' flex w-full justify-between items-start flex-wrap gap-8 '>
         <Breadcrumbs />
-        <CalendarLabel />
+        <CalendarContainer />
       </div>
 
       <div className='grid w-full  md:mt-24 lg:grid-cols-2 grid-cols-1 lg:gap-6 gap-24 md:place-items-start items-center '>
@@ -162,7 +126,7 @@ const ContentContainer = (props: ContentInterface) => {
           contentState.title && (
             <>
               <motion.div
-                variants={variantsArticle}
+                variants={variantsArticle_imageOfTheDay}
                 initial='exit'
                 animate='enter'
                 transition={{ duration: 0.5, delay: 0.5 }}
@@ -175,7 +139,7 @@ const ContentContainer = (props: ContentInterface) => {
                 />
               </motion.div>
               <motion.div
-                variants={variantsImage}
+                variants={variantsImage_imageOfTheDay}
                 initial='exit'
                 animate='enter'
                 transition={{ duration: 0.5, delay: 1 }}
@@ -186,7 +150,9 @@ const ContentContainer = (props: ContentInterface) => {
                   <LikeAndShare
                     articleData={{
                       title: contentState.title,
-                      url: `${pathname}?${createQueryString('date', dayjs(currentDate).format('YYYY-MM-DD'))}`,
+                      url: `${currentPath}${createQueryString({
+                        date: dayjs(imageOfTheDayCurrentDate).format('YYYY-MM-DD'),
+                      })}`,
                       description: `${contentState.desc.slice(0, 60)}...`,
                       ogImage: contentState.image,
                     }}
