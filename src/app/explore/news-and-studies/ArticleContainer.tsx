@@ -34,24 +34,25 @@ const ArticleContainer = (props: ArticleContainerData) => {
       <AnimatePresence>
         {props.data.map((item, index) => (
           <motion.div
-            className='flex justify-between items-start flex-wrap shadow-custom-article-shadow bg-text-white px-2 py-2 snap-center rounded-lg min-w-[18rem] max-w-[33.6rem]'
+            className='flex justify-between origin-top-right items-start flex-wrap shadow-custom-article-shadow bg-text-white px-2 py-2 snap-center rounded-lg min-w-[18rem] max-w-[33.6rem]'
             key={index}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, translateY: '-5%' }}
+            animate={{ opacity: 1, translateY: '0%' }}
+            exit={{ opacity: 0, translateY: '-5%' }}
+            transition={{ duration: index - index * 0.85, delay: index - index * 0.85, ease: 'easeInOut' }}
           >
             <div className=' md:w-[11.625rem] h-[13.375rem] w-full relative bg-text-white'>
               <Link href={`${pathName}/${item.data[0].nasa_id}`}>
                 <Image
-                  className='object-cover transition-opacity opacity-0 duration-1000 rounded placeholder:text-bg-black'
+                  className='object-cover  transition-all bg-deep-green/30 animate-pulse rounded placeholder:text-bg-black'
                   fill
-                  style={{
-                    objectFit: 'cover',
-                  }}
                   alt='Astronomy article image'
                   src={item?.links[0].href.toString()}
                   loading='lazy'
-                  onLoadingComplete={(image) => image.classList.remove('opacity-0')}
+                  onLoadingComplete={(image) => {
+                    image.classList.remove('bg-deep-green/30');
+                    image.classList.remove('animate-pulse');
+                  }}
                 />
               </Link>
             </div>
