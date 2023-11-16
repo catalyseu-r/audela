@@ -23,9 +23,12 @@ const ImageContainer = (props: ImageContainerProps) => {
         alt='astronomy picture of the day provided by NASA'
         fill
         priority
-        className='object-cover  opacity-0 transition-opacity placeholder:text-bg-black'
+        className='object-cover  bg-deep-green/30 aspect-square animate-pulse transition-all placeholder:text-bg-black'
         loading='eager'
-        onLoadingComplete={(image) => image.classList.remove('opacity-0')}
+        onLoadingComplete={(image) => {
+          image.classList.remove('bg-deep-green/30');
+          image.classList.remove('animate-pulse');
+        }}
       />
     </div>
   );
