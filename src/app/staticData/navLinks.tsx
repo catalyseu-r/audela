@@ -1,6 +1,11 @@
 import { TbNotebook as NoteBookIcon, TbMailbox as MailIcon } from 'react-icons/tb';
 import { IoTelescopeOutline as TelescopeIcon } from 'react-icons/io5';
-import { BiPlanet as PlanetIcon, BiImage as ImageIcon, BiLock as LockIcon } from 'react-icons/bi';
+import {
+  BiPlanet as PlanetIcon,
+  BiImage as ImageIcon,
+  BiLock as LockIcon,
+  BiImages as MarsGalleryIcon,
+} from 'react-icons/bi';
 import { FaRegNewspaper as NewsIcon } from 'react-icons/fa';
 export const navLinks = [
   {
@@ -14,9 +19,8 @@ export const navLinks = [
         icon: ImageIcon,
       },
       { title: 'News and studies', href: '/explore/news-and-studies', icon: NewsIcon },
-
+      { title: 'Mars rover gallery', href: '/explore/mars-rover-gallery', icon: MarsGalleryIcon },
       { title: 'Weather on Mars', href: 'blank', icon: LockIcon },
-      { title: 'Mars rover gallery', href: 'blank', icon: LockIcon },
     ],
   },
   { title: 'Our mission', delay: 0.8, icon: PlanetIcon, href: '/#mission' },

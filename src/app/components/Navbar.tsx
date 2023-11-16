@@ -153,7 +153,7 @@ const Navbar = () => {
         animate={containerControls}
         initial={{ opacity: 0, transform: 'translateY(-100%)' }}
         transition={{ duration: 0.35 }}
-        className={`w-full min-h-custom-page-min bg-bg-black  px-4 z-30 fixed top-0 lg:hidden  overflow-hidden`}
+        className={`w-full min-h-custom-page-min  bg-bg-black  px-4 z-30 fixed top-0 lg:hidden  overflow-hidden`}
       >
         <ElipseEffect />
         <div className='flex flex-col mt-32 mx-auto gap-14 max-w-[12.815rem] '>

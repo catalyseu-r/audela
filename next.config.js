@@ -11,6 +11,7 @@ const nextConfig = {
       'mars.nasa.gov',
       'mars.jpl.nasa.gov',
     ],
+    // formats: ['image/avif', 'image/webp'],
   },
 };
 
