@@ -103,11 +103,11 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
             src={mainImage.url ?? ''}
             fill
             alt='NASA article image'
-            className={` transition-all duration-500 opacity-0 rounded placeholder:text-bg-black`}
-            style={{
-              objectFit: 'cover',
+            className={` transition-all duration-500 bg-deep-green/30 animate-pulse rounded object-cover placeholder:text-bg-black`}
+            onLoadingComplete={(image) => {
+              image.classList.remove('bg-deep-green/30');
+              image.classList.remove('animate-pulse');
             }}
-            onLoadingComplete={(image) => image.classList.remove('opacity-0')}
             placeholder={'blur'}
             blurDataURL={mainImage.mediaThumb}
             loading='eager'
@@ -150,7 +150,7 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
               <div className='md:w-[13.5rem] md:h-[13.5rem] w-32 h-32 relative shrink-0'>
                 <Image
                   src={placeholder}
-                  className='rounded-full lg:shadow-custom-img-shadow placeholder:text-bg-black '
+                  className='rounded-full lg:shadow-custom-img-shadow placeholder:text-bg-black  '
                   fill
                   alt='placeholder for author'
                 />
@@ -169,6 +169,9 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
           </div>
         </div>
 
+        <h2 className='lg:mt-40 md:mt-24 mt-12 lg:text-subHeading md:text-2xl text-xl lg:leading-10 md:leading-8 leading-6 text-accent-pink font-light'>
+          More like this
+        </h2>
         <RelatedArticles />
       </div>
     </div>

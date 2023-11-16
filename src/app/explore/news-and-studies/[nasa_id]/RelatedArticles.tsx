@@ -32,7 +32,17 @@ const RelatedArticles = () => {
                 key={index}
                 className='w-[28rem] h-[20rem] relative rounded snap-always snap-center aspect-video pointer-events-none select-none'
               >
-                <Image className='  rounded aspect-video ' fill src={item.links[0].href.toString()} alt='article' />
+                <Image
+                  className='rounded aspect-video bg-deep-green/30 animate-pulse'
+                  fill
+                  loading='lazy'
+                  src={item.links[0].href.toString()}
+                  alt={`Related article to current reading topic`}
+                  onLoadingComplete={(image) => {
+                    image.classList.remove('bg-deep-green/30');
+                    image.classList.remove('animate-pulse');
+                  }}
+                />
               </div>
             );
           })}
