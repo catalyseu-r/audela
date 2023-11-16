@@ -40,12 +40,15 @@ const RoverPhotoGallery = () => {
             className='md:w-[28rem] md:h-[20rem] w-[20rem] h-[18rem] relative rounded snap-always snap-center aspect-video pointer-events-none select-none'
           >
             <Image
-              className='rounded object-cover opacity-0 transition-opacity  aspect-video '
+              className='rounded object-cover bg-deep-green/30 animate-pulse transition-all  aspect-video '
               loading='lazy'
               src={photo.img_src}
               fill
               alt='Photo form Mars rover'
-              onLoadingComplete={(image) => image.classList.remove('opacity-0')}
+              onLoadingComplete={(image) => {
+                image.classList.remove('bg-deep-green/30');
+                image.classList.remove('animate-pulse');
+              }}
             />
           </div>
         ))}

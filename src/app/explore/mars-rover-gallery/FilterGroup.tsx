@@ -25,14 +25,14 @@ const FilterGroup = ({ rovers }: MarsRoverProfiles) => {
         } transition-all `}
       >
         <CogIcon
-          className={`z-20 text-base cursor-pointer ${
-            isDropdownOpen ? 'rotate-45 text-interactive-green scale-125' : 'text-text-white'
+          className={`z-20 text-2xl cursor-pointer ${
+            isDropdownOpen ? 'rotate-45 text-interactive-green scale-105' : 'text-text-white'
           } transition-all `}
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         />
         {isDropdownOpen && (
           <div
-            className={`animate-animate-filters absolute w-full min-h-iframes-images-sm  bg-bg-black/90 rounded flex flex-wrap items-start lg:gap-10 md:gap-8 gap-6 h-min inset-0 py-6 px-4 z-10`}
+            className={`animate-animate-filters absolute w-full min-h-iframes-images-sm  bg-bg-black/90 rounded flex flex-wrap items-center justify-start lg:gap-10 gap-8  h-min inset-0 py-6 px-4 z-10`}
           >
             <GenerateRoverPicker rovers={rovers} />
             <GenerateSolPicker />
