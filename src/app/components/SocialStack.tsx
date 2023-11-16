@@ -14,7 +14,7 @@ const SocialStack = (props: SocialStackProps) => {
         return (
           <Link key={link.href} href={link.href} target='_blank' rel='noopener noreferrer'>
             <Icon
-              className={`text-deep-green  text-base cursor-pointer hover:text-interactive-green hover:scale-150 transition-all`}
+              className={`text-deep-green  text-lg cursor-pointer hover:text-interactive-green hover:scale-150 transition-all`}
             />
           </Link>
         );

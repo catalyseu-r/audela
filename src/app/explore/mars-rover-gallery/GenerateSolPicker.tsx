@@ -57,7 +57,7 @@ const GenerateSolPicker = () => {
         </div>
         <QuestionIcon
           onClick={toggleTooltip}
-          className={`lg:text-2xl text-base transition-all cursor-pointer ${
+          className={`lg:text-2xl text-xl transition-all cursor-pointer ${
             isTooltip ? 'text-interactive-green scale-125' : 'text-deep-green'
           }`}
         />
