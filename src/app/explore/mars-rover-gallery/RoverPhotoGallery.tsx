@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Loading from '../loading';
 import React from 'react';
 import { useCustomScroll } from '@/app/utils/hooks/useCustomScroll';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const RoverPhotoGallery = () => {
   const {
@@ -32,26 +33,32 @@ const RoverPhotoGallery = () => {
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
         ref={scrollContainerRef}
-        className=' w-full flex flex-nowrap lg:gap-12 md:gap-8 gap-6  overflow-auto scroll-smooth  overscroll-contain scroll-px-2 snap-proximity snap-x cursor-grab active:cursor-grabbing no-scrollbar'
+        className=' w-full flex flex-nowrap lg:gap-12 md:gap-8 gap-6  overflow-auto scroll-smooth  overscroll-contain scroll-px-2 snap-proximity snap-x cursor-grab active:cursor-grabbing no-scrollbar animate-animate-rover-gallery transition-all delay-300'
       >
-        {photos.map((photo) => (
-          <div
-            key={photo.id}
-            className='md:w-[28rem] md:h-[20rem] w-[20rem] h-[18rem] relative rounded snap-always snap-center aspect-video pointer-events-none select-none'
-          >
-            <Image
-              className='rounded object-cover bg-deep-green/30 animate-pulse transition-all  aspect-video '
-              loading='lazy'
-              src={photo.img_src}
-              fill
-              alt='Photo form Mars rover'
-              onLoadingComplete={(image) => {
-                image.classList.remove('bg-deep-green/30');
-                image.classList.remove('animate-pulse');
-              }}
-            />
-          </div>
-        ))}
+        <AnimatePresence>
+          {photos.map((photo, index) => (
+            <motion.div
+              key={photo.id}
+              className='md:w-[28rem] md:h-[20rem] w-[20rem] h-[18rem] relative rounded snap-always snap-center aspect-video pointer-events-none select-none'
+              initial={{ translateY: '-100%' }}
+              animate={{ translateY: '0%' }}
+              exit={{ translateY: '-100%' }}
+              transition={{ duration: index - index * 0.5, delay: index - index * 0.85, ease: 'easeInOut' }}
+            >
+              <Image
+                className='rounded object-cover bg-deep-green/30 animate-pulse transition-all  aspect-video '
+                loading='lazy'
+                src={photo.img_src}
+                fill
+                alt='Photo form Mars rover'
+                onLoadingComplete={(image) => {
+                  image.classList.remove('bg-deep-green/30');
+                  image.classList.remove('animate-pulse');
+                }}
+              />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
     );
   }
