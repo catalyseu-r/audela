@@ -20,6 +20,8 @@ import { getLocalStorageItem, setLocalStorageItem } from '@/app/utils/localStora
 import FilterGroup from './FilterGroup';
 import { useSearchParams } from 'next/navigation';
 
+import { motion, AnimatePresence } from 'framer-motion';
+
 const RoverGalleryContent = (data: MarsRoverProfiles) => {
   const {
     state: {
@@ -170,7 +172,10 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
         {isPageLoad || !rover ? (
           <Loading />
         ) : (
-          <div key={rover?.name} className='flex justify-start md:gap-14 gap-7 md:flex-nowrap flex-wrap animate-enter '>
+          <div
+            key={rover?.name}
+            className='flex justify-start md:gap-14 gap-7 md:flex-nowrap flex-wrap transition-all animate-animate-rover-pick'
+          >
             <div className='grid lg:shrink-0 md:gap-10 place-items-start  md:grid-cols-1  grid-cols-2  gap-3  '>
               <GenerateRoverIframe />
               <div className='w-full flex md:flex-row flex-col flex-wrap gap-4 items-start justify-start'>

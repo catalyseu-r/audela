@@ -150,6 +150,29 @@ const config: Config = {
             transform: 'translateY(0)',
           },
         },
+
+        roverPickScreenAnima: {
+          '0%': {
+            transform: 'translateY(16%) translateX(-24%)',
+            opacity: '.25',
+          },
+          '100%': {
+            transform: 'translateY(0) translateX(0)',
+            opacity: '1',
+          },
+        },
+
+        roverGalleryScreenAnima: {
+          '0%': {
+            transform: 'translateY(-16%) translateX(24%)',
+            opacity: '.25',
+          },
+
+          '100%': {
+            transform: 'translateY(0) translateX(0)',
+            opacity: '1',
+          },
+        },
       },
       animation: {
         enter: 'baseFadeIn 1s ease',
@@ -164,9 +187,12 @@ const config: Config = {
         'animate-text-custom': 'bioTextAnima .5s cubic-bezier(.31,.05,0,1.03) forwards ',
         'animate-tooltip': 'tooltipFadeIn 1s cubic-bezier(.31,.05,0,1.03) forwards',
         'animate-filters': 'filterSettingsFadeIn 1s cubic-bezier(.31,.05,0,1.03) forwards',
+        'animate-rover-pick': 'roverPickScreenAnima 1s ease',
+        'animate-rover-gallery': 'roverGalleryScreenAnima 1s ease',
       },
       transitionTimingFunction: {
         'custom-anim': 'cubic-bezier(.31,.05,0,1.03)',
+        'overshoot-bezier-custom': 'cubic-bezier(.95,-0.38,.47,.55)',
       },
       lineHeight: {
         '2xl': '4.5rem',
