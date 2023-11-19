@@ -101,12 +101,14 @@ const LandingContent = () => {
               <div className='absolute bottom-12   left-2/4 transform -translate-x-1/2 flex flex-col items-center justify-center gap-4'>
                 <SocialStack />
 
-                <p className='text-xs text-text-white text-center leading-6 font-normal'>
-                  Designed and Developed with <span className='text-accent-pink'>❤</span> by Catalisteu-r
-                </p>
-                <p className='text-xs text-text-white text-center leading-6 font-normal'>
-                  Powered by NextJS, TailwindCSS, and NASA Open API
-                </p>
+                <div className='flex flex-col gap-2 items-center'>
+                  <p className='text-xs text-text-white text-center leading-6 font-normal'>
+                    Designed and Developed with <span className='text-accent-pink'>❤</span> by Catalisteu-r
+                  </p>
+                  <p className='text-xs text-text-white text-center leading-6 font-normal'>
+                    Powered by NextJS, TailwindCSS, and NASA Open API
+                  </p>
+                </div>
               </div>
             </div>
           </div>
