@@ -92,6 +92,17 @@ const config: Config = {
           },
         },
 
+        landingTextAnima: {
+          '0%': {
+            transform: 'translateY(-50%) translateX(24%)',
+            opacity: '0',
+          },
+          '100%': {
+            transform: 'translateY(0) translateX(0)',
+            opacity: '1',
+          },
+        },
+
         baseFadeIn: {
           from: {
             opacity: '0',
@@ -173,6 +184,14 @@ const config: Config = {
             opacity: '1',
           },
         },
+
+        socialStackAnima: {
+          '0%': { transform: 'translateY(-200%) translateX(-24%)' },
+          '100%': {
+            transform: 'translateY(0) translateX(0)',
+            opacity: '1',
+          },
+        },
       },
       animation: {
         enter: 'baseFadeIn 1s ease',
@@ -189,6 +208,8 @@ const config: Config = {
         'animate-filters': 'filterSettingsFadeIn 1s cubic-bezier(.31,.05,0,1.03) forwards',
         'animate-rover-pick': 'roverPickScreenAnima 1s ease',
         'animate-rover-gallery': 'roverGalleryScreenAnima 1s ease',
+        'animate-social-stack': 'socialStackAnima 1s ease forwards',
+        'animate-landing-text': 'landingTextAnima 1.5s cubic-bezier(.31,.05,0,1.03) forwards',
       },
       transitionTimingFunction: {
         'custom-anim': 'cubic-bezier(.31,.05,0,1.03)',
