@@ -194,6 +194,12 @@ const config: Config = {
             opacity: '1',
           },
         },
+
+        customScrollbarAnima: {
+          '0%': { filter: 'blur(4px)' },
+          '50%': { filter: 'blur(2px)' },
+          '100%': { filter: 'none' },
+        },
       },
       animation: {
         enter: 'baseFadeIn 1s ease',
@@ -212,6 +218,7 @@ const config: Config = {
         'animate-rover-gallery': 'roverGalleryScreenAnima 1s ease',
         'animate-social-stack': 'socialStackAnima 1s ease forwards',
         'animate-landing-text': 'landingTextAnima 2s cubic-bezier(.31,.05,0,1.03) forwards',
+        'animate-custom-scrollbar': 'customScrollbarScale 2s cubic-bezier(.95,-0.38,.47,.55) forwards',
       },
       transitionTimingFunction: {
         'custom-anim': 'cubic-bezier(.31,.05,0,1.03)',
