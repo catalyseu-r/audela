@@ -47,13 +47,14 @@ export const useCustomScroll = (
       e.preventDefault();
       if (elementContainer && elementContainer.current) {
         const delta = e.deltaY;
-        console.log('DELTA', delta);
-        const newScrollLeft = elementContainer.current.scrollLeft + delta * easing;
+        const scrollSpeed = 5;
+
+        const newScrollLeft = elementContainer.current.scrollLeft + delta * scrollSpeed;
 
         elementContainer.current.scrollLeft = newScrollLeft;
       }
     },
-    [elementContainer, easing]
+    [elementContainer]
   );
 
   React.useEffect(() => {
@@ -62,16 +63,19 @@ export const useCustomScroll = (
     if (containerVar) {
       containerVar.addEventListener('mousemove', handleMouseMove as any);
       containerVar.addEventListener('mouseup', handleMouseUp);
+      containerVar.addEventListener('wheel', handleMouseWheel);
       containerVar.childNodes.forEach((child) => child.addEventListener('mouseleave', handleMouseUp));
     }
 
     return () => {
       containerVar && containerVar.removeEventListener('mousemove', handleMouseMove as any);
       containerVar && containerVar.removeEventListener('mouseup', handleMouseUp);
+      containerVar && containerVar.removeEventListener('wheel', handleMouseWheel);
+
       containerVar &&
         containerVar.childNodes.forEach((child) => child.removeEventListener('mouseleave', handleMouseUp));
     };
-  }, [elementContainer, handleMouseMove, handleMouseUp]);
+  }, [elementContainer, handleMouseMove, handleMouseUp, handleMouseWheel]);
 
   return [handleMouseDown, handleMouseMove, handleMouseUp];
 };
