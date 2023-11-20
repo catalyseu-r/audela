@@ -92,6 +92,19 @@ const config: Config = {
           },
         },
 
+        landingTextAnima: {
+          '0%': {
+            transform: 'translateY(-200%) translateX(88%)',
+            opacity: '0',
+            // letterSpacing: '.05em',
+          },
+          '100%': {
+            transform: 'translateY(0) translateX(0)',
+            opacity: '1',
+            // letterSpacing: '-0.05em',
+          },
+        },
+
         baseFadeIn: {
           from: {
             opacity: '0',
@@ -173,6 +186,20 @@ const config: Config = {
             opacity: '1',
           },
         },
+
+        socialStackAnima: {
+          '0%': { transform: 'translateY(-200%) translateX(-80%)' },
+          '100%': {
+            transform: 'translateY(0) translateX(0)',
+            opacity: '1',
+          },
+        },
+
+        customScrollbarAnima: {
+          '0%': { filter: 'blur(4px)' },
+          '50%': { filter: 'blur(2px)' },
+          '100%': { filter: 'none' },
+        },
       },
       animation: {
         enter: 'baseFadeIn 1s ease',
@@ -189,6 +216,9 @@ const config: Config = {
         'animate-filters': 'filterSettingsFadeIn 1s cubic-bezier(.31,.05,0,1.03) forwards',
         'animate-rover-pick': 'roverPickScreenAnima 1s ease',
         'animate-rover-gallery': 'roverGalleryScreenAnima 1s ease',
+        'animate-social-stack': 'socialStackAnima 1s ease forwards',
+        'animate-landing-text': 'landingTextAnima 2s cubic-bezier(.31,.05,0,1.03) forwards',
+        'animate-custom-scrollbar': 'customScrollbarScale 2s cubic-bezier(.95,-0.38,.47,.55) forwards',
       },
       transitionTimingFunction: {
         'custom-anim': 'cubic-bezier(.31,.05,0,1.03)',

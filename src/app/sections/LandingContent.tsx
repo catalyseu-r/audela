@@ -71,8 +71,8 @@ const LandingContent = () => {
         >
           {/* custom-scrollbar */}
           <div
-            style={{ transform: `translate3d(${containerWidth}px,-50%,0)` }}
-            className={`h-[calc(80vh/1.3)] fixed top-2/4  w-px m-0 p-0  z-50 bg-text-white/10 lg:flex sm:hidden flex-col items-center justify-between overflow-visible`}
+            style={{ transform: `translate3d(${containerWidth}px,-50%,0)`, animationDelay: '1.5s' }}
+            className={`h-[calc(80vh/1.3)] animate-animate-custom-scrollbar fixed top-2/4  w-px m-0 p-0 origin-top  z-50 bg-text-white/10 lg:flex sm:hidden flex-col items-center justify-between overflow-visible `}
           >
             {pageSections.map((section) => (
               <Bubble key={section} linkTo={section} currentInView={getTrueKey(intersectionElements)} />
@@ -85,7 +85,7 @@ const LandingContent = () => {
               transitionTimingFunction: 'cubic-bezier(0,.79,.65,.99)',
               transitionDuration: '250ms',
             }}
-            className='w-full  mx-auto flex flex-col transform-gpu will-change-transform transition-custom-anim'
+            className='w-full  mx-auto flex flex-col transform-gpu will-change-transform ease-custom-anim'
           >
             {/* container */}
             {/* overlay */}
@@ -101,12 +101,14 @@ const LandingContent = () => {
               <div className='absolute bottom-12   left-2/4 transform -translate-x-1/2 flex flex-col items-center justify-center gap-4'>
                 <SocialStack />
 
-                <p className='text-xs text-text-white text-center leading-6 font-normal'>
-                  Designed and Developed with <span className='text-accent-pink'>❤</span> by Catalisteu-r
-                </p>
-                <p className='text-xs text-text-white text-center leading-6 font-normal'>
-                  Powered by NextJS, TailwindCSS, and NASA Open API
-                </p>
+                <div className='flex flex-col gap-2 items-center'>
+                  <p className='text-xs text-text-white text-center leading-6 font-normal'>
+                    Designed and Developed with <span className='text-accent-pink'>❤</span> by Catalisteu-r
+                  </p>
+                  <p className='text-xs text-text-white text-center leading-6 font-normal'>
+                    Powered by NextJS, TailwindCSS, and NASA Open API
+                  </p>
+                </div>
               </div>
             </div>
           </div>

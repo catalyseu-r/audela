@@ -128,8 +128,8 @@ const ArticlePageContainer = ({ articleData, mainImage }: ArticlePageContainerDa
           <div className='flex flex-wrap-reverse justify-end items-center gap-9 max-w-xl place-self-end px-6'>
             {keywords.map((keyword) => (
               <button key={keyword} className='flex items-center gap-1 px-4 py-2 border border-deep-green rounded'>
-                <HashTag className={`text-text-white text-base`} />
-                <p className='text-text-white text-base leading-6 font-light'>{keyword}</p>
+                <HashTag className={`text-text-white text-base shrink-0`} />
+                <p className='text-text-white text-base leading-6 font-light truncate max-w-[35ch]'>{keyword}</p>
               </button>
             ))}
           </div>

@@ -12,9 +12,18 @@ const SocialStack = (props: SocialStackProps) => {
       {socialLinks.map((link, index, orig) => {
         const Icon = orig[index].icon;
         return (
-          <Link key={link.href} href={link.href} target='_blank' rel='noopener noreferrer'>
+          <Link
+            key={link.href}
+            href={link.href}
+            target='_blank'
+            rel='noopener noreferrer'
+            className={`animate-animate-social-stack transition-all -translate-y-[200%] -translate-x-[24%] opacity-0`}
+            style={{
+              animationDelay: String(index - index * 0.85 + 's'),
+            }}
+          >
             <Icon
-              className={`text-deep-green  text-lg cursor-pointer hover:text-interactive-green hover:scale-150 transition-all`}
+              className={`text-deep-green  text-lg cursor-pointer hover:text-interactive-green transition-all hover:scale-150 `}
             />
           </Link>
         );
