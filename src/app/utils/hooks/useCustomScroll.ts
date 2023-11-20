@@ -42,27 +42,34 @@ export const useCustomScroll = (
     [elementContainer, isDragging, scrollLeft, startX, easing]
   );
 
-  // const handleMouseWheel = React.useCallback(
-  //   (e: WheelEvent) => {
-  //     e.preventDefault();
-  //     if (elementContainer && elementContainer.current) {
-  //       elementContainer.current.scrollLeft = e.deltaY * 7;
-  //     }
-  //   },
-  //   [elementContainer]
-  // );
-  //
+  const handleMouseWheel = React.useCallback(
+    (e: WheelEvent) => {
+      e.preventDefault();
+      if (elementContainer && elementContainer.current) {
+        const delta = e.deltaY;
+        console.log('DELTA', delta);
+        const newScrollLeft = elementContainer.current.scrollLeft + delta * easing;
+
+        elementContainer.current.scrollLeft = newScrollLeft;
+      }
+    },
+    [elementContainer, easing]
+  );
+
   React.useEffect(() => {
     const containerVar = elementContainer.current;
 
     if (containerVar) {
       containerVar.addEventListener('mousemove', handleMouseMove as any);
       containerVar.addEventListener('mouseup', handleMouseUp);
+      containerVar.childNodes.forEach((child) => child.addEventListener('mouseleave', handleMouseUp));
     }
 
     return () => {
       containerVar && containerVar.removeEventListener('mousemove', handleMouseMove as any);
       containerVar && containerVar.removeEventListener('mouseup', handleMouseUp);
+      containerVar &&
+        containerVar.childNodes.forEach((child) => child.removeEventListener('mouseleave', handleMouseUp));
     };
   }, [elementContainer, handleMouseMove, handleMouseUp]);
 
