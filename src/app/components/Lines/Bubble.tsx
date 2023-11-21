@@ -18,7 +18,7 @@ const Bubble = (props: BubbleProps) => {
         height={17}
         fill='none'
         transform={props.linkTo ? undefined : `translate(72,260)`}
-        className='cursor-pointer transition-all'
+        className={`cursor-pointer transition-all ${props.currentInView === props.linkTo && 'animate-pulse'}`}
       >
         {props.linkTo ? (
           <a href={`/#${props.linkTo}`}>
@@ -28,7 +28,7 @@ const Bubble = (props: BubbleProps) => {
               r={8.5}
               fill='#6F6'
               fillOpacity={isHover || props.currentInView === props.linkTo ? 1 : 0.24}
-              className='transition-all duration-500'
+              className='transition-all duration-500 '
             />
           </a>
         ) : (
