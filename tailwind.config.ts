@@ -217,7 +217,7 @@ const config: Config = {
             backgroundSize: '.75em 300%',
           },
 
-          '99': {
+          '99%': {
             backgroundPosition: 'center -300%',
             backgroundSize: '1em -90%',
           },
@@ -227,22 +227,22 @@ const config: Config = {
             backgroundPosition: '36% 42%',
             backgroundSize: '200%',
           },
-          ' 20%': {
+          '20%': {
             backgroundPosition: '30% 35%',
             backgroundSize: '200%',
           },
 
-          '20.0001% ': {
-            backgroundPosition: ' 60% 85%',
+          '20.0001%': {
+            backgroundPosition: '60% 85%',
             backgroundSize: '500%',
           },
 
-          '40% ': {
+          '40%': {
             backgroundPosition: '49% 81%',
             backgroundSize: '500%',
           },
 
-          '40.0001% ': {
+          '40.0001%': {
             backgroundPosition: '80% 42%',
             backgroundSize: '300%',
           },
@@ -267,7 +267,7 @@ const config: Config = {
             backgroundSize: '300%',
           },
 
-          '100%:': {
+          '100%': {
             backgroundPosition: '72% 14%',
             backgroundSize: '300%',
           },
@@ -287,7 +287,7 @@ const config: Config = {
       },
       animation: {
         enter: 'baseFadeIn 1s ease',
-        leave: 'baseFadeOut 1s ease-in ',
+        leave: 'baseFadeOut 1s ease-in',
         'animate-elipse': 'elipseTransform 35s infinite alternate ease-in-out',
         'animate-elipse-short': 'elipseTransform 25s infinite alternate ease-in-out',
         'animate-reverse': 'elipseTransform 35s infinite alternate-reverse ease-in-out',
@@ -305,7 +305,7 @@ const config: Config = {
         'animate-custom-scrollbar': 'customScrollbarScale 2s cubic-bezier(.95,-0.38,.47,.55) forwards',
         'animate-gradient-overlay': 'gradientAnima 15s  linear forwards',
         'animate-mission-image': 'missionImageAnima 15s cubic-bezier(.95,-0.38,.47,.55) infinite',
-        'animate-cta-text': 'buttonTextAnima 2s linear ',
+        'animate-cta-text': 'buttonTextAnima 2s linear',
       },
       transitionTimingFunction: {
         'custom-anim': 'cubic-bezier(.31,.05,0,1.03)',
