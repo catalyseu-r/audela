@@ -63,6 +63,7 @@ const config: Config = {
         'custom-image-strong-shadow': '12px 12px 4px -4px #00A86B',
         'custom-article-shadow': '0px 4px 10px 1px rgba(106, 137, 204, 0.80)',
       },
+
       keyframes: {
         wave: {
           '0%, 60%, 100%': { transform: 'rotate(0.0deg)' },
@@ -200,6 +201,28 @@ const config: Config = {
           '50%': { filter: 'blur(2px)' },
           '100%': { filter: 'none' },
         },
+
+        gradientAnima: {
+          '0%, 100%': {
+            backgroundPosition: 'center center',
+            backgroundSize: '300% 300%',
+          },
+
+          '33%': {
+            backgroundPosition: ' -300% center',
+            backgroundSize: '.5em 300%',
+          },
+
+          '66%': {
+            backgroundPosition: ' center -150%',
+            backgroundSize: '.75em 300%',
+          },
+
+          '99': {
+            backgroundPosition: 'center -300%',
+            backgroundSize: '1em -90%',
+          },
+        },
       },
       animation: {
         enter: 'baseFadeIn 1s ease',
@@ -219,6 +242,7 @@ const config: Config = {
         'animate-social-stack': 'socialStackAnima 1s ease forwards',
         'animate-landing-text': 'landingTextAnima 2s cubic-bezier(.31,.05,0,1.03) forwards',
         'animate-custom-scrollbar': 'customScrollbarScale 2s cubic-bezier(.95,-0.38,.47,.55) forwards',
+        'animate-gradient-overlay': 'gradientAnima 25s  linear infinite',
       },
       transitionTimingFunction: {
         'custom-anim': 'cubic-bezier(.31,.05,0,1.03)',
