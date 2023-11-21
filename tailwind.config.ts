@@ -217,7 +217,7 @@ const config: Config = {
             backgroundSize: '.75em 300%',
           },
 
-          '99': {
+          '99%': {
             backgroundPosition: 'center -300%',
             backgroundSize: '1em -90%',
           },
@@ -227,22 +227,22 @@ const config: Config = {
             backgroundPosition: '36% 42%',
             backgroundSize: '200%',
           },
-          ' 20%': {
+          '20%': {
             backgroundPosition: '30% 35%',
             backgroundSize: '200%',
           },
 
-          '20.0001% ': {
+          '20.0001%': {
             backgroundPosition: '60% 85%',
             backgroundSize: '500%',
           },
 
-          '40% ': {
+          '40%': {
             backgroundPosition: '49% 81%',
             backgroundSize: '500%',
           },
 
-          '40.0001% ': {
+          '40.0001%': {
             backgroundPosition: '80% 42%',
             backgroundSize: '300%',
           },
@@ -267,7 +267,7 @@ const config: Config = {
             backgroundSize: '300%',
           },
 
-          '100%:': {
+          '100%': {
             backgroundPosition: '72% 14%',
             backgroundSize: '300%',
           },
