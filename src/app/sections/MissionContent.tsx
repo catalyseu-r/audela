@@ -2,8 +2,6 @@
 
 import React from 'react';
 
-import Image from 'next/image';
-import roverImg from '../img/mars-rover.jpg';
 import LineOne from '../components/Lines/LineOne';
 import LineTwo from '../components/Lines/LineTwo';
 import LineThree from '../components/Lines/LineThree';
@@ -86,21 +84,12 @@ const MissionContent = (props: CommonSectionProps) => {
 
           <div className='flex relative flex-col w-full md:w-8/12 lg:w-5/12 group'>
             <div
-              className={`relative  h-80 lg:max-w-[416px]  aspect-square ${
+              ref={missionArticleRef}
+              style={{ backgroundPosition: '0% 0%', backgroundSize: '300%' }}
+              className={`relative bg-overlay-mission aspect-video  h-80 lg:max-w-[416px]  overflow-hidden ${
                 isArticleInView ? 'lg:shadow-custom-img-shadow delay-1000 ' : 'shadow-none'
-              } transition-all duration-500 ease-linear cursor-pointer overflow-hidden`}
-            >
-              <Image
-                ref={missionArticleRef}
-                className={`${
-                  isArticleInView ? 'scale-100 opacity-100 delay-300' : 'scale-20 opacity-10'
-                } object-cover transition-all duration-300 ease-linear group-hover:scale-125`}
-                src={roverImg}
-                fill
-                loading='lazy'
-                alt='Mars rover in action'
-              />
-            </div>
+              } transition-all duration-500 ease-linear cursor-pointer overflow-hidden animate-animate-mission-image bg-no-repeat bg-cover`}
+            ></div>
 
             <div className='absolute bottom-0 cursor-pointer w-full h-full will-change-contents '>
               <Bubble linkTo={null} currentInView={'mission'} />

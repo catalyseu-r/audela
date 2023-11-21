@@ -19,7 +19,7 @@ const ButtonCTA = ({ title: buttonText, linkTo }: ButtonPropsCTA) => {
        px-3  
        
       
-       lg:w-64 h-auto 
+       lg:w-[16.5rem] h-auto 
        w-auto 
        relative 
     overflow-hidden
@@ -42,9 +42,11 @@ const ButtonCTA = ({ title: buttonText, linkTo }: ButtonPropsCTA) => {
       onMouseOver={() => setIsPause(true)}
       onMouseLeave={() => setIsPause(false)}
     >
-      <div className='flex items-center content-center  gap-4 w-full h-full  transition-all '>
-        <p className='w-full lg:text-2xl text-lg  transition-all ease-linear leading-9 font-normal '>{buttonText}</p>
-        <TelescopeIcon className={`lg:text-3xl text-lg`} />
+      <div className='flex items-center content-center gap-4 w-full h-full transition-all'>
+        <p className='w-full lg:text-2xl text-lg  transition-all ease-linear leading-9 font-normal animate-animate-cta-text'>
+          {buttonText}
+        </p>
+        <TelescopeIcon className={`lg:text-3xl text-lg shrink-0`} />
       </div>
     </Link>
   );

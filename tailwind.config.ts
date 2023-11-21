@@ -14,6 +14,7 @@ const config: Config = {
           'linear-gradient(to left, rgba(14, 14, 14, .72) 100%, rgba(14, 14, 14, 0.72) 100%), url("img/landing-bg.jpg")',
         'not-found-bg': 'url("img/not-found-n.png")',
         'overlay-landing': 'url(img/overlay-landing.png)',
+        'overlay-mission': 'url(img/mars-rover.jpg)',
       },
       minHeight: {
         'custom-page-min': 'calc(100svh + 1rem)',
@@ -97,12 +98,10 @@ const config: Config = {
           '0%': {
             transform: 'translateY(-200%) translateX(88%)',
             opacity: '0',
-            // letterSpacing: '.05em',
           },
           '100%': {
             transform: 'translateY(0) translateX(0)',
             opacity: '1',
-            // letterSpacing: '-0.05em',
           },
         },
 
@@ -223,6 +222,68 @@ const config: Config = {
             backgroundSize: '1em -90%',
           },
         },
+        missionImageAnima: {
+          '0%': {
+            backgroundPosition: '36% 42%',
+            backgroundSize: '200%',
+          },
+          ' 20%': {
+            backgroundPosition: '30% 35%',
+            backgroundSize: '200%',
+          },
+
+          '20.0001% ': {
+            backgroundPosition: ' 60% 85%',
+            backgroundSize: '500%',
+          },
+
+          '40% ': {
+            backgroundPosition: '49% 81%',
+            backgroundSize: '500%',
+          },
+
+          '40.0001% ': {
+            backgroundPosition: '80% 42%',
+            backgroundSize: '300%',
+          },
+
+          '60%': {
+            backgroundPosition: '84% 33%',
+            backgroundSize: '300%',
+          },
+
+          '60.0001%': {
+            backgroundPosition: '0% 0%',
+            backgroundSize: '300%',
+          },
+
+          '80%': {
+            backgroundPosition: '15% 4%',
+            backgroundSize: '300%',
+          },
+
+          '80.0001%': {
+            backgroundPosition: '80% 10%',
+            backgroundSize: '300%',
+          },
+
+          '100%:': {
+            backgroundPosition: '72% 14%',
+            backgroundSize: '300%',
+          },
+        },
+
+        buttonTextAnima: {
+          '0%': {
+            color: '#0E0E0E',
+          },
+          '50%': {
+            color: '#FF6B6B',
+          },
+          '100%': {
+            color: '#E4E4E4',
+          },
+        },
       },
       animation: {
         enter: 'baseFadeIn 1s ease',
@@ -242,7 +303,9 @@ const config: Config = {
         'animate-social-stack': 'socialStackAnima 1s ease forwards',
         'animate-landing-text': 'landingTextAnima 2s cubic-bezier(.31,.05,0,1.03) forwards',
         'animate-custom-scrollbar': 'customScrollbarScale 2s cubic-bezier(.95,-0.38,.47,.55) forwards',
-        'animate-gradient-overlay': 'gradientAnima 25s  linear infinite',
+        'animate-gradient-overlay': 'gradientAnima 15s  linear forwards',
+        'animate-mission-image': 'missionImageAnima 15s cubic-bezier(.95,-0.38,.47,.55) infinite',
+        'animate-cta-text': 'buttonTextAnima 2s linear ',
       },
       transitionTimingFunction: {
         'custom-anim': 'cubic-bezier(.31,.05,0,1.03)',
