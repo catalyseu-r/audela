@@ -85,10 +85,10 @@ const MissionContent = (props: CommonSectionProps) => {
           <div className='flex relative flex-col w-full md:w-8/12 lg:w-5/12 group'>
             <div
               ref={missionArticleRef}
-              style={{ backgroundPosition: '0% 0%', backgroundSize: '300%' }}
-              className={`relative bg-overlay-mission aspect-video  h-80 lg:max-w-[416px]  overflow-hidden ${
+              style={{ backgroundPosition: '0% 0%', backgroundSize: '300% 300%' }}
+              className={`relative  bg-overlay-mission aspect-video  h-80 lg:max-w-[416px]  overflow-hidden ${
                 isArticleInView ? 'lg:shadow-custom-img-shadow delay-1000 ' : 'shadow-none'
-              } transition-all duration-500 ease-linear cursor-pointer overflow-hidden animate-animate-mission-image bg-no-repeat bg-cover`}
+              } transition-all duration-500 ease-linear cursor-pointer overflow-hidden animate-animate-mission-image bg-no-repeat bg-cover after:absolute after:w-full after:h-full after:bg-gradient-to-r from-bg-black/25 after:bg-[length:300%_300%] after:inset-0 after:animate-animate-mission-image-overlay after:opacity-20  lg:after:blur-sm after:z-10`}
             ></div>
 
             <div className='absolute bottom-0 cursor-pointer w-full h-full will-change-contents '>
