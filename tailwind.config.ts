@@ -253,7 +253,7 @@ const config: Config = {
           },
 
           '60.0001%': {
-            backgroundPosition: '0% 0%',
+            backgroundPosition: '30% 0%',
             backgroundSize: '300%',
           },
 
