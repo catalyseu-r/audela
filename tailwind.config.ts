@@ -225,7 +225,7 @@ const config: Config = {
         missionImageAnima: {
           '0%': {
             backgroundPosition: '36% 42%',
-            backgroundSize: '200%',
+            backgroundSize: '300%',
           },
           '20%': {
             backgroundPosition: '30% 35%',
@@ -234,22 +234,22 @@ const config: Config = {
 
           '20.0001%': {
             backgroundPosition: '60% 85%',
-            backgroundSize: '500%',
+            backgroundSize: '250%',
           },
 
           '40%': {
             backgroundPosition: '49% 81%',
-            backgroundSize: '500%',
+            backgroundSize: '250%',
           },
 
           '40.0001%': {
             backgroundPosition: '80% 42%',
-            backgroundSize: '300%',
+            backgroundSize: '350%',
           },
 
           '60%': {
             backgroundPosition: '84% 33%',
-            backgroundSize: '300%',
+            backgroundSize: '450%',
           },
 
           '60.0001%': {
@@ -259,7 +259,7 @@ const config: Config = {
 
           '80%': {
             backgroundPosition: '15% 4%',
-            backgroundSize: '300%',
+            backgroundSize: '350%',
           },
 
           '80.0001%': {
@@ -284,6 +284,43 @@ const config: Config = {
             color: '#E4E4E4',
           },
         },
+
+        contactStackAnima: {
+          '0%': {
+            transform: 'translateY(-300%) translateX(250%) ',
+            opacity: '.8',
+          },
+
+          '100%': {
+            transform: 'translateY(0) translateX(0%) ',
+            opacity: '1',
+          },
+        },
+        missionImageOverlayAnima: {
+          '0%': {
+            backgroundSize: '100% 20%',
+            backgroundPosition: '300% 20%',
+          },
+
+          '25%': {
+            backgroundSize: '80% 30%',
+            backgroundPosition: '250%, 30%',
+          },
+
+          '50%': {
+            backgroundSize: '60% 30%',
+            backgroundPosition: '250%, 30%',
+          },
+
+          '75%': {
+            backgroundSize: '80% 40%',
+            backgroundPosition: '100% -40%',
+          },
+          '100%': {
+            backgroundSize: '40% 300%',
+            backgroundPosition: '-200% 100%',
+          },
+        },
       },
       animation: {
         enter: 'baseFadeIn 1s ease',
@@ -306,6 +343,9 @@ const config: Config = {
         'animate-gradient-overlay': 'gradientAnima 15s  linear forwards',
         'animate-mission-image': 'missionImageAnima 15s cubic-bezier(.95,-0.38,.47,.55) infinite',
         'animate-cta-text': 'buttonTextAnima 2s linear',
+        'animate-contact-stack': 'contactStackAnima 1s cubic-bezier(.31,.05,0,1.03) forwards',
+        'animate-mission-image-overlay':
+          'missionImageOverlayAnima 10s cubic-bezier(.95,-0.38,.47,.55) alternate infinite',
       },
       transitionTimingFunction: {
         'custom-anim': 'cubic-bezier(.31,.05,0,1.03)',
