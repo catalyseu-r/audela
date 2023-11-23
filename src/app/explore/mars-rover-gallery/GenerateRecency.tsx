@@ -5,7 +5,7 @@ import { LuClock4 as ClockIcon } from 'react-icons/lu';
 const GenerateRecency = () => {
   const {
     state: {
-      marsFilterState: { recency, rover },
+      marsFilterState: { latest, rover },
     },
     dispatch,
   } = useAppContext();
@@ -13,11 +13,11 @@ const GenerateRecency = () => {
   const updateRecency = (event: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch({
       type: ActionTypes.SET_MARS_ROVER_FILTER_STATE,
-      payload: { key: 'recency', value: event.target.value },
+      payload: { key: 'latest', value: event.target.value },
     });
   };
 
-  if (!recency || !rover) {
+  if (!latest || !rover) {
     return null;
   } else
     return (
@@ -31,7 +31,7 @@ const GenerateRecency = () => {
         </label>
         <select
           onChange={updateRecency}
-          value={recency}
+          value={latest}
           className='py-2 px-4 rounded bg-bg-black  border-r-[16px] border-transparent outline outline-1 outline-deep-green/50 focus:outline-interactive-green transition-all lg:text-base text-sm text-text-white  !font-sans cursor-pointer w-full max-w-[17ch]'
         >
           <option value={PhotoRecency.all}>All</option>
