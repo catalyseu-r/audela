@@ -33,7 +33,7 @@ export interface AppState {
     sol: string;
     earth_date: string;
     camera: string | null;
-    recency: PhotoRecency;
+    latest: PhotoRecency;
     rover: MarsRoverProfile | null;
   };
 
