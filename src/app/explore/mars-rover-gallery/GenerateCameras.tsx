@@ -6,7 +6,7 @@ import { GiPhotoCamera as CameraIcon } from 'react-icons/gi';
 const GenerateCameras = () => {
   const {
     state: {
-      marsFilterState: { camera, rover, recency },
+      marsFilterState: { camera, rover, latest },
     },
     dispatch,
   } = useAppContext();
@@ -14,7 +14,7 @@ const GenerateCameras = () => {
   const handleCameraPick = (event: React.ChangeEvent<HTMLSelectElement>) =>
     dispatch({ type: ActionTypes.SET_MARS_ROVER_FILTER_STATE, payload: { key: 'camera', value: event.target.value } });
 
-  const isMostRecent = recency === PhotoRecency.latest_photos;
+  const isMostRecent = latest === PhotoRecency.latest_photos;
 
   if (!camera || !rover) {
     return null;
