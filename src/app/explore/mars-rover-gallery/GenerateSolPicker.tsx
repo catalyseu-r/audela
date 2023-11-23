@@ -12,7 +12,7 @@ import { RxQuestionMarkCircled as QuestionIcon } from 'react-icons/rx';
 const GenerateSolPicker = () => {
   const {
     state: {
-      marsFilterState: { rover, sol, recency },
+      marsFilterState: { rover, sol, latest },
     },
     dispatch,
   } = useAppContext();
@@ -32,7 +32,7 @@ const GenerateSolPicker = () => {
 
   const [isTooltip, setIsTooltip] = React.useState<boolean>(false);
 
-  const isMostRecent = recency === PhotoRecency.latest_photos;
+  const isMostRecent = latest === PhotoRecency.latest_photos;
 
   const toggleTooltip = React.useCallback(() => setIsTooltip((_prev) => !_prev), []);
 

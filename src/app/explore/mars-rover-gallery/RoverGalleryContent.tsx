@@ -20,12 +20,10 @@ import { getLocalStorageItem, setLocalStorageItem } from '@/app/utils/localStora
 import FilterGroup from './FilterGroup';
 import { useSearchParams } from 'next/navigation';
 
-import { motion, AnimatePresence } from 'framer-motion';
-
 const RoverGalleryContent = (data: MarsRoverProfiles) => {
   const {
     state: {
-      marsFilterState: { sol, camera, rover, recency },
+      marsFilterState: { sol, camera, rover, latest },
       currentGallery: { isLoading },
     },
     dispatch,
@@ -136,7 +134,7 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
           rover: rover!.name,
           sol: sol,
           camera: camera!,
-          latest: recency,
+          latest: latest,
         });
 
         if (getImages) {
@@ -151,18 +149,18 @@ const RoverGalleryContent = (data: MarsRoverProfiles) => {
       } catch (error) {
         console.log(error);
       } finally {
-        setLocalStorageItem('@au-dela_filters', { sol: sol, camera: camera, rover: rover, latest: recency });
+        setLocalStorageItem('@au-dela_filters', { sol: sol, camera: camera, rover: rover, latest: latest });
         updatePath({
           sol: sol,
           camera: camera!,
           rover: rover!.name,
-          recency: recency,
+          latest: latest,
         });
       }
     };
 
     rover?.name && getSelectedRoverImages();
-  }, [dispatch, sol, camera, rover, recency, updatePath]);
+  }, [dispatch, sol, camera, rover, latest, updatePath]);
 
   if (isPageLoad || !rover) {
     return <Loading />;

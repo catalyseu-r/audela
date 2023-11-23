@@ -102,7 +102,7 @@ const MissionContent = (props: CommonSectionProps) => {
                 className={` transition-opacity duration-700 ${
                   isArticleInView ? 'opacity-100' : 'opacity-0'
                 } flex  flex-col items-end w-10/12 md:w-8/12 absolute top-full translate-x-6 rounded translate-y-48 lg:w-[22rem] bg-text-white p-4 lg:gap-6 md:gap-4 gap-2 `}
-                href={`${pathName}explore/news-and-studies/PIA07081`}
+                href={`${pathName}explore/news-and-studies/PIA24937`}
               >
                 <h3 className='text-bg-black font-normal leading-6 text-xl self-stretch px-4'>Photographing Mars</h3>
                 <p className='text-bg-black font-light leading-6 text-base self-stretch px-6 '>

@@ -88,7 +88,7 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
           sol: '',
           earth_date: '',
           camera: null,
-          recency: PhotoRecency.all,
+          latest: PhotoRecency.all,
           rover: null,
         },
       };
@@ -145,7 +145,7 @@ export const GlobalContextProvider = ({ children }: any) => {
       sol: '',
       earth_date: '',
       camera: null,
-      recency: PhotoRecency.all,
+      latest: PhotoRecency.all,
       rover: null,
     },
 
